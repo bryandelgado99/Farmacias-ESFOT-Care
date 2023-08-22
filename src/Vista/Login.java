@@ -1,20 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Vista;
-
+import java.io.*;
+import javax.swing.*;
 /**
  *
  * @author bryan
  */
 public class Login extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Login
-     */
     public Login() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        this.setTitle("Sistema de Gestión Comercial | ESFOT-Care+");
     }
 
     /**
@@ -43,6 +40,7 @@ public class Login extends javax.swing.JFrame {
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Iniciar Sesión");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTabbedPane1.setBackground(new java.awt.Color(204, 255, 204));
@@ -72,7 +70,6 @@ public class Login extends javax.swing.JFrame {
             .addGroup(adminTabLayout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addGroup(adminTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(ingresarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(adminTabLayout.createSequentialGroup()
                         .addGroup(adminTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -80,7 +77,8 @@ public class Login extends javax.swing.JFrame {
                         .addGap(47, 47, 47)
                         .addGroup(adminTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(admiInput)
-                            .addComponent(pass_admiInput, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))))
+                            .addComponent(pass_admiInput, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)))
+                    .addComponent(ingresarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(41, Short.MAX_VALUE))
         );
         adminTabLayout.setVerticalGroup(
@@ -94,12 +92,12 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(adminTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(pass_admiInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addComponent(ingresarButton)
-                .addGap(49, 49, 49))
+                .addGap(44, 44, 44))
         );
 
-        jTabbedPane1.addTab("Adminstrador", new javax.swing.ImageIcon(getClass().getResource("/Images/profile.png")), adminTab); // NOI18N
+        jTabbedPane1.addTab("Administrador/a   ", new javax.swing.ImageIcon(getClass().getResource("/Images/profile.png")), adminTab); // NOI18N
         adminTab.getAccessibleContext().setAccessibleName("adminTab");
 
         cajeroTab.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Bienvenido Cajero/a...!", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Roboto", 0, 12))); // NOI18N
@@ -113,6 +111,16 @@ public class Login extends javax.swing.JFrame {
         ingresarButton2.setBackground(new java.awt.Color(204, 255, 204));
         ingresarButton2.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         ingresarButton2.setText("Ingresar al sistema");
+        ingresarButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ingresarButton2MouseClicked(evt);
+            }
+        });
+        ingresarButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ingresarButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout cajeroTabLayout = new javax.swing.GroupLayout(cajeroTab);
         cajeroTab.setLayout(cajeroTabLayout);
@@ -143,12 +151,12 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(cajeroTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(cajero_passInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                 .addComponent(ingresarButton2)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addGap(46, 46, 46))
         );
 
-        jTabbedPane1.addTab("Cajero/a", new javax.swing.ImageIcon(getClass().getResource("/Images/package.png")), cajeroTab); // NOI18N
+        jTabbedPane1.addTab("Cajero/a    ", new javax.swing.ImageIcon(getClass().getResource("/Images/package.png")), cajeroTab); // NOI18N
         cajeroTab.getAccessibleContext().setAccessibleName("cajeroTab");
 
         getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, 510, 320));
@@ -164,8 +172,18 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ingresarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarButtonActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_ingresarButtonActionPerformed
+
+    private void ingresarButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ingresarButton2ActionPerformed
+
+    private void ingresarButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ingresarButton2MouseClicked
+         Home_Cajero cajero = new Home_Cajero();
+         
+         cajero.setVisible(true);
+         this.setVisible(false);
+    }//GEN-LAST:event_ingresarButton2MouseClicked
 
     /**
      * @param args the command line arguments
@@ -217,4 +235,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel logo;
     private javax.swing.JPasswordField pass_admiInput;
     // End of variables declaration//GEN-END:variables
+
+    private Object ValueStringof(char[] password) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
