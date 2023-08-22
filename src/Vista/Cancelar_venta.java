@@ -58,6 +58,11 @@ public class Cancelar_venta extends javax.swing.JFrame {
 
         yesButton.setBackground(new java.awt.Color(204, 255, 204));
         yesButton.setText("Sí");
+        yesButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                yesButtonMouseClicked(evt);
+            }
+        });
         yesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 yesButtonActionPerformed(evt);
@@ -105,6 +110,12 @@ public class Cancelar_venta extends javax.swing.JFrame {
     private void noButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noButtonActionPerformed
         this.setVisible(false);           // TODO add your handling code here:
     }//GEN-LAST:event_noButtonActionPerformed
+
+    private void yesButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_yesButtonMouseClicked
+        Confir_Anulacion confir = new Confir_Anulacion();
+        confir.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_yesButtonMouseClicked
 
     /**
      * @param args the command line arguments

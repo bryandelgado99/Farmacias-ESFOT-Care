@@ -35,7 +35,7 @@ public class Metodo_pago extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         nomCli = new javax.swing.JLabel();
-        nomCli1 = new javax.swing.JLabel();
+        ccCli = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -95,7 +95,7 @@ public class Metodo_pago extends javax.swing.JFrame {
 
         nomCli.setText("nom-cli");
 
-        nomCli1.setText("ciCli");
+        ccCli.setText("ciCli");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Subtotal: ");
@@ -169,6 +169,11 @@ public class Metodo_pago extends javax.swing.JFrame {
         efectivoButton.setBackground(new java.awt.Color(204, 255, 255));
         efectivoButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         efectivoButton.setText("Efectivo");
+        efectivoButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                efectivoButtonMouseClicked(evt);
+            }
+        });
         efectivoButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 efectivoButtonActionPerformed(evt);
@@ -178,6 +183,11 @@ public class Metodo_pago extends javax.swing.JFrame {
         cardButton.setBackground(new java.awt.Color(102, 153, 255));
         cardButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         cardButton.setText("Tarjeta de débito/crédito");
+        cardButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cardButtonMouseClicked(evt);
+            }
+        });
         cardButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cardButtonActionPerformed(evt);
@@ -202,8 +212,12 @@ public class Metodo_pago extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(nomCli1)
+                        .addComponent(ccCli)
                         .addGap(84, 84, 84))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(103, 103, 103)
+                .addComponent(cardButton)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -213,10 +227,6 @@ public class Metodo_pago extends javax.swing.JFrame {
                         .addGap(175, 175, 175)
                         .addComponent(efectivoButton)))
                 .addContainerGap(56, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(103, 103, 103)
-                .addComponent(cardButton)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,16 +237,16 @@ public class Metodo_pago extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
                     .addComponent(nomCli)
-                    .addComponent(nomCli1))
+                    .addComponent(ccCli))
                 .addGap(44, 44, 44)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
                 .addComponent(jLabel8)
-                .addGap(29, 29, 29)
+                .addGap(18, 18, 18)
                 .addComponent(efectivoButton)
-                .addGap(28, 28, 28)
+                .addGap(29, 29, 29)
                 .addComponent(cardButton)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 540));
@@ -255,6 +265,18 @@ public class Metodo_pago extends javax.swing.JFrame {
     private void exitButtpnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtpnMouseClicked
         this.setVisible(false);        // TODO add your handling code here:
     }//GEN-LAST:event_exitButtpnMouseClicked
+
+    private void efectivoButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_efectivoButtonMouseClicked
+       Efectivo efectivo = new Efectivo();
+       efectivo.setVisible(true);
+       this.setVisible(false);
+    }//GEN-LAST:event_efectivoButtonMouseClicked
+
+    private void cardButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cardButtonMouseClicked
+        Tarjeta card = new Tarjeta();
+        card.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_cardButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -294,6 +316,7 @@ public class Metodo_pago extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cardButton;
+    private javax.swing.JLabel ccCli;
     private javax.swing.JLabel descuNum;
     private javax.swing.JButton efectivoButton;
     private javax.swing.JButton exitButtpn;
@@ -310,7 +333,6 @@ public class Metodo_pago extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel nomCli;
-    private javax.swing.JLabel nomCli1;
     private javax.swing.JLabel subtotalNum;
     private javax.swing.JLabel totalNum;
     // End of variables declaration//GEN-END:variables
