@@ -37,7 +37,7 @@ public class Home_Cajero extends javax.swing.JFrame {
         ClienteData = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        codvENTA = new javax.swing.JLabel();
+        numFactLabel = new javax.swing.JLabel();
         fechaEmi = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -62,6 +62,10 @@ public class Home_Cajero extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         anularventaButton = new javax.swing.JButton();
         finventaButton = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        ProdutcBox = new javax.swing.JComboBox<>();
+        productField = new javax.swing.JTextField();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -125,15 +129,15 @@ public class Home_Cajero extends javax.swing.JFrame {
         ClienteData.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setText("Código Venta:");
+        jLabel4.setText("Num. Fact.:");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Fecha:");
 
-        codvENTA.setText("codVenta");
-        codvENTA.addComponentListener(new java.awt.event.ComponentAdapter() {
+        numFactLabel.setText("codVenta");
+        numFactLabel.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
-                codvENTAComponentShown(evt);
+                numFactLabelComponentShown(evt);
             }
         });
 
@@ -201,7 +205,7 @@ public class Home_Cajero extends javax.swing.JFrame {
                     .addGroup(ClienteDataLayout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(codvENTA, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(numFactLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
@@ -226,7 +230,7 @@ public class Home_Cajero extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(ClienteDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(codvENTA)
+                    .addComponent(numFactLabel)
                     .addComponent(jLabel6)
                     .addComponent(jLabel9)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -363,7 +367,7 @@ public class Home_Cajero extends javax.swing.JFrame {
             sellProdTable.getColumnModel().getColumn(4).setResizable(false);
         }
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 1080, 310));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 1080, 260));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo_2.png"))); // NOI18N
@@ -399,6 +403,46 @@ public class Home_Cajero extends javax.swing.JFrame {
         });
         getContentPane().add(finventaButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 480, 130, 40));
 
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel14.setText("Ingresar nombre o código del producto:");
+
+        ProdutcBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        productField.setText("nomprod/codprod");
+        productField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                productFieldActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(productField, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(ProdutcBox, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(ProdutcBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(productField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 600, -1));
+
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/radiant-gradient.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 600));
 
@@ -413,9 +457,9 @@ public class Home_Cajero extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_logoutButtonActionPerformed
 
-    private void codvENTAComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_codvENTAComponentShown
+    private void numFactLabelComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_numFactLabelComponentShown
                 // TODO add your handling code here:
-    }//GEN-LAST:event_codvENTAComponentShown
+    }//GEN-LAST:event_numFactLabelComponentShown
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
@@ -457,6 +501,10 @@ public class Home_Cajero extends javax.swing.JFrame {
            this.setVisible(false);
     }//GEN-LAST:event_logoutButtonMouseClicked
 
+    private void productFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_productFieldActionPerformed
+
        public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -490,13 +538,13 @@ public class Home_Cajero extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel CajeroData;
     private javax.swing.JPanel ClienteData;
+    private javax.swing.JComboBox<String> ProdutcBox;
     private javax.swing.JButton anularventaButton;
     private javax.swing.JLabel background;
     private javax.swing.JLabel cajeroCode;
     private javax.swing.JLabel cajeroName;
     private javax.swing.JTextField cliMail;
     private javax.swing.JTextField cliTelef;
-    private javax.swing.JLabel codvENTA;
     private javax.swing.JLabel fechaEmi;
     private javax.swing.JButton finventaButton;
     private javax.swing.JButton homeButton;
@@ -506,6 +554,7 @@ public class Home_Cajero extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -516,10 +565,13 @@ public class Home_Cajero extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JButton logoutButton;
+    private javax.swing.JLabel numFactLabel;
+    private javax.swing.JTextField productField;
     private javax.swing.JTable sellProdTable;
     private javax.swing.JLabel subtotalLabel;
     private javax.swing.JLabel totalLabel;
