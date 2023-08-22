@@ -252,6 +252,11 @@ public class Home_Cajero extends javax.swing.JFrame {
         logoutButton.setText("Cerrar Sesion");
         logoutButton.setBorder(null);
         logoutButton.setBorderPainted(false);
+        logoutButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutButtonMouseClicked(evt);
+            }
+        });
         logoutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logoutButtonActionPerformed(evt);
@@ -445,6 +450,12 @@ public class Home_Cajero extends javax.swing.JFrame {
        Metodo_pago metodo = new Metodo_pago();
        metodo.setVisible(true);
     }//GEN-LAST:event_finventaButtonMouseClicked
+
+    private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
+           Login login = new Login();
+           login.setVisible(true);
+           this.setVisible(false);
+    }//GEN-LAST:event_logoutButtonMouseClicked
 
        public static void main(String args[]) {
         /* Set the Nimbus look and feel */
