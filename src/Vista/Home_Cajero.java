@@ -17,6 +17,7 @@ public class Home_Cajero extends javax.swing.JFrame {
     public Home_Cajero() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setTitle("Sistema de Gestión de Caja - ESFOT-Care+");
     }
 
     /**
