@@ -57,6 +57,11 @@ public class Login extends javax.swing.JFrame {
         ingresarButton.setBackground(new java.awt.Color(204, 255, 255));
         ingresarButton.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         ingresarButton.setText("Ingresar al sistema");
+        ingresarButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ingresarButtonMouseClicked(evt);
+            }
+        });
         ingresarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ingresarButtonActionPerformed(evt);
@@ -184,6 +189,12 @@ public class Login extends javax.swing.JFrame {
          cajero.setVisible(true);
          this.setVisible(false);
     }//GEN-LAST:event_ingresarButton2MouseClicked
+
+    private void ingresarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ingresarButtonMouseClicked
+        this.setVisible(false); 
+        Home_Admin admin = new Home_Admin();
+        admin.setVisible(true);
+    }//GEN-LAST:event_ingresarButtonMouseClicked
 
     /**
      * @param args the command line arguments
