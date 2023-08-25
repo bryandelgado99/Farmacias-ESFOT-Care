@@ -42,7 +42,6 @@ public class Lista_Empleado extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         homeMenu = new javax.swing.JMenu();
         empleadosMenu = new javax.swing.JMenu();
-        empleadosLista = new javax.swing.JMenuItem();
         inventarioMenu = new javax.swing.JMenu();
         reportesMenu = new javax.swing.JMenu();
         reporteStock = new javax.swing.JMenuItem();
@@ -159,16 +158,6 @@ public class Lista_Empleado extends javax.swing.JFrame {
                 empleadosMenuMouseClicked(evt);
             }
         });
-
-        empleadosLista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/package.png"))); // NOI18N
-        empleadosLista.setText("Lista de Cajeros");
-        empleadosLista.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                empleadosListaActionPerformed(evt);
-            }
-        });
-        empleadosMenu.add(empleadosLista);
-
         jMenuBar1.add(empleadosMenu);
 
         inventarioMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/box-open-full.png"))); // NOI18N
@@ -224,10 +213,6 @@ public class Lista_Empleado extends javax.swing.JFrame {
         homin.setVisible(true);
     }//GEN-LAST:event_homeMenuMouseClicked
 
-    private void empleadosListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empleadosListaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_empleadosListaActionPerformed
-
     private void inventarioMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventarioMenuActionPerformed
 
     }//GEN-LAST:event_inventarioMenuActionPerformed
@@ -274,47 +259,11 @@ public class Lista_Empleado extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_inventarioMenuMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Lista_Empleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Lista_Empleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Lista_Empleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Lista_Empleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Lista_Empleado().setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarCajero;
     private javax.swing.JTable cajeroTable;
     private javax.swing.JTextField cajerocodInput;
     private javax.swing.JButton eliminarCajero;
-    private javax.swing.JMenuItem empleadosLista;
     private javax.swing.JMenu empleadosMenu;
     private javax.swing.JMenu homeMenu;
     private javax.swing.JMenu inventarioMenu;

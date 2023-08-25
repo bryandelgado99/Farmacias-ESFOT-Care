@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
@@ -25,19 +25,6 @@
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="empleadosMenuMouseClicked"/>
           </Events>
-          <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="empleadosLista">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Images/package.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Lista de Cajeros"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="empleadosListaActionPerformed"/>
-              </Events>
-            </MenuItem>
-          </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="inventarioMenu">
           <Properties>
