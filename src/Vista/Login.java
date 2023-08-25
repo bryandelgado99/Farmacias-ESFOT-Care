@@ -46,8 +46,6 @@ public class Login extends javax.swing.JFrame {
         jTabbedPane1.setBackground(new java.awt.Color(204, 255, 204));
         jTabbedPane1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
 
-        adminTab.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Bienvenido Administrador/a...!", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Roboto", 0, 12))); // NOI18N
-
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel1.setText("Cédula / Código de administ.:");
 
@@ -74,17 +72,16 @@ public class Login extends javax.swing.JFrame {
             adminTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(adminTabLayout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addGroup(adminTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(adminTabLayout.createSequentialGroup()
-                        .addGroup(adminTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(47, 47, 47)
-                        .addGroup(adminTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(admiInput)
-                            .addComponent(pass_admiInput, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)))
-                    .addComponent(ingresarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addGroup(adminTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47)
+                .addGroup(adminTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(ingresarButton, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                    .addGroup(adminTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(admiInput)
+                        .addComponent(pass_admiInput, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         adminTabLayout.setVerticalGroup(
             adminTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,15 +94,13 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(adminTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(pass_admiInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                 .addComponent(ingresarButton)
                 .addGap(44, 44, 44))
         );
 
         jTabbedPane1.addTab("Administrador/a   ", new javax.swing.ImageIcon(getClass().getResource("/Images/profile.png")), adminTab); // NOI18N
         adminTab.getAccessibleContext().setAccessibleName("adminTab");
-
-        cajeroTab.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Bienvenido Cajero/a...!", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Roboto", 0, 12))); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel5.setText("Cédula / Código de cajero:");
@@ -133,17 +128,16 @@ public class Login extends javax.swing.JFrame {
             cajeroTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cajeroTabLayout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addGroup(cajeroTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(ingresarButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(cajeroTabLayout.createSequentialGroup()
-                        .addGroup(cajeroTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(47, 47, 47)
-                        .addGroup(cajeroTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cajeroInput, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
-                            .addComponent(cajero_passInput))))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addGroup(cajeroTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47)
+                .addGroup(cajeroTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(ingresarButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                    .addGroup(cajeroTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(cajeroInput, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                        .addComponent(cajero_passInput)))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         cajeroTabLayout.setVerticalGroup(
             cajeroTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,7 +150,7 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(cajeroTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(cajero_passInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                 .addComponent(ingresarButton2)
                 .addGap(46, 46, 46))
         );
@@ -196,39 +190,6 @@ public class Login extends javax.swing.JFrame {
         admin.setVisible(true);
     }//GEN-LAST:event_ingresarButtonMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            new Login().setVisible(true);
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField admiInput;
     private javax.swing.JPanel adminTab;
@@ -247,7 +208,4 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField pass_admiInput;
     // End of variables declaration//GEN-END:variables
 
-    private Object ValueStringof(char[] password) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }

@@ -48,13 +48,6 @@
       <SubComponents>
         <Container class="javax.swing.JPanel" name="adminTab">
           <Properties>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder position="5" title="Bienvenido Administrador/a...!">
-                  <Font PropertyName="font" name="Roboto" size="12" style="0"/>
-                </TitledBorder>
-              </Border>
-            </Property>
           </Properties>
           <AccessibilityProperties>
             <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="adminTab"/>
@@ -75,21 +68,19 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel1" min="-2" pref="171" max="-2" attributes="0"/>
-                                  <Component id="jLabel2" min="-2" pref="171" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="admiInput" max="32767" attributes="0"/>
-                                  <Component id="pass_admiInput" pref="208" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Component id="ingresarButton" alignment="1" min="-2" pref="142" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel1" min="-2" pref="171" max="-2" attributes="0"/>
+                          <Component id="jLabel2" min="-2" pref="171" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="41" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="ingresarButton" pref="208" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="admiInput" max="32767" attributes="0"/>
+                              <Component id="pass_admiInput" pref="208" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace pref="49" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -106,7 +97,7 @@
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="pass_admiInput" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="59" max="32767" attributes="0"/>
+                      <EmptySpace pref="78" max="32767" attributes="0"/>
                       <Component id="ingresarButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                   </Group>
@@ -153,13 +144,6 @@
         </Container>
         <Container class="javax.swing.JPanel" name="cajeroTab">
           <Properties>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder position="5" title="Bienvenido Cajero/a...!">
-                  <Font PropertyName="font" name="Roboto" size="12" style="0"/>
-                </TitledBorder>
-              </Border>
-            </Property>
           </Properties>
           <AccessibilityProperties>
             <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="cajeroTab"/>
@@ -180,21 +164,19 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="ingresarButton2" min="-2" pref="143" max="-2" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel5" alignment="0" min="-2" pref="171" max="-2" attributes="0"/>
-                                  <Component id="jLabel6" alignment="0" min="-2" pref="171" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="cajeroInput" pref="207" max="32767" attributes="0"/>
-                                  <Component id="cajero_passInput" max="32767" attributes="0"/>
-                              </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel5" alignment="0" min="-2" pref="171" max="-2" attributes="0"/>
+                          <Component id="jLabel6" alignment="0" min="-2" pref="171" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="ingresarButton2" pref="207" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="cajeroInput" pref="207" max="32767" attributes="0"/>
+                              <Component id="cajero_passInput" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="42" max="32767" attributes="0"/>
+                      <EmptySpace pref="50" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -211,7 +193,7 @@
                           <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cajero_passInput" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="57" max="32767" attributes="0"/>
+                      <EmptySpace pref="76" max="32767" attributes="0"/>
                       <Component id="ingresarButton2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                   </Group>

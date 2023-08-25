@@ -49,7 +49,6 @@ public class Home_Cajero extends javax.swing.JFrame {
         cliMail = new javax.swing.JTextField();
         cliTelef = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
-        homeButton = new javax.swing.JButton();
         logoutButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -243,20 +242,11 @@ public class Home_Cajero extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/home.png"))); // NOI18N
-        homeButton.setText("   Inicio");
-        homeButton.setBorder(null);
-        homeButton.setBorderPainted(false);
-        homeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                homeButtonActionPerformed(evt);
-            }
-        });
-
         logoutButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/sign-out-alt.png"))); // NOI18N
         logoutButton.setText("Cerrar Sesion");
         logoutButton.setBorder(null);
         logoutButton.setBorderPainted(false);
+        logoutButton.setFocusPainted(false);
         logoutButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 logoutButtonMouseClicked(evt);
@@ -273,14 +263,12 @@ public class Home_Cajero extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(homeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 856, Short.MAX_VALUE)
+                .addContainerGap(944, Short.MAX_VALUE)
                 .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(homeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(logoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(logoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 40));
@@ -450,10 +438,6 @@ public class Home_Cajero extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void homeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_homeButtonActionPerformed
-
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_logoutButtonActionPerformed
@@ -506,36 +490,7 @@ public class Home_Cajero extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_productFieldActionPerformed
 
-       public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Home_Cajero.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Home_Cajero.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Home_Cajero.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Home_Cajero.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            new Home_Cajero().setVisible(true);
-        });
-    }
-
+  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel CajeroData;
     private javax.swing.JPanel ClienteData;
@@ -548,7 +503,6 @@ public class Home_Cajero extends javax.swing.JFrame {
     private javax.swing.JTextField cliTelef;
     private javax.swing.JLabel fechaEmi;
     private javax.swing.JButton finventaButton;
-    private javax.swing.JButton homeButton;
     private javax.swing.JLabel ivaLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
