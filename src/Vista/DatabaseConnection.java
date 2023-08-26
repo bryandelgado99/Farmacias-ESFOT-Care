@@ -12,7 +12,7 @@ import java.sql.*;
 public class DatabaseConnection {
     final String DB_URL="jdbc:mysql://localhost/ESFOT-CARE"; //cadena de conexion
     final String USER="root"; //usuario
-    final String PASS="melA01.2"; //password
+    final String PASS="root2023"; //password
 
     public boolean iniciarSesionDB_caj(String QUERY, String cod_in,String ci_in, String password_in){
         try(
