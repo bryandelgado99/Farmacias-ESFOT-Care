@@ -15,7 +15,7 @@ import java.sql.*;
 public class Lista_Empleado extends javax.swing.JFrame {
     
     //variables para mysql
-    public static final String DB_URL = "jdbc:mysql://localhost/esfot-care";
+    public static final String DB_URL = "jdbc:mysql://localhost/ESFOT-CARE";
     public static final String USER = "root";
     public static final String PASSWORD = "edu1751395623";
 
