@@ -9,14 +9,20 @@ package Vista;
  * @author bryan
  */
 public class Login extends javax.swing.JFrame {
+<<<<<<< Updated upstream
 
     /**
      * Creates new form Login
      */
+=======
+>>>>>>> Stashed changes
     public Login() {
         initComponents();
     }
-
+    
+    //Objeto para la clase de conexion a la base de datos
+    DatabaseConexion dataconnect = new DatabaseConexion();
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -167,6 +173,7 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ingresarButtonActionPerformed
 
+<<<<<<< Updated upstream
     /**
      * @param args the command line arguments
      */
@@ -193,6 +200,24 @@ public class Login extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+=======
+    private void ingresarButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarButton2ActionPerformed
+        String cod_caj = cajeroInput.getText();
+        String ci_caj = cajeroInput.getText();
+        //tipo password como String
+        String password_caj = String.valueOf(cajero_passInput.getPassword());
+
+        //Query busca id de un usuario
+        String QUERY="SELECT codigo_caj,ci_caj,password_caj from Cajeros where codigo_caj='"+cod_caj+"' or ci_caj='"+ci_caj+"'";
+
+        boolean inicioCorrecto = dataconnect.iniciarSesionDB(QUERY,cod_caj,ci_caj,password_caj);
+
+        if(!inicioCorrecto){
+            JOptionPane.showMessageDialog(null,"Usuario o contraseña incorrectos!","Error",JOptionPane.ERROR_MESSAGE);
+            limpiarRegistro();
+        }
+    }//GEN-LAST:event_ingresarButton2ActionPerformed
+>>>>>>> Stashed changes
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
@@ -217,4 +242,12 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel logo;
     private javax.swing.JPasswordField pass_admiInput;
     // End of variables declaration//GEN-END:variables
+<<<<<<< Updated upstream
+=======
+    
+    private void limpiarRegistro(){
+        cajeroInput.setText(null);
+        cajero_passInput.setText(null);
+    }
+>>>>>>> Stashed changes
 }
