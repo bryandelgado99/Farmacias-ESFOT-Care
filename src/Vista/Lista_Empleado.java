@@ -43,6 +43,7 @@ public class Lista_Empleado extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         cajerocodInput = new javax.swing.JTextField();
         jButtonDesplejarCajeros = new javax.swing.JButton();
+        jButtonBusquedaCajero = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         cajeroTable = new javax.swing.JTable();
@@ -74,7 +75,6 @@ public class Lista_Empleado extends javax.swing.JFrame {
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, -1));
 
         cajerocodInput.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        cajerocodInput.setText("----");
         cajerocodInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cajerocodInputActionPerformed(evt);
@@ -89,6 +89,14 @@ public class Lista_Empleado extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButtonDesplejarCajeros, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 140, -1, -1));
+
+        jButtonBusquedaCajero.setText("Buscar");
+        jButtonBusquedaCajero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBusquedaCajeroActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonBusquedaCajero, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 120, 80, 30));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo_2.png"))); // NOI18N
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 30, -1, -1));
@@ -328,6 +336,7 @@ public class Lista_Empleado extends javax.swing.JFrame {
                         
             row++;
             
+            //prueba de conexion
             System.out.println("Código: " + codigo);
             System.out.println("Nombre: " + nombre);
             System.out.println("Apellido: " + apellido);
@@ -344,6 +353,82 @@ public class Lista_Empleado extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonDesplejarCajerosActionPerformed
 
+    private void jButtonBusquedaCajeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBusquedaCajeroActionPerformed
+        // TODO add your handling code here:
+        
+         String codigoinput = cajerocodInput.getText();
+        
+        try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)){
+            String Query = "SELECT * FROM cajeros WHERE codigo_caj = ?";
+            PreparedStatement stmt = conn.prepareStatement(Query);
+            stmt.setString(1, codigoinput);
+            ResultSet rs = stmt.executeQuery();
+            
+           
+            
+            cajeroTable.getModel();
+            
+            //Logica para busqueda
+            int row = 0;
+            
+            if (rs.next()) {
+                
+                /*
+                int rowc = 1;
+                while(rowc > 10 ){
+                    cajeroTable.setValueAt("", rowc, 0);
+                    cajeroTable.setValueAt("", rowc, 1);
+                    cajeroTable.setValueAt("", rowc, 2);
+                    cajeroTable.setValueAt("", rowc, 3);
+                    cajeroTable.setValueAt("", rowc, 4);
+                    rowc++;
+                }
+                */
+                
+                int rowCount = cajeroTable.getRowCount();
+                    for (int i = 1; i < rowCount; i++) {
+                        for (int j = 0; j < 5; j++) {
+                            cajeroTable.setValueAt("", i, j);
+                        }
+                    }
+
+           
+                
+                String codigo = rs.getString("codigo_caj");
+                String nombre = rs.getString("nombre_caj");
+                String apellido = rs.getString("apellido_caj");
+                String ci = rs.getString("ci_caj");
+                String telefono = rs.getString("telefono_caj");
+                String email = rs.getString("email_caj");
+                String direccion = rs.getString("direccion_caj");
+                String password = rs.getString("password_caj");
+                String codigoAdmin = rs.getString("Administradores_codigo_admin");
+
+                cajeroTable.setValueAt(codigo, row, 0);
+                cajeroTable.setValueAt(nombre + " " + apellido, row, 1);
+                cajeroTable.setValueAt(ci, row, 2);
+                cajeroTable.setValueAt(telefono, row, 3);
+                cajeroTable.setValueAt(direccion, row, 4);
+
+
+
+                //prueba de conexion
+                System.out.println("Código: " + codigo);
+                System.out.println("Nombre: " + nombre);
+                System.out.println("Apellido: " + apellido);
+                System.out.println("CI: " + ci);
+                System.out.println("Teléfono: " + telefono);
+                System.out.println("Email: " + email);
+                System.out.println("Dirección: " + direccion);
+                System.out.println("Password: " + password);
+                System.out.println("Código de Admin: " + codigoAdmin);
+                System.out.println("----------");
+            }
+        } catch (SQLException x) {
+            throw new RuntimeException(x);
+        }
+    }//GEN-LAST:event_jButtonBusquedaCajeroActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarCajero;
     private javax.swing.JTable cajeroTable;
@@ -352,6 +437,7 @@ public class Lista_Empleado extends javax.swing.JFrame {
     private javax.swing.JMenu empleadosMenu;
     private javax.swing.JMenu homeMenu;
     private javax.swing.JMenu inventarioMenu;
+    private javax.swing.JButton jButtonBusquedaCajero;
     private javax.swing.JButton jButtonDesplejarCajeros;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
