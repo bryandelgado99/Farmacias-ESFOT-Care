@@ -2,13 +2,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+
 package Vista;
+
+// importacion libreria para sql
+import java.sql.*;
 
 /**
  *
  * @author bryan
  */
 public class Lista_Empleado extends javax.swing.JFrame {
+    
+    //variables para mysql
+    public static final String DB_URL = "jdbc:mysql://localhost/esfot-care";
+    public static final String USER = "root";
+    public static final String PASSWORD = "edu1751395623";
 
     /**
      * Creates new form Lista_Empleado
@@ -33,6 +42,7 @@ public class Lista_Empleado extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         cajerocodInput = new javax.swing.JTextField();
+        jButtonBuscarCajero = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         cajeroTable = new javax.swing.JTable();
@@ -71,6 +81,14 @@ public class Lista_Empleado extends javax.swing.JFrame {
             }
         });
         getContentPane().add(cajerocodInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 120, 240, 30));
+
+        jButtonBuscarCajero.setText("Buscar");
+        jButtonBuscarCajero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarCajeroActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonBuscarCajero, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 120, -1, -1));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo_2.png"))); // NOI18N
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 30, -1, -1));
@@ -259,6 +277,41 @@ public class Lista_Empleado extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_inventarioMenuMouseClicked
 
+    private void jButtonBuscarCajeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarCajeroActionPerformed
+        // TODO add your handling code here:
+        try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)){
+            String Query = "SELECT * FROM cajeros";
+            PreparedStatement stmt = conn.prepareStatement(Query);
+            ResultSet rs = stmt.executeQuery();
+            
+            //prueba conexion
+            while (rs.next()) {
+            String codigo = rs.getString("codigo_caj");
+            String nombre = rs.getString("nombre_caj");
+            String apellido = rs.getString("apellido_caj");
+            String ci = rs.getString("ci_caj");
+            String telefono = rs.getString("telefono_caj");
+            String email = rs.getString("email_caj");
+            String direccion = rs.getString("direccion_caj");
+            String password = rs.getString("password_caj");
+            String codigoAdmin = rs.getString("Administradores_codigo_admin");
+
+            System.out.println("Código: " + codigo);
+            System.out.println("Nombre: " + nombre);
+            System.out.println("Apellido: " + apellido);
+            System.out.println("CI: " + ci);
+            System.out.println("Teléfono: " + telefono);
+            System.out.println("Email: " + email);
+            System.out.println("Dirección: " + direccion);
+            System.out.println("Password: " + password);
+            System.out.println("Código de Admin: " + codigoAdmin);
+            System.out.println("----------");
+            }
+        } catch (SQLException x) {
+            throw new RuntimeException(x);
+        }
+    }//GEN-LAST:event_jButtonBuscarCajeroActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarCajero;
     private javax.swing.JTable cajeroTable;
@@ -267,6 +320,7 @@ public class Lista_Empleado extends javax.swing.JFrame {
     private javax.swing.JMenu empleadosMenu;
     private javax.swing.JMenu homeMenu;
     private javax.swing.JMenu inventarioMenu;
+    private javax.swing.JButton jButtonBuscarCajero;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
