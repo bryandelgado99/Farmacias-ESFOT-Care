@@ -15,9 +15,9 @@ import java.sql.*;
 public class Lista_Empleado extends javax.swing.JFrame {
     
     //variables para mysql
-    public static final String DB_URL = "jdbc:mysql://localhost/ESFOT-CARE";
+    public static final String DB_URL = "jdbc:mysql://localhost/esfot-care";
     public static final String USER = "root";
-    public static final String PASSWORD = "edu1751395623";
+    public static final String PASSWORD = "root2023";
 
     /**
      * Creates new form Lista_Empleado
@@ -42,8 +42,8 @@ public class Lista_Empleado extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         cajerocodInput = new javax.swing.JTextField();
-        jButtonDesplejarCajeros = new javax.swing.JButton();
-        jButtonBusquedaCajero = new javax.swing.JButton();
+        jButtonBuscarCajeroCod = new javax.swing.JButton();
+        jButtonDesplegarCajeros = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         cajeroTable = new javax.swing.JTable();
@@ -82,39 +82,27 @@ public class Lista_Empleado extends javax.swing.JFrame {
         });
         getContentPane().add(cajerocodInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 120, 240, 30));
 
-        jButtonDesplejarCajeros.setText("Desplegar todo");
-        jButtonDesplejarCajeros.addActionListener(new java.awt.event.ActionListener() {
+        jButtonBuscarCajeroCod.setText("Buscar");
+        jButtonBuscarCajeroCod.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonDesplejarCajerosActionPerformed(evt);
+                jButtonBuscarCajeroCodActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonDesplejarCajeros, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 140, -1, -1));
+        getContentPane().add(jButtonBuscarCajeroCod, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 120, 90, 30));
 
-        jButtonBusquedaCajero.setText("Buscar");
-        jButtonBusquedaCajero.addActionListener(new java.awt.event.ActionListener() {
+        jButtonDesplegarCajeros.setText("Desplegar todo");
+        jButtonDesplegarCajeros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonBusquedaCajeroActionPerformed(evt);
+                jButtonDesplegarCajerosActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonBusquedaCajero, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 120, 80, 30));
+        getContentPane().add(jButtonDesplegarCajeros, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 140, -1, -1));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo_2.png"))); // NOI18N
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 30, -1, -1));
 
         cajeroTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
                 {null, null, null, null, null},
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -297,27 +285,15 @@ public class Lista_Empleado extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_inventarioMenuMouseClicked
 
-    private void jButtonDesplejarCajerosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDesplejarCajerosActionPerformed
+    private void jButtonDesplegarCajerosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDesplegarCajerosActionPerformed
         // TODO add your handling code here:
         try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)){
             String Query = "SELECT * FROM cajeros";
             PreparedStatement stmt = conn.prepareStatement(Query);
             ResultSet rs = stmt.executeQuery();
             
-            
-            cajeroTable.getModel();
-           
-            int row = 0;
-            
             //prueba conexion
             while (rs.next()) {
-            
-            cajeroTable.setValueAt("", row, 0);
-            cajeroTable.setValueAt("", row, 1);
-            cajeroTable.setValueAt("", row, 2);
-            cajeroTable.setValueAt("", row, 3);
-            cajeroTable.setValueAt("", row, 4);
-                
             String codigo = rs.getString("codigo_caj");
             String nombre = rs.getString("nombre_caj");
             String apellido = rs.getString("apellido_caj");
@@ -327,16 +303,7 @@ public class Lista_Empleado extends javax.swing.JFrame {
             String direccion = rs.getString("direccion_caj");
             String password = rs.getString("password_caj");
             String codigoAdmin = rs.getString("Administradores_codigo_admin");
-            
-            cajeroTable.setValueAt(codigo, row, 0);
-            cajeroTable.setValueAt(nombre + " " + apellido, row, 1);
-            cajeroTable.setValueAt(ci, row, 2);
-            cajeroTable.setValueAt(telefono, row, 3);
-            cajeroTable.setValueAt(direccion, row, 4);
-                        
-            row++;
-            
-            //prueba de conexion
+
             System.out.println("Código: " + codigo);
             System.out.println("Nombre: " + nombre);
             System.out.println("Apellido: " + apellido);
@@ -351,11 +318,10 @@ public class Lista_Empleado extends javax.swing.JFrame {
         } catch (SQLException x) {
             throw new RuntimeException(x);
         }
-    }//GEN-LAST:event_jButtonDesplejarCajerosActionPerformed
+    }//GEN-LAST:event_jButtonDesplegarCajerosActionPerformed
 
-    private void jButtonBusquedaCajeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBusquedaCajeroActionPerformed
+    private void jButtonBuscarCajeroCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarCajeroCodActionPerformed
         // TODO add your handling code here:
-        
          String codigoinput = cajerocodInput.getText();
         
         try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)){
@@ -427,7 +393,7 @@ public class Lista_Empleado extends javax.swing.JFrame {
         } catch (SQLException x) {
             throw new RuntimeException(x);
         }
-    }//GEN-LAST:event_jButtonBusquedaCajeroActionPerformed
+    }//GEN-LAST:event_jButtonBuscarCajeroCodActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarCajero;
@@ -437,8 +403,8 @@ public class Lista_Empleado extends javax.swing.JFrame {
     private javax.swing.JMenu empleadosMenu;
     private javax.swing.JMenu homeMenu;
     private javax.swing.JMenu inventarioMenu;
-    private javax.swing.JButton jButtonBusquedaCajero;
-    private javax.swing.JButton jButtonDesplejarCajeros;
+    private javax.swing.JButton jButtonBuscarCajeroCod;
+    private javax.swing.JButton jButtonDesplegarCajeros;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
