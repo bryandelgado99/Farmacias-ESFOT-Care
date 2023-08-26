@@ -33,6 +33,7 @@ public class Lista_Empleado extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         cajerocodInput = new javax.swing.JTextField();
+        jButtonBuscarCajero = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         cajeroTable = new javax.swing.JTable();
@@ -71,6 +72,14 @@ public class Lista_Empleado extends javax.swing.JFrame {
             }
         });
         getContentPane().add(cajerocodInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 120, 240, 30));
+
+        jButtonBuscarCajero.setText("Buscar");
+        jButtonBuscarCajero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarCajeroActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonBuscarCajero, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 120, -1, -1));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo_2.png"))); // NOI18N
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 30, -1, -1));
@@ -259,6 +268,10 @@ public class Lista_Empleado extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_inventarioMenuMouseClicked
 
+    private void jButtonBuscarCajeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarCajeroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonBuscarCajeroActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarCajero;
     private javax.swing.JTable cajeroTable;
@@ -267,6 +280,7 @@ public class Lista_Empleado extends javax.swing.JFrame {
     private javax.swing.JMenu empleadosMenu;
     private javax.swing.JMenu homeMenu;
     private javax.swing.JMenu inventarioMenu;
+    private javax.swing.JButton jButtonBuscarCajero;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
