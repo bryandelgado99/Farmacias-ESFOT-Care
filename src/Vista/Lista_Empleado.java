@@ -284,6 +284,7 @@ public class Lista_Empleado extends javax.swing.JFrame {
             PreparedStatement stmt = conn.prepareStatement(Query);
             ResultSet rs = stmt.executeQuery();
             
+            //prueba conexion
             while (rs.next()) {
             String codigo = rs.getString("codigo_caj");
             String nombre = rs.getString("nombre_caj");
