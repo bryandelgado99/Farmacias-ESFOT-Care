@@ -116,8 +116,6 @@ public class Lista_Empleado extends javax.swing.JFrame {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
                 {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
                 {null, null, null, null, null}
             },
             new String [] {
@@ -298,6 +296,7 @@ public class Lista_Empleado extends javax.swing.JFrame {
     }//GEN-LAST:event_inventarioMenuMouseClicked
 
     private void jButtonDesplegarCajerosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDesplegarCajerosActionPerformed
+        // TODO add your handling code here:
         // TODO add your handling code here:
         try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)){
             String Query = "SELECT * FROM cajeros";
