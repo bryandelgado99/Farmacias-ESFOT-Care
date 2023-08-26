@@ -583,7 +583,7 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="productField" min="-2" pref="180" max="-2" attributes="0"/>
                   <EmptySpace pref="27" max="32767" attributes="0"/>
-                  <Component id="ProdutcBox" min="-2" pref="149" max="-2" attributes="0"/>
+                  <Component id="ProductBox" min="-2" pref="149" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -594,7 +594,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="ProdutcBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="ProductBox" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="productField" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -611,17 +611,17 @@
             <Property name="text" type="java.lang.String" value="Ingresar nombre o c&#xf3;digo del producto:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="ProdutcBox">
+        <Component class="javax.swing.JComboBox" name="ProductBox">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
+              <StringArray count="1">
+                <StringItem index="0" value="----------------"/>
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ProductBoxActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>

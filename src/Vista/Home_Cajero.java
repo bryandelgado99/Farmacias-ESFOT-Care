@@ -3,7 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Vista;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -14,6 +18,12 @@ public class Home_Cajero extends javax.swing.JFrame {
     /**
      * Creates new form Home_Cajero
      */
+    
+    //variables para mysql
+    public static final String DB_URL = "jdbc:mysql://localhost/esfot-care";
+    public static final String USER = "root";
+    public static final String PASSWORD = "root_bas3";
+    
     public Home_Cajero() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -64,7 +74,7 @@ public class Home_Cajero extends javax.swing.JFrame {
         finventaButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
-        ProdutcBox = new javax.swing.JComboBox<>();
+        ProductBox = new javax.swing.JComboBox<>();
         productField = new javax.swing.JTextField();
         background = new javax.swing.JLabel();
 
@@ -397,7 +407,12 @@ public class Home_Cajero extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel14.setText("Ingresar nombre o código del producto:");
 
-        ProdutcBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ProductBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "----------------" }));
+        ProductBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ProductBoxActionPerformed(evt);
+            }
+        });
 
         productField.setText("nomprod/codprod");
         productField.addActionListener(new java.awt.event.ActionListener() {
@@ -416,7 +431,7 @@ public class Home_Cajero extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(productField, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(ProdutcBox, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ProductBox, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -425,7 +440,7 @@ public class Home_Cajero extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
-                    .addComponent(ProdutcBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ProductBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(productField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -490,11 +505,36 @@ public class Home_Cajero extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_productFieldActionPerformed
 
+    private void ProductBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProductBoxActionPerformed
+        try {          
+            Connection conexion = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+
+            String query = "SELECT nombre_prod FROM productos";
+
+            List<String> nombresProductos = new ArrayList<>();
+            Statement statement = conexion.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                nombresProductos.add(resultSet.getString("nombre_prod"));
+            }         
+            
+            JComboBox<String> productBox = ProductBox; 
+            for (String nombreProducto : nombresProductos) {
+                productBox.addItem(nombreProducto);
+            }
+            
+            conexion.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }//GEN-LAST:event_ProductBoxActionPerformed
+
   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel CajeroData;
     private javax.swing.JPanel ClienteData;
-    private javax.swing.JComboBox<String> ProdutcBox;
+    private javax.swing.JComboBox<String> ProductBox;
     private javax.swing.JButton anularventaButton;
     private javax.swing.JLabel background;
     private javax.swing.JLabel cajeroCode;
