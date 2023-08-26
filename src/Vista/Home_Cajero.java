@@ -3,14 +3,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Vista;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import javax.swing.JComboBox;
 
 /**
  *
  * @author bryan
  */
 public class Home_Cajero extends javax.swing.JFrame {
-
+    public static final String DB_URL = "jdbc:mysql://localhost/esfot-care";
+    public static final String USER = "root";
+    public static final String PASSWORD = "root_bas3";
     /**
      * Creates new form Home_Cajero
      */
@@ -397,7 +403,7 @@ public class Home_Cajero extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel14.setText("Ingresar nombre o código del producto:");
 
-        ProdutcBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ProdutcBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-------------------" }));
 
         productField.setText("nomprod/codprod");
         productField.addActionListener(new java.awt.event.ActionListener() {
@@ -487,7 +493,28 @@ public class Home_Cajero extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutButtonMouseClicked
 
     private void productFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productFieldActionPerformed
-        // TODO add your handling code here:
+        try {          
+            Connection conexion = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+
+            String query = "SELECT nombre_prod FROM productos";
+
+            List<String> nombresProductos = new ArrayList<>();
+            Statement statement = conexion.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                nombresProductos.add(resultSet.getString("nombre_prod"));
+            }         
+            
+            JComboBox<String> productBox = ProdutcBox; 
+            for (String nombreProducto : nombresProductos) {
+                productBox.addItem(nombreProducto);
+            }
+            
+            conexion.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }//GEN-LAST:event_productFieldActionPerformed
 
   
@@ -537,3 +564,5 @@ public class Home_Cajero extends javax.swing.JFrame {
     }
 
 }
+
+
