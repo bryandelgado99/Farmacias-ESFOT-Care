@@ -304,8 +304,20 @@ public class Lista_Empleado extends javax.swing.JFrame {
             PreparedStatement stmt = conn.prepareStatement(Query);
             ResultSet rs = stmt.executeQuery();
             
+            
+            cajeroTable.getModel();
+           
+            int row = 0;
+            
             //prueba conexion
             while (rs.next()) {
+            
+            cajeroTable.setValueAt("", row, 0);
+            cajeroTable.setValueAt("", row, 1);
+            cajeroTable.setValueAt("", row, 2);
+            cajeroTable.setValueAt("", row, 3);
+            cajeroTable.setValueAt("", row, 4);
+                
             String codigo = rs.getString("codigo_caj");
             String nombre = rs.getString("nombre_caj");
             String apellido = rs.getString("apellido_caj");
@@ -315,7 +327,16 @@ public class Lista_Empleado extends javax.swing.JFrame {
             String direccion = rs.getString("direccion_caj");
             String password = rs.getString("password_caj");
             String codigoAdmin = rs.getString("Administradores_codigo_admin");
-
+            
+            cajeroTable.setValueAt(codigo, row, 0);
+            cajeroTable.setValueAt(nombre + " " + apellido, row, 1);
+            cajeroTable.setValueAt(ci, row, 2);
+            cajeroTable.setValueAt(telefono, row, 3);
+            cajeroTable.setValueAt(direccion, row, 4);
+                        
+            row++;
+            
+            //prueba de conexion
             System.out.println("Código: " + codigo);
             System.out.println("Nombre: " + nombre);
             System.out.println("Apellido: " + apellido);

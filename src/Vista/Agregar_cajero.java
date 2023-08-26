@@ -239,8 +239,7 @@ public class Agregar_cajero extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelarButtonMouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        JOptionPane.showMessageDialog(null, "Cajero a sido agregado satisfactoriamente. \n CI: \nCod. Empleado: ","Agregar Cajero",JOptionPane.INFORMATION_MESSAGE);
-        this.setVisible(false);
+        
     }//GEN-LAST:event_jButton1MouseClicked
 
 
