@@ -1,5 +1,4 @@
 package Vista;
-import java.io.*;
 import javax.swing.*;
 /**
  *
@@ -13,7 +12,10 @@ public class Login extends javax.swing.JFrame {
         this.setResizable(false);
         this.setTitle("Sistema de Gestión Comercial | ESFOT-Care+");
     }
-
+    
+    //Objeto para la clase de conexion a la base de datos
+    DatabaseConnection dbConnect = new DatabaseConnection();
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -174,7 +176,20 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_ingresarButtonActionPerformed
 
     private void ingresarButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarButton2ActionPerformed
-        // TODO add your handling code here:
+        String cod_caj = cajeroInput.getText();
+        String ci_caj = cajeroInput.getText();
+        //tipo password como String
+        String password_caj = String.valueOf(cajero_passInput.getPassword());
+
+        //Query busca cod,ci y password de un cajero
+        String QUERY="SELECT codigo_caj,ci_caj,password_caj from Cajeros where codigo_caj='"+cod_caj+"' or ci_caj='"+ci_caj+"'";
+
+        boolean inicioCorrecto = dbConnect.iniciarSesionDB_caj(QUERY,cod_caj,ci_caj,password_caj);
+
+        if(!inicioCorrecto){
+            JOptionPane.showMessageDialog(null,"Usuario o contraseña incorrectos!","Error",JOptionPane.ERROR_MESSAGE);
+            limpiarRegistro();
+        }        
     }//GEN-LAST:event_ingresarButton2ActionPerformed
 
     private void ingresarButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ingresarButton2MouseClicked
@@ -208,4 +223,9 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField pass_admiInput;
     // End of variables declaration//GEN-END:variables
 
+    //metodo para limpieza de campos
+    private void limpiarRegistro(){
+        cajeroInput.setText(null);
+        cajero_passInput.setText(null);
+    }
 }
