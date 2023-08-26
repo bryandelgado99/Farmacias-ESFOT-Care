@@ -75,7 +75,6 @@ public class Lista_Empleado extends javax.swing.JFrame {
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, -1));
 
         cajerocodInput.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        cajerocodInput.setText("----");
         cajerocodInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cajerocodInputActionPerformed(evt);
@@ -97,7 +96,7 @@ public class Lista_Empleado extends javax.swing.JFrame {
                 jButtonDesplegarCajerosActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonDesplegarCajeros, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 140, -1, -1));
+        getContentPane().add(jButtonDesplegarCajeros, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 140, -1, -1));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo_2.png"))); // NOI18N
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 30, -1, -1));
