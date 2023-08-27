@@ -72,6 +72,7 @@ public class Home_Cajero extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         ProdutcBox = new javax.swing.JComboBox<>();
         productField = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -404,11 +405,23 @@ public class Home_Cajero extends javax.swing.JFrame {
         jLabel14.setText("Ingresar nombre o código del producto:");
 
         ProdutcBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-------------------" }));
+        ProdutcBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ProdutcBoxActionPerformed(evt);
+            }
+        });
 
         productField.setText("nomprod/codprod");
         productField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 productFieldActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("AgregarProducto");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AgregarProductoActionPerformed(evt);
             }
         });
 
@@ -421,9 +434,11 @@ public class Home_Cajero extends javax.swing.JFrame {
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(productField, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
                 .addComponent(ProdutcBox, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -432,11 +447,12 @@ public class Home_Cajero extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
                     .addComponent(ProdutcBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(productField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(productField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 600, -1));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 770, -1));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/radiant-gradient.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 600));
@@ -493,6 +509,10 @@ public class Home_Cajero extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutButtonMouseClicked
 
     private void productFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productFieldActionPerformed
+        
+    }//GEN-LAST:event_productFieldActionPerformed
+
+    private void ProdutcBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProdutcBoxActionPerformed
         try {          
             Connection conexion = DriverManager.getConnection(DB_URL, USER, PASSWORD);
 
@@ -515,7 +535,11 @@ public class Home_Cajero extends javax.swing.JFrame {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }//GEN-LAST:event_productFieldActionPerformed
+    }//GEN-LAST:event_ProdutcBoxActionPerformed
+
+    private void AgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarProductoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AgregarProductoActionPerformed
 
   
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -531,6 +555,7 @@ public class Home_Cajero extends javax.swing.JFrame {
     private javax.swing.JLabel fechaEmi;
     private javax.swing.JButton finventaButton;
     private javax.swing.JLabel ivaLabel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
