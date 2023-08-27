@@ -173,6 +173,17 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ingresarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarButtonActionPerformed
+        String cod_adm = admiInput.getText();
+        String ci_adm = admiInput.getText();
+        //tipo password como String
+        String password_adm = String.valueOf(pass_admiInput.getPassword());
+
+        boolean inicioCorrecto_adm = dbConnect.iniciarSesionDB("administradores","codigo_admin","ci_admin","password_admin",cod_adm,ci_adm,password_adm);
+
+        if(!inicioCorrecto_adm){
+            JOptionPane.showMessageDialog(null,"Usuario o contraseña incorrectos!","Error",JOptionPane.ERROR_MESSAGE);
+            limpiarRegistro(admiInput,pass_admiInput);
+        } 
     }//GEN-LAST:event_ingresarButtonActionPerformed
 
     private void ingresarButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarButton2ActionPerformed
@@ -181,14 +192,11 @@ public class Login extends javax.swing.JFrame {
         //tipo password como String
         String password_caj = String.valueOf(cajero_passInput.getPassword());
 
-        //Query busca cod,ci y password de un cajero
-        String QUERY="SELECT codigo_caj,ci_caj,password_caj from Cajeros where codigo_caj='"+cod_caj+"' or ci_caj='"+ci_caj+"'";
+        boolean inicioCorrecto_caj = dbConnect.iniciarSesionDB("cajeros","codigo_caj","ci_caj","password_caj",cod_caj,ci_caj,password_caj);
 
-        boolean inicioCorrecto = dbConnect.iniciarSesionDB_caj(QUERY,cod_caj,ci_caj,password_caj);
-
-        if(!inicioCorrecto){
+        if(!inicioCorrecto_caj){
             JOptionPane.showMessageDialog(null,"Usuario o contraseña incorrectos!","Error",JOptionPane.ERROR_MESSAGE);
-            limpiarRegistro();
+            limpiarRegistro(cajeroInput,cajero_passInput);
         }        
     }//GEN-LAST:event_ingresarButton2ActionPerformed
 
@@ -224,8 +232,8 @@ public class Login extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     //metodo para limpieza de campos
-    private void limpiarRegistro(){
-        cajeroInput.setText(null);
-        cajero_passInput.setText(null);
+    private void limpiarRegistro(JTextField userInput, JPasswordField passInput){
+        userInput.setText(null);
+        passInput.setText(null);
     }
 }
