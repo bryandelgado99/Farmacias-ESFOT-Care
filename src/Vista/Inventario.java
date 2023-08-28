@@ -378,7 +378,7 @@ public class Inventario extends javax.swing.JFrame {
                 
                 int rowCount = prodTable.getRowCount();
                     for (int i = 1; i < rowCount; i++) {
-                        for (int j = 0; j < 5; j++) {
+                        for (int j = 0; j < 8; j++) {
                             prodTable.setValueAt("", i, j);
                         }
                     }

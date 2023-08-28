@@ -3,8 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Vista;
+import java.sql.*;
 
 import javax.swing.JOptionPane;
+
+
 
 /**
  *
@@ -12,6 +15,11 @@ import javax.swing.JOptionPane;
  */
 public class Modificar_Stock extends javax.swing.JFrame {
 
+    //variables para mysql
+    public static final String DB_URL = "jdbc:mysql://localhost/esfot-care";
+    public static final String USER = "root";
+    public static final String PASSWORD = "root2023";
+    
     /**
      * Creates new form Modificar_Stock
      */
@@ -48,6 +56,7 @@ public class Modificar_Stock extends javax.swing.JFrame {
         stockLabel1 = new javax.swing.JLabel();
         titLabel = new javax.swing.JLabel();
         newstockInput = new javax.swing.JTextField();
+        jButtonBuscarActualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -55,7 +64,6 @@ public class Modificar_Stock extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         codprodInput.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        codprodInput.setText("----");
         codprodInput.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 codprodInputMouseClicked(evt);
@@ -120,7 +128,13 @@ public class Modificar_Stock extends javax.swing.JFrame {
         titLabel.setText("Nuevo Stock:");
 
         newstockInput.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        newstockInput.setText("---");
+
+        jButtonBuscarActualizar.setText("Buscar");
+        jButtonBuscarActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarActualizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -147,23 +161,24 @@ public class Modificar_Stock extends javax.swing.JFrame {
                                 .addComponent(stockLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(54, 54, 54))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(17, 17, 17)
-                                .addComponent(modstockButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                                .addComponent(codprodInput, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(43, 43, 43))))
+                        .addGap(17, 17, 17)
+                        .addComponent(modstockButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(87, 87, 87))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(codprodInput, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonBuscarActualizar)
+                        .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(90, 90, 90)
                 .addComponent(titLabel)
                 .addGap(29, 29, 29)
                 .addComponent(newstockInput, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 137, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,8 +190,9 @@ public class Modificar_Stock extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(codprodInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                    .addComponent(codprodInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonBuscarActualizar))
+                .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(desTitle)
                     .addComponent(descriptLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -188,7 +204,7 @@ public class Modificar_Stock extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(titLabel)
                     .addComponent(newstockInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(modstockButton)
                     .addComponent(cancelButton))
@@ -214,12 +230,32 @@ public class Modificar_Stock extends javax.swing.JFrame {
     }//GEN-LAST:event_codprodInputActionPerformed
 
     private void modstockButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modstockButtonMouseClicked
-        JOptionPane.showMessageDialog(null, "El stock del producto con código: ----- \n ha modificado con éxito.", "Stock Modificado",JOptionPane.INFORMATION_MESSAGE);
-        this.setVisible(false);
+        
+        
     }//GEN-LAST:event_modstockButtonMouseClicked
 
     private void modstockButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modstockButtonActionPerformed
+        
+        String cod = codprodInput.getText();
+        String newstock = this.newstockInput.getText();
+        
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
+            String query = "UPDATE `esfot-care`.`productos` SET `stock_prod` = ? WHERE `codigo_prod` = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, newstock);
+            stmt.setString(2, cod);
 
+            int rowsAffected = stmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, "Producto actualizado.");
+                this.setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe este producto, ingrese el código correcto.");
+            }
+        } catch (SQLException x) {
+            throw new RuntimeException(x);
+        }
     }//GEN-LAST:event_modstockButtonActionPerformed
 
     private void cancelButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseClicked
@@ -230,6 +266,32 @@ public class Modificar_Stock extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cancelButtonActionPerformed
 
+    private void jButtonBuscarActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActualizarActionPerformed
+        // TODO add your handling code here:
+        String cod = codprodInput.getText();
+        
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
+        String Query = "SELECT * FROM productos WHERE codigo_prod = ?";
+        PreparedStatement stmt = conn.prepareStatement(Query);
+        stmt.setString(1, cod);
+
+        ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                String nombreProd = rs.getString("nombre_prod");
+                String stock = rs.getString("stock_prod");
+                
+                descriptLabel.setText(nombreProd);
+                stockLabel1.setText(stock);
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe este producto, ingrese el cosigo correcto.");
+            }
+        } catch (SQLException x) {
+            throw new RuntimeException(x);
+        }
+    }//GEN-LAST:event_jButtonBuscarActualizarActionPerformed
+
  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -238,6 +300,7 @@ public class Modificar_Stock extends javax.swing.JFrame {
     private javax.swing.JLabel desTitle;
     private javax.swing.JLabel desTitle1;
     private javax.swing.JLabel descriptLabel;
+    private javax.swing.JButton jButtonBuscarActualizar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
