@@ -119,6 +119,19 @@
         </Constraint>
       </Constraints>
     </Component>
+    <Component class="javax.swing.JButton" name="jButtonDesplegarpProducto">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Desplegar todo"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonDesplegarpProductoActionPerformed"/>
+      </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="1050" y="140" width="-1" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -181,10 +194,22 @@
         </Constraint>
       </Constraints>
     </Component>
+    <Component class="javax.swing.JButton" name="jButtonBuscarProdCod">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Buscar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBuscarProdCodActionPerformed"/>
+      </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="580" y="120" width="-1" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
     <Component class="javax.swing.JTextField" name="buscarProdInput">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="----"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buscarProdInputActionPerformed"/>
@@ -234,18 +259,24 @@
         <Component class="javax.swing.JTable" name="prodTable">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="7" rowCount="4">
+              <Table columnCount="8" rowCount="18">
                 <Column editable="false" title="Cod. Producto" type="java.lang.String"/>
-                <Column editable="false" title="Descripci&#xf3;n" type="java.lang.String"/>
-                <Column editable="false" title="Gramaje" type="java.lang.Integer"/>
+                <Column editable="false" title="Nom. Producto" type="java.lang.String"/>
+                <Column editable="false" title="Gramaje" type="java.lang.String"/>
+                <Column editable="false" title="Presentacion" type="java.lang.String"/>
+                <Column editable="false" title="Categoria" type="java.lang.String"/>
                 <Column editable="false" title="Stock" type="java.lang.Integer"/>
-                <Column editable="false" title="Cantidad" type="java.lang.Integer"/>
-                <Column editable="false" title="Valor de Compra" type="java.lang.Double"/>
-                <Column editable="false" title="Valor Unitario" type="java.lang.Double"/>
+                <Column editable="false" title="Valor de Compra" type="java.lang.Object"/>
+                <Column editable="false" title="Valor de Venta" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>

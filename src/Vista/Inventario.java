@@ -4,15 +4,23 @@
  */
 package Vista;
 
+import java.sql.*;
+
 /**
  *
  * @author bryan
  */
 public class Inventario extends javax.swing.JFrame {
 
+    //variables para mysql
+    public static final String DB_URL = "jdbc:mysql://localhost/esfot-care";
+    public static final String USER = "root";
+    public static final String PASSWORD = "root2023";
+    
     /**
      * Creates new form Inventario
      */
+    
     public Inventario() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -29,10 +37,12 @@ public class Inventario extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel7 = new javax.swing.JLabel();
+        jButtonDesplegarpProducto = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         quitarProducto1 = new javax.swing.JButton();
+        jButtonBuscarProdCod = new javax.swing.JButton();
         buscarProdInput = new javax.swing.JTextField();
         quitarProducto = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -54,6 +64,14 @@ public class Inventario extends javax.swing.JFrame {
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo_2.png"))); // NOI18N
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 30, -1, -1));
+
+        jButtonDesplegarpProducto.setText("Desplegar todo");
+        jButtonDesplegarpProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDesplegarpProductoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonDesplegarpProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 140, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/box-open-full.png"))); // NOI18N
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
@@ -83,8 +101,15 @@ public class Inventario extends javax.swing.JFrame {
         });
         getContentPane().add(quitarProducto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 610, 200, -1));
 
+        jButtonBuscarProdCod.setText("Buscar");
+        jButtonBuscarProdCod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarProdCodActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonBuscarProdCod, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 120, -1, -1));
+
         buscarProdInput.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        buscarProdInput.setText("----");
         buscarProdInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buscarProdInputActionPerformed(evt);
@@ -111,20 +136,34 @@ public class Inventario extends javax.swing.JFrame {
 
         prodTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Cod. Producto", "Descripción", "Gramaje", "Stock", "Cantidad", "Valor de Compra", "Valor Unitario"
+                "Cod. Producto", "Nom. Producto", "Gramaje", "Presentacion", "Categoria", "Stock", "Valor de Compra", "Valor de Venta"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -276,6 +315,101 @@ public class Inventario extends javax.swing.JFrame {
     this.setVisible(false);        // TODO add your handling code here:
     }//GEN-LAST:event_empleadosMenuMouseClicked
 
+    private void jButtonDesplegarpProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDesplegarpProductoActionPerformed
+        // TODO add your handling code here:
+        try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)){
+            String Query = "SELECT * FROM Productos";
+            PreparedStatement stmt = conn.prepareStatement(Query);
+            ResultSet rs = stmt.executeQuery();
+            
+            
+            prodTable.getModel();
+           
+            int row = 0;
+            
+            //prueba conexion
+            while (rs.next()) {
+                
+            String codigo = rs.getString("codigo_prod");
+            String nombre = rs.getString("nombre_prod");
+            String gramaje = rs.getString("gramaje_prod");
+            String presentacion = rs.getString("presentacion_prod");
+            String categoria = rs.getString("categoria_prod");
+            int stock = rs.getInt("stock_prod");
+            double valcompra = rs.getDouble("valcompra_prod");
+            double valventa = rs.getDouble("valventa_prod");
+            
+            
+            prodTable.setValueAt(codigo, row, 0);
+            prodTable.setValueAt(nombre, row, 1);
+            prodTable.setValueAt(gramaje, row, 2);
+            prodTable.setValueAt(presentacion, row, 3);
+            prodTable.setValueAt(categoria, row, 4);
+            prodTable.setValueAt(stock, row, 5);
+            prodTable.setValueAt(valcompra, row, 6);
+            prodTable.setValueAt(valventa, row, 7);
+                        
+            row++;
+            
+            }
+        } catch (SQLException x) {
+            throw new RuntimeException(x);
+        }
+    }//GEN-LAST:event_jButtonDesplegarpProductoActionPerformed
+
+    private void jButtonBuscarProdCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarProdCodActionPerformed
+        // TODO add your handling code here:
+        String codigoinput = buscarProdInput.getText();
+        
+        try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)){
+            String Query = "SELECT * FROM productos WHERE codigo_prod = ?";
+            PreparedStatement stmt = conn.prepareStatement(Query);
+            stmt.setString(1, codigoinput);
+            ResultSet rs = stmt.executeQuery();
+            
+           
+            
+            prodTable.getModel();
+            
+            //Logica para busqueda
+            int row = 0;
+            
+            if (rs.next()) {
+                
+                int rowCount = prodTable.getRowCount();
+                    for (int i = 1; i < rowCount; i++) {
+                        for (int j = 0; j < 5; j++) {
+                            prodTable.setValueAt("", i, j);
+                        }
+                    }
+                    
+                String codigo = rs.getString("codigo_prod");
+                String nombre = rs.getString("nombre_prod");
+                String gramaje = rs.getString("gramaje_prod");
+                String presentacion = rs.getString("presentacion_prod");
+                String categoria = rs.getString("categoria_prod");
+                int stock = rs.getInt("stock_prod");
+                String valcompra = rs.getString("valcompra_prod");
+                String valventa = rs.getString("valventa_prod");
+                
+                System.out.println(valcompra);
+                System.out.println(valventa);
+                
+                prodTable.setValueAt(codigo, row, 0);
+                prodTable.setValueAt(nombre, row, 1);
+                prodTable.setValueAt(gramaje, row, 2);
+                prodTable.setValueAt(presentacion, row, 3);
+                prodTable.setValueAt(categoria, row, 4);
+                prodTable.setValueAt(stock, row, 5);
+                prodTable.setValueAt(valcompra, row, 6);
+                prodTable.setValueAt(valventa, row, 7);
+
+            }
+        } catch (SQLException x) {
+            throw new RuntimeException(x);
+        }
+    }//GEN-LAST:event_jButtonBuscarProdCodActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarProducto1;
@@ -283,6 +417,8 @@ public class Inventario extends javax.swing.JFrame {
     private javax.swing.JMenu empleadosMenu;
     private javax.swing.JMenu homeMenu;
     private javax.swing.JMenu inventarioMenu;
+    private javax.swing.JButton jButtonBuscarProdCod;
+    private javax.swing.JButton jButtonDesplegarpProducto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
