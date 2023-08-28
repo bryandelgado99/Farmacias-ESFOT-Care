@@ -4,6 +4,7 @@
  */
 package Vista;
 
+import java.sql.*;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,6 +13,11 @@ import javax.swing.JOptionPane;
  */
 public class Eliminar_producto extends javax.swing.JFrame {
 
+    //variables para mysql
+    public static final String DB_URL = "jdbc:mysql://localhost/esfot-care";
+    public static final String USER = "root";
+    public static final String PASSWORD = "root2023";
+    
     /**
      * Creates new form Eliminar_producto
      */
@@ -38,9 +44,10 @@ public class Eliminar_producto extends javax.swing.JFrame {
         desTitle = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        suprButton = new javax.swing.JButton();
+        eliminarProductoButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
         descriptLabel = new javax.swing.JLabel();
+        jButtonBuscarDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -51,7 +58,6 @@ public class Eliminar_producto extends javax.swing.JFrame {
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 2, true));
 
         codprodInput.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        codprodInput.setText("----");
         codprodInput.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 codprodInputMouseClicked(evt);
@@ -74,17 +80,17 @@ public class Eliminar_producto extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 17)); // NOI18N
         jLabel4.setText("Código del producto:");
 
-        suprButton.setBackground(new java.awt.Color(204, 204, 255));
-        suprButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        suprButton.setText("Eliminar Producto");
-        suprButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        eliminarProductoButton.setBackground(new java.awt.Color(204, 204, 255));
+        eliminarProductoButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        eliminarProductoButton.setText("Eliminar Producto");
+        eliminarProductoButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                suprButtonMouseClicked(evt);
+                eliminarProductoButtonMouseClicked(evt);
             }
         });
-        suprButton.addActionListener(new java.awt.event.ActionListener() {
+        eliminarProductoButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                suprButtonActionPerformed(evt);
+                eliminarProductoButtonActionPerformed(evt);
             }
         });
 
@@ -103,7 +109,13 @@ public class Eliminar_producto extends javax.swing.JFrame {
         });
 
         descriptLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        descriptLabel.setText("----");
+
+        jButtonBuscarDelete.setText("Buscar");
+        jButtonBuscarDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarDeleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -113,26 +125,28 @@ public class Eliminar_producto extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(desTitle)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(suprButton)
+                                .addComponent(eliminarProductoButton)
                                 .addGap(107, 107, 107)
                                 .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(descriptLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jLabel3)
-                                    .addGap(139, 139, 139))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel4)
-                                    .addGap(37, 37, 37)
-                                    .addComponent(codprodInput, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(30, Short.MAX_VALUE))))
+                            .addComponent(descriptLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel3)
+                                .addGap(139, 139, 139)))
+                        .addGap(57, 87, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(desTitle)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(codprodInput, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonBuscarDelete)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,14 +158,15 @@ public class Eliminar_producto extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(codprodInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                    .addComponent(codprodInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonBuscarDelete))
+                .addGap(31, 31, 31)
                 .addComponent(desTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(descriptLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(suprButton)
+                    .addComponent(eliminarProductoButton)
                     .addComponent(cancelButton))
                 .addGap(58, 58, 58))
         );
@@ -169,10 +184,10 @@ public class Eliminar_producto extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_cancelButtonMouseClicked
 
-    private void suprButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_suprButtonMouseClicked
+    private void eliminarProductoButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminarProductoButtonMouseClicked
         JOptionPane.showMessageDialog(null, "El producto de código: ----- \n ha sido eliminado con éxito.", "Producto Eliminado",JOptionPane.INFORMATION_MESSAGE);
         this.setVisible(false);
-    }//GEN-LAST:event_suprButtonMouseClicked
+    }//GEN-LAST:event_eliminarProductoButtonMouseClicked
 
     private void codprodInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codprodInputActionPerformed
         // TODO add your handling code here:
@@ -183,9 +198,56 @@ public class Eliminar_producto extends javax.swing.JFrame {
         descriptLabel.setVisible(true);
     }//GEN-LAST:event_codprodInputMouseClicked
 
-    private void suprButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suprButtonActionPerformed
-       
-    }//GEN-LAST:event_suprButtonActionPerformed
+    private void eliminarProductoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarProductoButtonActionPerformed
+       String cod = codprodInput.getText();
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
+            String DELETE_QUERY = "DELETE FROM productos WHERE codigo_prod = ?";
+
+            conn.setAutoCommit(false);
+
+            PreparedStatement deleteStmt = conn.prepareStatement(DELETE_QUERY);
+            deleteStmt.setString(1, cod);
+
+            int rowsAffected = deleteStmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                conn.commit();
+                JOptionPane.showMessageDialog(null, "Producto eliminado exitosamente");
+                this.setVisible(false);
+            } else {
+                conn.rollback();
+                JOptionPane.showMessageDialog(null, "Error al eliminar el cajero, intentelo nuevamente.");
+            }
+        } catch (SQLException x) {
+            throw new RuntimeException(x);
+        }
+    }//GEN-LAST:event_eliminarProductoButtonActionPerformed
+
+    private void jButtonBuscarDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarDeleteActionPerformed
+        // TODO add your handling code here:
+        String cod = codprodInput.getText();
+        
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
+        String Query = "SELECT * FROM productos WHERE codigo_prod = ?";
+        PreparedStatement stmt = conn.prepareStatement(Query);
+        stmt.setString(1, cod);
+
+        ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                String nombreProd = rs.getString("nombre_prod");
+                
+                descriptLabel.setText(nombreProd);
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe este producto, ingrese el cosigo correcto.");
+            }
+        } catch (SQLException x) {
+            throw new RuntimeException(x);
+        }
+        
+    }//GEN-LAST:event_jButtonBuscarDeleteActionPerformed
 
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -193,10 +255,11 @@ public class Eliminar_producto extends javax.swing.JFrame {
     private javax.swing.JTextField codprodInput;
     private javax.swing.JLabel desTitle;
     private javax.swing.JLabel descriptLabel;
+    private javax.swing.JButton eliminarProductoButton;
+    private javax.swing.JButton jButtonBuscarDelete;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JButton suprButton;
     // End of variables declaration//GEN-END:variables
 }

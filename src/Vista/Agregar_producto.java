@@ -373,11 +373,11 @@ public class Agregar_producto extends javax.swing.JFrame {
 
         if (rowsAffected > 0) {
             conn.commit();
-            JOptionPane.showMessageDialog(null, "Cajero añadido exitosamente");
+            JOptionPane.showMessageDialog(null, "Producto añadido exitosamente");
             this.setVisible(false);
         } else {
             conn.rollback();
-            JOptionPane.showMessageDialog(null, "Error al agregar el cajero");
+            JOptionPane.showMessageDialog(null, "Error al agregar producto");
         }
     } catch (SQLException x) {
         throw new RuntimeException(x);
