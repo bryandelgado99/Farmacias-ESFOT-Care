@@ -1,5 +1,6 @@
 package Vista;
 import javax.swing.*;
+
 /**
  *
  * @author bryan
@@ -172,8 +173,10 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public static String cod_adm;
+    
     private void ingresarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarButtonActionPerformed
-        String cod_adm = admiInput.getText();
+        cod_adm = admiInput.getText();
         String ci_adm = admiInput.getText();
         //tipo password como String
         String password_adm = String.valueOf(pass_admiInput.getPassword());
@@ -185,6 +188,10 @@ public class Login extends javax.swing.JFrame {
             limpiarRegistro(admiInput,pass_admiInput);
         } 
     }//GEN-LAST:event_ingresarButtonActionPerformed
+
+    public static String getCod_adm() {
+        return cod_adm;
+    }
 
     private void ingresarButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarButton2ActionPerformed
         String cod_caj = cajeroInput.getText();
@@ -213,6 +220,7 @@ public class Login extends javax.swing.JFrame {
         admin.setVisible(true);
     }//GEN-LAST:event_ingresarButtonMouseClicked
 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField admiInput;
     private javax.swing.JPanel adminTab;
@@ -237,3 +245,5 @@ public class Login extends javax.swing.JFrame {
         passInput.setText(null);
     }
 }
+
+
