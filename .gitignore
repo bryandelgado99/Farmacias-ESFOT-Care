@@ -1,3 +1,6 @@
 /Farmacia/nbproject/private/
 /Farmacia/build/
 
+*.zip
+*.jar
+dist/README.TXT
