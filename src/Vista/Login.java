@@ -174,7 +174,7 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public static String cod_adm;
-    
+    public static String cod_caj;
     private void ingresarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarButtonActionPerformed
         cod_adm = admiInput.getText();
         String ci_adm = admiInput.getText();
@@ -192,9 +192,13 @@ public class Login extends javax.swing.JFrame {
     public static String getCod_adm() {
         return cod_adm;
     }
+    
+    public static String getCod_caj() {
+        return cod_caj;
+    }
 
     private void ingresarButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarButton2ActionPerformed
-        String cod_caj = cajeroInput.getText();
+        cod_caj = cajeroInput.getText();
         String ci_caj = cajeroInput.getText();
         //tipo password como String
         String password_caj = String.valueOf(cajero_passInput.getPassword());
