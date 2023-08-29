@@ -514,12 +514,12 @@ public class Home_Cajero extends javax.swing.JFrame {
 
     private void ProdutcBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProdutcBoxActionPerformed
         try {          
-            Connection conexion = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
 
             String query = "SELECT nombre_prod FROM productos";
 
             List<String> nombresProductos = new ArrayList<>();
-            Statement statement = conexion.createStatement();
+            Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
@@ -531,14 +531,14 @@ public class Home_Cajero extends javax.swing.JFrame {
                 productBox.addItem(nombreProducto);
             }
             
-            conexion.close();
+            conn.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }//GEN-LAST:event_ProdutcBoxActionPerformed
 
     private void AgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarProductoActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_AgregarProductoActionPerformed
 
   
