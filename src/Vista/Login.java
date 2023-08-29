@@ -1,5 +1,8 @@
 package Vista;
 import javax.swing.*;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -13,9 +16,6 @@ public class Login extends javax.swing.JFrame {
         this.setResizable(false);
         this.setTitle("Sistema de Gestión Comercial | ESFOT-Care+");
     }
-    
-    //Objeto para la clase de conexion a la base de datos
-    DatabaseConnection dbConnect = new DatabaseConnection();
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -176,17 +176,21 @@ public class Login extends javax.swing.JFrame {
     public static String cod_adm;
     
     private void ingresarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarButtonActionPerformed
-        cod_adm = admiInput.getText();
-        String ci_adm = admiInput.getText();
-        //tipo password como String
-        String password_adm = String.valueOf(pass_admiInput.getPassword());
-
-        boolean inicioCorrecto_adm = dbConnect.iniciarSesionDB("administradores","codigo_admin","ci_admin","password_admin",cod_adm,ci_adm,password_adm);
-
-        if(!inicioCorrecto_adm){
-            JOptionPane.showMessageDialog(null,"Usuario o contraseña incorrectos!","Error",JOptionPane.ERROR_MESSAGE);
-            limpiarRegistro(admiInput,pass_admiInput);
-        } 
+        try {
+            cod_adm = admiInput.getText();
+            String ci_adm = admiInput.getText();
+            //tipo password como String
+            String password_adm = String.valueOf(pass_admiInput.getPassword());
+            
+            boolean inicioCorrecto_adm = iniciarSesionDB("administradores","codigo_admin","ci_admin","password_admin",cod_adm,ci_adm,password_adm);
+            
+            if(!inicioCorrecto_adm){
+                JOptionPane.showMessageDialog(null,"Usuario o contraseña incorrectos!","Error",JOptionPane.ERROR_MESSAGE);
+                limpiarRegistro(admiInput,pass_admiInput); 
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_ingresarButtonActionPerformed
 
     public static String getCod_adm() {
@@ -194,17 +198,21 @@ public class Login extends javax.swing.JFrame {
     }
 
     private void ingresarButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarButton2ActionPerformed
-        String cod_caj = cajeroInput.getText();
-        String ci_caj = cajeroInput.getText();
-        //tipo password como String
-        String password_caj = String.valueOf(cajero_passInput.getPassword());
-
-        boolean inicioCorrecto_caj = dbConnect.iniciarSesionDB("cajeros","codigo_caj","ci_caj","password_caj",cod_caj,ci_caj,password_caj);
-
-        if(!inicioCorrecto_caj){
-            JOptionPane.showMessageDialog(null,"Usuario o contraseña incorrectos!","Error",JOptionPane.ERROR_MESSAGE);
-            limpiarRegistro(cajeroInput,cajero_passInput);
-        }        
+        try {
+            String cod_caj = cajeroInput.getText();
+            String ci_caj = cajeroInput.getText();
+            //tipo password como String
+            String password_caj = String.valueOf(cajero_passInput.getPassword());
+            
+            boolean inicioCorrecto_caj = iniciarSesionDB("cajeros","codigo_caj","ci_caj","password_caj",cod_caj,ci_caj,password_caj);
+            
+            if(!inicioCorrecto_caj){
+                JOptionPane.showMessageDialog(null,"Usuario o contraseña incorrectos!","Error",JOptionPane.ERROR_MESSAGE);
+                limpiarRegistro(cajeroInput,cajero_passInput);        
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_ingresarButton2ActionPerformed
 
     private void ingresarButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ingresarButton2MouseClicked
@@ -239,6 +247,29 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField pass_admiInput;
     // End of variables declaration//GEN-END:variables
 
+    
+    //metodo para verificar credenciales
+    public boolean iniciarSesionDB(String tabla, String cod_user, String ci_user, String password_user, String cod_in,String ci_in, String password_in) throws ClassNotFoundException{
+        try(
+                Connection connection = DatabaseConnection.iniciarDB();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT "+cod_user+","+ci_user+","+password_user+" from "+tabla+" where "+cod_user+" = '"+cod_in+"' or "+ci_user+" = '"+ci_in+"'");
+                ){
+            while(resultSet.next()){
+                String obtenerCod = resultSet.getString(cod_user);
+                String obtenerCI = resultSet.getString(ci_user);
+                String obtenerPass = resultSet.getString(password_user);
+                if((cod_in.equals(obtenerCod) && password_in.equals(obtenerPass)) | 
+                    (ci_in.equals(obtenerCI) && password_in.equals(obtenerPass))){
+                    return true;
+                }
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return false;
+    }
+    
     //metodo para limpieza de campos
     private void limpiarRegistro(JTextField userInput, JPasswordField passInput){
         userInput.setText(null);
