@@ -16,7 +16,7 @@ import javax.swing.JComboBox;
 public class Home_Cajero extends javax.swing.JFrame {
     public static final String DB_URL = "jdbc:mysql://localhost/esfot-care";
     public static final String USER = "root";
-    public static final String PASSWORD = "root_bas3";
+    public static final String PASSWORD = "root2023";
     /**
      * Creates new form Home_Cajero
      */
@@ -24,7 +24,30 @@ public class Home_Cajero extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Sistema de Gestión de Caja - ESFOT-Care+");
+        String cod_caj = Vista.Login.getCod_caj();
+        System.out.println("Código del cajero: " + cod_caj);
+        try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)){
+            String Query = "SELECT * FROM cajeros WHERE codigo_caj = ?";
+            PreparedStatement stmt = conn.prepareStatement(Query);
+            stmt.setString(1, cod_caj);
+            ResultSet rs = stmt.executeQuery();
+            
+            
+            //prueba conexion
+            if (rs.next()) {
+                String nombre = rs.getString("nombre_caj");
+                String apellido = rs.getString("apellido_caj");
+                String cod = rs.getString("codigo_caj");
+                
+                cajeroName.setText(nombre + " " +  apellido);
+                cajeroCode.setText(cod);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -71,8 +94,9 @@ public class Home_Cajero extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         ProdutcBox = new javax.swing.JComboBox<>();
-        productField = new javax.swing.JTextField();
+        cantidadField = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -402,7 +426,7 @@ public class Home_Cajero extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel14.setText("Ingresar nombre o código del producto:");
+        jLabel14.setText("Ingresar cantidad:");
 
         ProdutcBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-------------------" }));
         ProdutcBox.addActionListener(new java.awt.event.ActionListener() {
@@ -411,10 +435,9 @@ public class Home_Cajero extends javax.swing.JFrame {
             }
         });
 
-        productField.setText("nomprod/codprod");
-        productField.addActionListener(new java.awt.event.ActionListener() {
+        cantidadField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                productFieldActionPerformed(evt);
+                cantidadFieldActionPerformed(evt);
             }
         });
 
@@ -425,6 +448,9 @@ public class Home_Cajero extends javax.swing.JFrame {
             }
         });
 
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel15.setText("Seleccione el producto:");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -433,12 +459,14 @@ public class Home_Cajero extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(productField, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addComponent(cantidadField, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ProdutcBox, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(45, 45, 45)
                 .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -447,9 +475,10 @@ public class Home_Cajero extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
                     .addComponent(ProdutcBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(productField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cantidadField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
+                    .addComponent(jLabel15))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 770, -1));
@@ -508,18 +537,18 @@ public class Home_Cajero extends javax.swing.JFrame {
            this.setVisible(false);
     }//GEN-LAST:event_logoutButtonMouseClicked
 
-    private void productFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productFieldActionPerformed
+    private void cantidadFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantidadFieldActionPerformed
         
-    }//GEN-LAST:event_productFieldActionPerformed
+    }//GEN-LAST:event_cantidadFieldActionPerformed
 
     private void ProdutcBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProdutcBoxActionPerformed
         try {          
-            Connection conexion = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
 
             String query = "SELECT nombre_prod FROM productos";
 
             List<String> nombresProductos = new ArrayList<>();
-            Statement statement = conexion.createStatement();
+            Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
@@ -531,14 +560,14 @@ public class Home_Cajero extends javax.swing.JFrame {
                 productBox.addItem(nombreProducto);
             }
             
-            conexion.close();
+            conn.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }//GEN-LAST:event_ProdutcBoxActionPerformed
 
     private void AgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarProductoActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_AgregarProductoActionPerformed
 
   
@@ -550,6 +579,7 @@ public class Home_Cajero extends javax.swing.JFrame {
     private javax.swing.JLabel background;
     private javax.swing.JLabel cajeroCode;
     private javax.swing.JLabel cajeroName;
+    private javax.swing.JTextField cantidadField;
     private javax.swing.JTextField cliMail;
     private javax.swing.JTextField cliTelef;
     private javax.swing.JLabel fechaEmi;
@@ -562,6 +592,7 @@ public class Home_Cajero extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -578,7 +609,6 @@ public class Home_Cajero extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JButton logoutButton;
     private javax.swing.JLabel numFactLabel;
-    private javax.swing.JTextField productField;
     private javax.swing.JTable sellProdTable;
     private javax.swing.JLabel subtotalLabel;
     private javax.swing.JLabel totalLabel;
