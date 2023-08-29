@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Vista;
+import java.sql.*;
 
 /**
  *
@@ -10,6 +11,11 @@ package Vista;
  */
 public class Home_Admin extends javax.swing.JFrame {
 
+    //variables para mysql
+    public static final String DB_URL = "jdbc:mysql://localhost/esfot-care";
+    public static final String USER = "root";
+    public static final String PASSWORD = "root2023";
+    
     /**
      * Creates new form Home_Admin
      */
@@ -17,6 +23,54 @@ public class Home_Admin extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Home | Gestion Administrativa de ESFOT-Care+");
+        
+        
+        
+        // Llama al método getCodAdm para obtener el código del administrador
+        String codigoAdmin = Vista.Login.getCod_adm();
+        System.out.println("Código del administrador: " + codigoAdmin);
+            
+        try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)){
+            String Query = "SELECT * FROM administradores WHERE codigo_admin = ?";
+            PreparedStatement stmt = conn.prepareStatement(Query);
+            stmt.setString(1, codigoAdmin);
+            ResultSet rs = stmt.executeQuery();
+            
+            
+            //prueba conexion
+            if (rs.next()) {
+                String nombre = rs.getString("nombre_admin");
+                String apellido = rs.getString("apellido_admin");
+                String ci = rs.getString("ci_admin");
+                
+                jLabelNombreAdmin.setText("Nombre completo: " + nombre + " " +  apellido);
+                jLabelCiAdmin.setText("CI: " + ci);
+            }
+            
+            //logica para poder mostrar la tabla de notificaciones
+            String QueryNoti = "SELECT * FROM Productos WHERE stock_prod <= 6";
+            PreparedStatement stmtNoti = conn.prepareStatement(QueryNoti);
+            ResultSet rsNoti = stmtNoti.executeQuery();
+            int row = 0;
+            notifTable.getModel();
+            while (rsNoti.next()){
+                String codigo = rsNoti.getString("codigo_prod");
+                String nombre = rsNoti.getString("nombre_prod");
+                String gramaje = rsNoti.getString("gramaje_prod");
+                String presentacion = rsNoti.getString("presentacion_prod");
+                String categoria = rsNoti.getString("categoria_prod");
+                int stock = rsNoti.getInt("stock_prod");
+                
+                notifTable.setValueAt(codigo, row, 0);
+                notifTable.setValueAt(nombre + " " + gramaje + " " + presentacion + " " + categoria, row, 1);
+                notifTable.setValueAt("#Stock: " + stock + " | Stock bajo", row, 2);
+                
+                row++;
+            }
+        } catch (SQLException x) {
+            throw new RuntimeException(x);
+        }
+        
     }
 
     /**
@@ -35,10 +89,12 @@ public class Home_Admin extends javax.swing.JFrame {
         notifTable = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         mensajeUsuario = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jLabelNombreAdmin = new javax.swing.JLabel();
+        jLabelCiAdmin = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabelNombreAdmin1 = new javax.swing.JLabel();
+        jLabelNombreAdmin2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         homeMenu = new javax.swing.JMenu();
         empleadosMenu = new javax.swing.JMenu();
@@ -56,7 +112,7 @@ public class Home_Admin extends javax.swing.JFrame {
         notifPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setText("Alertas y Notificaciones");
+        jLabel2.setText("Alertas y Notificaciones ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -77,6 +133,12 @@ public class Home_Admin extends javax.swing.JFrame {
 
         notifTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
                 {null, null, null},
                 {null, null, null},
                 {null, null, null},
@@ -103,6 +165,7 @@ public class Home_Admin extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(notifTable);
         if (notifTable.getColumnModel().getColumnCount() > 0) {
+            notifTable.getColumnModel().getColumn(0).setMaxWidth(80);
             notifTable.getColumnModel().getColumn(2).setResizable(false);
         }
 
@@ -131,19 +194,27 @@ public class Home_Admin extends javax.swing.JFrame {
         mensajeUsuario.setText("Bievenido, AdminJava...!");
         getContentPane().add(mensajeUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, -1, 40));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel5.setText("Nombre completo:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 450, -1, -1));
+        jLabelNombreAdmin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabelNombreAdmin.setText("Nombre completo:");
+        getContentPane().add(jLabelNombreAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 450, -1, -1));
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel6.setText("CI:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 450, -1, -1));
+        jLabelCiAdmin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabelCiAdmin.setText("CI:");
+        getContentPane().add(jLabelCiAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 450, -1, -1));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo_2.png"))); // NOI18N
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 550, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/radiant-gradient.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 720));
+
+        jLabelNombreAdmin1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelNombreAdmin1.setText("-----");
+        getContentPane().add(jLabelNombreAdmin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 450, 100, -1));
+
+        jLabelNombreAdmin2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelNombreAdmin2.setText("-----");
+        getContentPane().add(jLabelNombreAdmin2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 450, 100, -1));
 
         homeMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/home.png"))); // NOI18N
         homeMenu.setText("Inicio");
@@ -239,9 +310,11 @@ public class Home_Admin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabelCiAdmin;
+    private javax.swing.JLabel jLabelNombreAdmin;
+    private javax.swing.JLabel jLabelNombreAdmin1;
+    private javax.swing.JLabel jLabelNombreAdmin2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
