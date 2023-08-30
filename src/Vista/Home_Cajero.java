@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import javax.swing.JComboBox;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -45,6 +50,10 @@ public class Home_Cajero extends javax.swing.JFrame {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        
+        Date fecha = new Date(); 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
+        fechaEmi.setText(sdf.format(fecha));
     }
     
     
@@ -93,7 +102,7 @@ public class Home_Cajero extends javax.swing.JFrame {
         finventaButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
-        ProdutcBox = new javax.swing.JComboBox<>();
+        ProductBox = new javax.swing.JComboBox<>();
         cantidadField = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
@@ -368,7 +377,7 @@ public class Home_Cajero extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Item", "Nombre del producto", "Código Producto", "Cantidad", "Valor Unitario", "Valor Total"
+                "Código Producto", "Nombre del producto", "Categoria Producto", "Cantidad", "Valor Unitario", "Valor Total"
             }
         ) {
             Class[] types = new Class [] {
@@ -428,10 +437,10 @@ public class Home_Cajero extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel14.setText("Ingresar cantidad:");
 
-        ProdutcBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-------------------" }));
-        ProdutcBox.addActionListener(new java.awt.event.ActionListener() {
+        ProductBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-------------------" }));
+        ProductBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ProdutcBoxActionPerformed(evt);
+                ProductBoxActionPerformed(evt);
             }
         });
 
@@ -463,7 +472,7 @@ public class Home_Cajero extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ProdutcBox, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ProductBox, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45)
                 .addComponent(jButton1)
                 .addContainerGap(82, Short.MAX_VALUE))
@@ -474,7 +483,7 @@ public class Home_Cajero extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
-                    .addComponent(ProdutcBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ProductBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cantidadField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1)
                     .addComponent(jLabel15))
@@ -541,7 +550,7 @@ public class Home_Cajero extends javax.swing.JFrame {
         
     }//GEN-LAST:event_cantidadFieldActionPerformed
 
-    private void ProdutcBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProdutcBoxActionPerformed
+    private void ProductBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProductBoxActionPerformed
         try {          
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
 
@@ -555,7 +564,7 @@ public class Home_Cajero extends javax.swing.JFrame {
                 nombresProductos.add(resultSet.getString("nombre_prod"));
             }         
             
-            JComboBox<String> productBox = ProdutcBox; 
+            JComboBox<String> productBox = ProductBox; 
             for (String nombreProducto : nombresProductos) {
                 productBox.addItem(nombreProducto);
             }
@@ -564,17 +573,44 @@ public class Home_Cajero extends javax.swing.JFrame {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }//GEN-LAST:event_ProdutcBoxActionPerformed
+    }//GEN-LAST:event_ProductBoxActionPerformed
 
     private void AgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarProductoActionPerformed
-       
-    }//GEN-LAST:event_AgregarProductoActionPerformed
+       if(!"".equals(cantidadField.getText())){
+           String producto = (String)ProductBox.getSelectedItem();
+           DefaultTableModel modelo = (DefaultTableModel) sellProdTable.getModel();
+           try {          
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
 
+            String query = "SELECT * FROM productos WHERE nombre_prod = " + "'" + producto + "'";
+
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            if (resultSet.next()) {
+                String Codigo = resultSet.getString("codigo_prod");
+                String Categoria = resultSet.getString("categoria_prod");
+                String Cantidad = cantidadField.getText();
+                String ValorU = resultSet.getString("valventa_prod");
+            while (resultSet.next()) {               
+                modelo.addRow(new Object[]{resultSet.getString(Codigo)});
+            }         
+            }
+                   
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+       }else{
+           JOptionPane.showMessageDialog(null, "Ingrese una cantidad");
+       }
+    }//GEN-LAST:event_AgregarProductoActionPerformed
+    
+    
   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel CajeroData;
     private javax.swing.JPanel ClienteData;
-    private javax.swing.JComboBox<String> ProdutcBox;
+    private javax.swing.JComboBox<String> ProductBox;
     private javax.swing.JButton anularventaButton;
     private javax.swing.JLabel background;
     private javax.swing.JLabel cajeroCode;
@@ -617,7 +653,6 @@ public class Home_Cajero extends javax.swing.JFrame {
     private String StringValueof(int i) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
 }
 
 
