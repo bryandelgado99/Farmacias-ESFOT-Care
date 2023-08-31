@@ -615,31 +615,28 @@ public class Home_Cajero extends javax.swing.JFrame {
             try {
                 Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
 
-                String query = "SELECT * FROM productos WHERE nombre_prod = 'Densibone'";
+                String query = "SELECT * FROM productos WHERE nombre_prod = ?";
 
-                PreparedStatement stmt = conn.prepareStatement(query);
-                ResultSet resultSet = stmt.executeQuery();
-                sellProdTable.getModel();
+                PreparedStatement preparedStatement = conn.prepareStatement(query);
+                preparedStatement.setString(1, producto);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                DefaultTableModel model = (DefaultTableModel) sellProdTable.getModel();   
                 int row = 0;
                 while (resultSet.next()) {
-                    sellProdTable.setValueAt("", row, 0);
-                    sellProdTable.setValueAt("", row, 1);
-                    sellProdTable.setValueAt("", row, 2);
-                    sellProdTable.setValueAt("", row, 3);
-                    sellProdTable.setValueAt("", row, 4);
-                    sellProdTable.setValueAt("", row, 5);
-
+                    model.addRow(new Object[7]);
+                    
                     String codigo = resultSet.getString("codigo_prod");
                     String nombre = resultSet.getString("nombre_prod");
                     String categoria = resultSet.getString("categoria_prod");
                     String cantidad = cantidadField.getText();
-                    String valorU = resultSet.getString("valventa_prod");
-                    String valorT = resultSet.getString("valcompra_prod");
+                    int cantidadInt = Integer.parseInt(cantidad);
+                    double valorU = Double.parseDouble(resultSet.getString("valventa_prod"));
+                    double valorT = valorU * cantidadInt;
                                       
                     sellProdTable.setValueAt(codigo, row, 0);
                     sellProdTable.setValueAt(nombre, row, 1);
                     sellProdTable.setValueAt(categoria, row, 2);
-                    sellProdTable.setValueAt(cantidad, row, 3);
+                    sellProdTable.setValueAt(cantidadInt, row, 3);
                     sellProdTable.setValueAt(valorU, row, 4);
                     sellProdTable.setValueAt(valorT, row, 5);
 
