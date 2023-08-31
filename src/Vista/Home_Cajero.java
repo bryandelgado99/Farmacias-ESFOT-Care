@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Vista;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +20,11 @@ import javax.swing.table.DefaultTableModel;
  * @author bryan
  */
 public class Home_Cajero extends javax.swing.JFrame {
+
     public static final String DB_URL = "jdbc:mysql://localhost/esfot-care";
     public static final String USER = "root";
     public static final String PASSWORD = "root2023";
+
     /**
      * Creates new form Home_Cajero
      */
@@ -31,32 +34,48 @@ public class Home_Cajero extends javax.swing.JFrame {
         this.setTitle("Sistema de Gestión de Caja - ESFOT-Care+");
         String cod_caj = Vista.Login.getCod_caj();
         System.out.println("Código del cajero: " + cod_caj);
-        try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)){
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
             String Query = "SELECT * FROM cajeros WHERE codigo_caj = ?";
             PreparedStatement stmt = conn.prepareStatement(Query);
             stmt.setString(1, cod_caj);
             ResultSet rs = stmt.executeQuery();
-            
-            
+
             //prueba conexion
             if (rs.next()) {
                 String nombre = rs.getString("nombre_caj");
                 String apellido = rs.getString("apellido_caj");
                 String cod = rs.getString("codigo_caj");
-                
-                cajeroName.setText(nombre + " " +  apellido);
+
+                cajeroName.setText(nombre + " " + apellido);
                 cajeroCode.setText(cod);
             }
+            num_factura();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        
-        Date fecha = new Date(); 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
+
+        Date fecha = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         fechaEmi.setText(sdf.format(fecha));
+
     }
-    
-    
+
+    private void num_factura() {
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
+            String Query = "SELECT num_factura FROM cabecera_fac";
+            PreparedStatement stmt = conn.prepareStatement(Query);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int numFac = rs.getInt("num_factura");
+                String numFacString = Integer.toString(numFac);
+                numFactLabel.setText(numFacString);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -317,13 +336,12 @@ public class Home_Cajero extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(logoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(fechaEmi)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(numFactLabel))))
+                .addComponent(jLabel4)
+                .addComponent(numFactLabel))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel5)
+                .addComponent(fechaEmi))
+            .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 40));
@@ -519,7 +537,7 @@ public class Home_Cajero extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void numFactLabelComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_numFactLabelComponentShown
-                // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_numFactLabelComponentShown
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -552,22 +570,22 @@ public class Home_Cajero extends javax.swing.JFrame {
     }//GEN-LAST:event_anularventaButtonMouseClicked
 
     private void finventaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_finventaButtonMouseClicked
-       Metodo_pago metodo = new Metodo_pago();
-       metodo.setVisible(true);
+        Metodo_pago metodo = new Metodo_pago();
+        metodo.setVisible(true);
     }//GEN-LAST:event_finventaButtonMouseClicked
 
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
-           Login login = new Login();
-           login.setVisible(true);
-           this.setVisible(false);
+        Login login = new Login();
+        login.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_logoutButtonMouseClicked
 
     private void cantidadFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantidadFieldActionPerformed
-        
+
     }//GEN-LAST:event_cantidadFieldActionPerformed
 
     private void ProductBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProductBoxActionPerformed
-        try {          
+        try {
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
 
             String query = "SELECT nombre_prod FROM productos";
@@ -578,13 +596,13 @@ public class Home_Cajero extends javax.swing.JFrame {
 
             while (resultSet.next()) {
                 nombresProductos.add(resultSet.getString("nombre_prod"));
-            }         
-            
-            JComboBox<String> productBox = ProductBox; 
+            }
+
+            JComboBox<String> productBox = ProductBox;
             for (String nombreProducto : nombresProductos) {
                 productBox.addItem(nombreProducto);
             }
-            
+
             conn.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -592,37 +610,51 @@ public class Home_Cajero extends javax.swing.JFrame {
     }//GEN-LAST:event_ProductBoxActionPerformed
 
     private void AgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarProductoActionPerformed
-       if(!"".equals(cantidadField.getText())){
-           String producto = (String)ProductBox.getSelectedItem();
-           DefaultTableModel modelo = (DefaultTableModel) sellProdTable.getModel();
-           try {          
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+        if (!"".equals(cantidadField.getText())) {
+            String producto = (String) ProductBox.getSelectedItem();
+            try {
+                Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
 
-            String query = "SELECT * FROM productos WHERE nombre_prod = " + "'" + producto + "'";
+                String query = "SELECT * FROM productos WHERE nombre_prod = 'Densibone'";
 
-            Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
-            if (resultSet.next()) {
-                String Codigo = resultSet.getString("codigo_prod");
-                String Categoria = resultSet.getString("categoria_prod");
-                String Cantidad = cantidadField.getText();
-                String ValorU = resultSet.getString("valventa_prod");
-            while (resultSet.next()) {               
-                modelo.addRow(new Object[]{resultSet.getString(Codigo)});
-            }         
+                PreparedStatement stmt = conn.prepareStatement(query);
+                ResultSet resultSet = stmt.executeQuery();
+                sellProdTable.getModel();
+                int row = 0;
+                while (resultSet.next()) {
+                    sellProdTable.setValueAt("", row, 0);
+                    sellProdTable.setValueAt("", row, 1);
+                    sellProdTable.setValueAt("", row, 2);
+                    sellProdTable.setValueAt("", row, 3);
+                    sellProdTable.setValueAt("", row, 4);
+                    sellProdTable.setValueAt("", row, 5);
+
+                    String codigo = resultSet.getString("codigo_prod");
+                    String nombre = resultSet.getString("nombre_prod");
+                    String categoria = resultSet.getString("categoria_prod");
+                    String cantidad = cantidadField.getText();
+                    String valorU = resultSet.getString("valventa_prod");
+                    String valorT = resultSet.getString("valcompra_prod");
+                                      
+                    sellProdTable.setValueAt(codigo, row, 0);
+                    sellProdTable.setValueAt(nombre, row, 1);
+                    sellProdTable.setValueAt(categoria, row, 2);
+                    sellProdTable.setValueAt(cantidad, row, 3);
+                    sellProdTable.setValueAt(valorU, row, 4);
+                    sellProdTable.setValueAt(valorT, row, 5);
+
+                    row++;
+                }
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-                   
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese una cantidad");
         }
-       }else{
-           JOptionPane.showMessageDialog(null, "Ingrese una cantidad");
-       }
     }//GEN-LAST:event_AgregarProductoActionPerformed
-    
-    
-  
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel CajeroData;
     private javax.swing.JPanel ClienteData;
@@ -672,5 +704,3 @@ public class Home_Cajero extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
-
-
