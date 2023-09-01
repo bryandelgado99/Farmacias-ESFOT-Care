@@ -621,13 +621,13 @@ public class Home_Cajero extends javax.swing.JFrame {
                 preparedStatement.setString(1, producto);
                 ResultSet resultSet = preparedStatement.executeQuery();
                 DefaultTableModel model = (DefaultTableModel) sellProdTable.getModel();
-                int rowCount = model.getRowCount(); 
+                int rowCount = model.getRowCount();
                 int currentRow = rowCount;
 
-                boolean isDuplicate = false; 
+                boolean isDuplicate = false;
 
                 for (int i = 0; i < rowCount; i++) {
-                    String nombreExistente = (String) model.getValueAt(i, 1); 
+                    String nombreExistente = (String) model.getValueAt(i, 1);
                     if (nombreExistente.equals(producto)) {
                         isDuplicate = true;
                         break;
@@ -656,6 +656,22 @@ public class Home_Cajero extends javax.swing.JFrame {
                             sellProdTable.setValueAt(valorT, currentRow, 5);
 
                             currentRow++;
+                            cantidadField.setText("");
+                            ProductBox.setSelectedIndex(0);
+
+                            double total = 0.0;
+                            double iva = 0.12;
+                            for (int i = 0; i < model.getRowCount(); i++) {
+                                double valorTotalFila = (double) model.getValueAt(i, 5); // Valor de la columna valorT
+                                total += valorTotalFila;
+                            }
+                            String formattedSubTotal = String.format("%.2f", total);
+                            String formattedIva = String.format("%.2f", iva);
+                            double TotalT = (total * iva) + total;
+                            String formattedTotalT = String.format("%.2f", TotalT);
+                            subtotalLabel.setText(formattedSubTotal);
+                            ivaLabel.setText(formattedIva);
+                            totalLabel.setText(formattedTotalT);
                         } else {
                             JOptionPane.showMessageDialog(null, "Stock no disponible");
                             cantidadField.setText("");
@@ -663,7 +679,7 @@ public class Home_Cajero extends javax.swing.JFrame {
                         }
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Producto ya agregado");
+                    JOptionPane.showMessageDialog(null, "Producto ya ha sido agregado");
                 }
 
                 conn.close();
@@ -675,6 +691,9 @@ public class Home_Cajero extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_AgregarProductoActionPerformed
 
+    private void Totalpagar() {
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel CajeroData;
