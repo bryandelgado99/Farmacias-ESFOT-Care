@@ -620,28 +620,52 @@ public class Home_Cajero extends javax.swing.JFrame {
                 PreparedStatement preparedStatement = conn.prepareStatement(query);
                 preparedStatement.setString(1, producto);
                 ResultSet resultSet = preparedStatement.executeQuery();
-                DefaultTableModel model = (DefaultTableModel) sellProdTable.getModel();   
-                int row = 0;
-                while (resultSet.next()) {
-                    model.addRow(new Object[7]);
-                    
-                    String codigo = resultSet.getString("codigo_prod");
-                    String nombre = resultSet.getString("nombre_prod");
-                    String categoria = resultSet.getString("categoria_prod");
-                    String cantidad = cantidadField.getText();
-                    int cantidadInt = Integer.parseInt(cantidad);
-                    double valorU = Double.parseDouble(resultSet.getString("valventa_prod"));
-                    double valorT = valorU * cantidadInt;
-                                      
-                    sellProdTable.setValueAt(codigo, row, 0);
-                    sellProdTable.setValueAt(nombre, row, 1);
-                    sellProdTable.setValueAt(categoria, row, 2);
-                    sellProdTable.setValueAt(cantidadInt, row, 3);
-                    sellProdTable.setValueAt(valorU, row, 4);
-                    sellProdTable.setValueAt(valorT, row, 5);
+                DefaultTableModel model = (DefaultTableModel) sellProdTable.getModel();
+                int rowCount = model.getRowCount(); 
+                int currentRow = rowCount;
 
-                    row++;
+                boolean isDuplicate = false; 
+
+                for (int i = 0; i < rowCount; i++) {
+                    String nombreExistente = (String) model.getValueAt(i, 1); 
+                    if (nombreExistente.equals(producto)) {
+                        isDuplicate = true;
+                        break;
+                    }
                 }
+
+                if (!isDuplicate) {
+                    while (resultSet.next()) {
+                        model.addRow(new Object[7]);
+
+                        String codigo = resultSet.getString("codigo_prod");
+                        String nombre = resultSet.getString("nombre_prod");
+                        String categoria = resultSet.getString("categoria_prod");
+                        String cantidad = cantidadField.getText();
+                        int cantidadInt = Integer.parseInt(cantidad);
+                        int stock = Integer.parseInt(resultSet.getString("stock_prod"));
+                        double valorU = Double.parseDouble(resultSet.getString("valventa_prod"));
+                        double valorT = valorU * cantidadInt;
+
+                        if (stock >= cantidadInt) {
+                            sellProdTable.setValueAt(codigo, currentRow, 0);
+                            sellProdTable.setValueAt(nombre, currentRow, 1);
+                            sellProdTable.setValueAt(categoria, currentRow, 2);
+                            sellProdTable.setValueAt(cantidadInt, currentRow, 3);
+                            sellProdTable.setValueAt(valorU, currentRow, 4);
+                            sellProdTable.setValueAt(valorT, currentRow, 5);
+
+                            currentRow++;
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Stock no disponible");
+                            cantidadField.setText("");
+                            model.removeRow(currentRow);
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Producto ya agregado");
+                }
+
                 conn.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
