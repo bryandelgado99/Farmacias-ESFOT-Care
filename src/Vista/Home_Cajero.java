@@ -11,6 +11,7 @@ import java.util.Random;
 import javax.swing.JComboBox;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -59,19 +60,21 @@ public class Home_Cajero extends javax.swing.JFrame {
         fechaEmi.setText(sdf.format(fecha));
 
     }
-
+    private int numFacActual = 0;
     private void num_factura() {
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
-            String Query = "SELECT num_factura FROM cabecera_fac";
+            String Query = "SELECT COUNT(*) from cabecera_fac";
             PreparedStatement stmt = conn.prepareStatement(Query);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                int numFac = rs.getInt("num_factura");
-                String numFacString = Integer.toString(numFac);
-                numFactLabel.setText(numFacString);
+                int count = rs.getInt(1);
+                int countTa = count + 1;
+                String countT= Integer.toString(countTa);
+                numFactLabel.setText(countT);
+                System.out.println(count);
             }
-
+            
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -561,7 +564,7 @@ public class Home_Cajero extends javax.swing.JFrame {
     }//GEN-LAST:event_anularventaButtonActionPerformed
 
     private void finventaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finventaButtonActionPerformed
-        // TODO add your handling code here:
+         
     }//GEN-LAST:event_finventaButtonActionPerformed
 
     private void anularventaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_anularventaButtonMouseClicked
@@ -609,6 +612,25 @@ public class Home_Cajero extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ProductBoxActionPerformed
 
+    
+    public static String formattedSubTotal;
+    public static String formattedIva;
+    public static String formattedTotalT;
+
+    public static String getFormattedSubTotal() {
+        return formattedSubTotal;
+    }
+
+    public static String getFormattedIva() {
+        return formattedIva;
+    }
+
+    public static String getFormattedTotalT() {
+        return formattedTotalT;
+    }
+    
+    
+    
     private void AgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarProductoActionPerformed
         if (!"".equals(cantidadField.getText())) {
             String producto = (String) ProductBox.getSelectedItem();
@@ -665,13 +687,17 @@ public class Home_Cajero extends javax.swing.JFrame {
                                 double valorTotalFila = (double) model.getValueAt(i, 5); // Valor de la columna valorT
                                 total += valorTotalFila;
                             }
-                            String formattedSubTotal = String.format("%.2f", total);
-                            String formattedIva = String.format("%.2f", iva);
+                            formattedSubTotal = String.format("%.2f", total);
+                            formattedIva = String.format("%.2f", iva);
                             double TotalT = (total * iva) + total;
-                            String formattedTotalT = String.format("%.2f", TotalT);
+                            formattedTotalT = String.format("%.2f", TotalT);
+                            
+                            
                             subtotalLabel.setText(formattedSubTotal);
                             ivaLabel.setText(formattedIva);
                             totalLabel.setText(formattedTotalT);
+                            
+                            
                         } else {
                             JOptionPane.showMessageDialog(null, "Stock no disponible");
                             cantidadField.setText("");
@@ -680,6 +706,7 @@ public class Home_Cajero extends javax.swing.JFrame {
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Producto ya ha sido agregado");
+                    cantidadField.setText("");
                 }
 
                 conn.close();
@@ -691,9 +718,7 @@ public class Home_Cajero extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_AgregarProductoActionPerformed
 
-    private void Totalpagar() {
-
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel CajeroData;

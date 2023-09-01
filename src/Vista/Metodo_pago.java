@@ -17,6 +17,16 @@ public class Metodo_pago extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        
+        String iva = Vista.Home_Cajero.getFormattedIva();
+        String SubTotal = Vista.Home_Cajero.getFormattedSubTotal();
+        String Total = Vista.Home_Cajero.getFormattedTotalT();
+        subtotalNum.setText(SubTotal);
+        ivaNum.setText(iva);
+        totalNum.setText(Total);
+        System.out.println(SubTotal);
+        System.out.println(iva);
+        System.out.println(Total);
     }
 
     /**
