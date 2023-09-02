@@ -1,75 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3fb5be69-becd-4785-a476-46b1357a181b">
-	<queryString language="SQL">
-		<![CDATA[select * from detalle_fac DET JOIN cabecera_fac CAB ON DET.Cabecera_Fac_num_factura=CAB.num_factura;]]>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="3fb5be69-becd-4785-a476-46b1357a181b">
+	<property name="ireport.zoom" value="1.331000000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="n_factura" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select 
+ROW_NUMBER() OVER (ORDER BY DET.Productos_codigo_prod) AS ITEM,
+    det.Productos_codigo_prod AS CODÍGO_PRODUCTO,
+    prod.nombre_prod AS NOMBRE_DEL_PRODUCTO,
+    det.cantidad AS CANTIDAD,
+    prod.valventa_prod AS VALOR_UNITARIO,
+    prod.valventa_prod * det.cantidad AS VALOR_TOTAL
+from cabecera_fac CAB JOIN detalle_fac DET ON CAB.num_factura=DET.Cabecera_Fac_num_factura JOIN
+productos PROD ON det.Productos_codigo_prod = prod.codigo_prod
+where num_factura=$P{n_factura};]]>
 	</queryString>
-	<field name="codigo_det" class="java.lang.Integer">
+	<field name="ITEM" class="java.math.BigInteger"/>
+	<field name="CODÍGO_PRODUCTO" class="java.lang.String"/>
+	<field name="NOMBRE_DEL_PRODUCTO" class="java.lang.String"/>
+	<field name="CANTIDAD" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="Cabecera_Fac_num_factura" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Productos_codigo_prod" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="cantidad" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="valor_venta" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="total_det" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="num_factura" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Clientes_ci_cli" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="fecha_emision" class="java.sql.Date">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Cajeros_codigo_caj" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="subtotal_fac" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="iva_fac" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="descuento_fac" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="total_pagar" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="metodo_pago" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
+	<field name="VALOR_UNITARIO" class="java.math.BigDecimal"/>
+	<field name="VALOR_TOTAL" class="java.math.BigDecimal"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="79" splitType="Stretch"/>
-	</title>
-	<pageHeader>
-		<band height="35" splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
-		<band height="61" splitType="Stretch"/>
-	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="31" height="20" uuid="908f7298-0410-4966-becf-f43352b18d2d"/>
+				<textFieldExpression><![CDATA[$F{ITEM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="31" y="0" width="139" height="20" uuid="281e7f65-5036-40dd-b93c-5fb146dd5c19"/>
+				<textFieldExpression><![CDATA[$F{NOMBRE_DEL_PRODUCTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="0" width="112" height="20" uuid="63b23a27-76d5-45ca-b18a-9f0251a05ea8"/>
+				<textFieldExpression><![CDATA[$F{CODÍGO_PRODUCTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="282" y="0" width="73" height="20" uuid="b2b75a46-6fec-4aab-a3c8-b39195683329"/>
+				<textFieldExpression><![CDATA[$F{CANTIDAD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="355" y="0" width="99" height="20" uuid="380e4ebf-4a93-4630-8cc0-7dfef28ee7c6"/>
+				<textFieldExpression><![CDATA[$F{VALOR_UNITARIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="454" y="0" width="101" height="20" uuid="cc35b305-d6a4-43a0-9b6a-3307f3c0d119"/>
+				<textFieldExpression><![CDATA[$F{VALOR_TOTAL}]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

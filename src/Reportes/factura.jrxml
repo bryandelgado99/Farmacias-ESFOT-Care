@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="66af6a6d-3cb6-4d14-b6e0-708a0e9adb69">
-	<property name="ireport.zoom" value="2.143588810000013"/>
+	<property name="ireport.zoom" value="1.331000000000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="619"/>
-	<parameter name="n_factura" class="java.lang.Integer">
+	<property name="ireport.y" value="0"/>
+	<parameter name="factura" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Brithany\\OneDrive - Escuela Politécnica Nacional\\TERCER SEMESTRE\\2. POO\\Proyecto-Farmacia--2do-Bimestre\\src\\Reportes\\"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[ select num_factura, 
+		<![CDATA[select num_factura, 
 	Clientes_ci_cli, 
 	fecha_emision, 
 	Cajeros_codigo_caj, 
@@ -29,7 +32,7 @@
  from detalle_fac DET JOIN cabecera_fac CAB
  ON DET.Cabecera_Fac_num_factura = CAB.num_factura 
 JOIN clientes CLI on CAB.Clientes_ci_cli=CLI.ci_cli
- WHERE CAB.num_factura=$P{n_factura};]]>
+where num_factura=$P{factura};]]>
 	</queryString>
 	<field name="num_factura" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -89,10 +92,6 @@ JOIN clientes CLI on CAB.Clientes_ci_cli=CLI.ci_cli
 	</background>
 	<title>
 		<band height="336" splitType="Stretch">
-			<image>
-				<reportElement x="1" y="20" width="192" height="95" uuid="816c2b60-6103-4f8f-9f1a-ed82bb9193f7"/>
-				<imageExpression><![CDATA["C:\\Users\\Brithany\\OneDrive - Escuela Politécnica Nacional\\TERCER SEMESTRE\\2. POO\\Proyecto-Farmacia--2do-Bimestre\\src\\Images\\logo_2.png"]]></imageExpression>
-			</image>
 			<rectangle>
 				<reportElement x="211" y="0" width="344" height="168" uuid="8ff581f2-b806-4411-8378-108c1a7f9869"/>
 			</rectangle>
@@ -239,6 +238,10 @@ JOIN clientes CLI on CAB.Clientes_ci_cli=CLI.ci_cli
 				</textElement>
 				<textFieldExpression><![CDATA[$F{num_factura}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="11" y="20" width="171" height="95" uuid="124e5af2-bc8c-4565-869f-1120ba0cb0ed"/>
+				<imageExpression><![CDATA["C:\\Users\\Brithany\\OneDrive - Escuela Politécnica Nacional\\TERCER SEMESTRE\\2. POO\\Proyecto-Farmacia--2do-Bimestre\\src\\Images\\logo_2.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<detail>
@@ -287,7 +290,7 @@ JOIN clientes CLI on CAB.Clientes_ci_cli=CLI.ci_cli
 				<text><![CDATA[CÓDIGO PRODUCTO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="356" y="10" width="99" height="20" uuid="03906239-2950-4391-882a-71d05e337ea2"/>
+				<reportElement x="356" y="10" width="100" height="20" uuid="03906239-2950-4391-882a-71d05e337ea2"/>
 				<box leftPadding="1" rightPadding="1">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -301,7 +304,7 @@ JOIN clientes CLI on CAB.Clientes_ci_cli=CLI.ci_cli
 				<text><![CDATA[VALOR UNITARIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="455" y="10" width="100" height="20" uuid="b481213c-5f6f-4ba7-a03b-65e02fead026"/>
+				<reportElement x="456" y="10" width="99" height="20" uuid="b481213c-5f6f-4ba7-a03b-65e02fead026"/>
 				<box leftPadding="1" rightPadding="1">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -344,8 +347,16 @@ JOIN clientes CLI on CAB.Clientes_ci_cli=CLI.ci_cli
 				<reportElement x="283" y="30" width="73" height="164" uuid="78bd1a28-2de2-40db-a2c8-11101598fcb6"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="356" y="30" width="99" height="164" uuid="556ded48-5823-43db-8841-b4d509a5fdc9"/>
+				<reportElement x="356" y="30" width="100" height="164" uuid="556ded48-5823-43db-8841-b4d509a5fdc9"/>
 			</rectangle>
+			<subreport>
+				<reportElement x="1" y="30" width="554" height="100" uuid="4846cd1c-90c9-4b85-9b4c-93b3530519c3"/>
+				<subreportParameter name="n_factura">
+					<subreportParameterExpression><![CDATA[$P{factura}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detalleFact.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 	<columnFooter>
