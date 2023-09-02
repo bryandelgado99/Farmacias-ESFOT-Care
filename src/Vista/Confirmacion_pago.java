@@ -16,6 +16,19 @@ public class Confirmacion_pago extends javax.swing.JFrame {
     public Confirmacion_pago() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
+        String nomcliN = Vista.Home_Cajero.getNomCli();
+        String cedulaN = Vista.Home_Cajero.getCedula();
+        
+        nomCli.setText(nomcliN);
+        ccCli.setText(cedulaN);
+        
+        String iva = Vista.Home_Cajero.getFormattedIva();
+        String SubTotal = Vista.Home_Cajero.getFormattedSubTotal();
+        String Total = Vista.Home_Cajero.getFormattedTotalT();
+        subtotalNum.setText(SubTotal);
+        ivaNum.setText(iva);
+        totalNum.setText(Total);
     }
 
     /**
