@@ -54,6 +54,7 @@
                 <Property name="text" type="java.lang.String" value="Reporte de Venta"/>
               </Properties>
               <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="reporteStockMouseClicked"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reporteStockActionPerformed"/>
               </Events>
             </MenuItem>

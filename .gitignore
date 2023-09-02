@@ -4,3 +4,5 @@
 *.zip
 *.jar
 dist/README.TXT
+/nbproject/private/
+/build/

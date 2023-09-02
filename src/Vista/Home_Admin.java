@@ -248,6 +248,11 @@ public class Home_Admin extends javax.swing.JFrame {
 
         reporteStock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/report_2.png"))); // NOI18N
         reporteStock.setText("Reporte de Venta");
+        reporteStock.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reporteStockMouseClicked(evt);
+            }
+        });
         reporteStock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 reporteStockActionPerformed(evt);
@@ -301,6 +306,12 @@ public class Home_Admin extends javax.swing.JFrame {
         lista.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_empleadosMenuMouseClicked
+
+    private void reporteStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reporteStockMouseClicked
+        Reportes reporte_venta = new Reportes();
+        this.setVisible(false);
+        reporte_venta.setVisible(true);
+    }//GEN-LAST:event_reporteStockMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

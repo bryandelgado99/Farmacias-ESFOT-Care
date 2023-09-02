@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Vista;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Random;
 import javax.swing.JComboBox;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -19,9 +21,11 @@ import javax.swing.table.DefaultTableModel;
  * @author bryan
  */
 public class Home_Cajero extends javax.swing.JFrame {
+
     public static final String DB_URL = "jdbc:mysql://localhost/esfot-care";
     public static final String USER = "root";
     public static final String PASSWORD = "root2023";
+
     /**
      * Creates new form Home_Cajero
      */
@@ -31,32 +35,50 @@ public class Home_Cajero extends javax.swing.JFrame {
         this.setTitle("Sistema de Gestión de Caja - ESFOT-Care+");
         String cod_caj = Vista.Login.getCod_caj();
         System.out.println("Código del cajero: " + cod_caj);
-        try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)){
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
             String Query = "SELECT * FROM cajeros WHERE codigo_caj = ?";
             PreparedStatement stmt = conn.prepareStatement(Query);
             stmt.setString(1, cod_caj);
             ResultSet rs = stmt.executeQuery();
-            
-            
+
             //prueba conexion
             if (rs.next()) {
                 String nombre = rs.getString("nombre_caj");
                 String apellido = rs.getString("apellido_caj");
                 String cod = rs.getString("codigo_caj");
-                
-                cajeroName.setText(nombre + " " +  apellido);
+
+                cajeroName.setText(nombre + " " + apellido);
                 cajeroCode.setText(cod);
             }
+            num_factura();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        
-        Date fecha = new Date(); 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
+
+        Date fecha = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         fechaEmi.setText(sdf.format(fecha));
+
     }
-    
-    
+    private int numFacActual = 0;
+    private void num_factura() {
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
+            String Query = "SELECT COUNT(*) from cabecera_fac";
+            PreparedStatement stmt = conn.prepareStatement(Query);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                int countTa = count + 1;
+                String countT= Integer.toString(countTa);
+                numFactLabel.setText(countT);
+                System.out.println(count);
+            }
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -74,10 +96,6 @@ public class Home_Cajero extends javax.swing.JFrame {
         cajeroName = new javax.swing.JLabel();
         cajeroCode = new javax.swing.JLabel();
         ClienteData = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        numFactLabel = new javax.swing.JLabel();
-        fechaEmi = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -86,8 +104,14 @@ public class Home_Cajero extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         cliMail = new javax.swing.JTextField();
         cliTelef = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        clienteDireccion = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         logoutButton = new javax.swing.JButton();
+        numFactLabel = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        fechaEmi = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -134,16 +158,17 @@ public class Home_Cajero extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
+                .addGroup(CajeroDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2))
                 .addGroup(CajeroDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(CajeroDataLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
                         .addGap(18, 18, 18)
                         .addComponent(cajeroName, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(CajeroDataLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
+                        .addGap(19, 19, 19)
                         .addComponent(cajeroCode, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         CajeroDataLayout.setVerticalGroup(
             CajeroDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,7 +180,7 @@ public class Home_Cajero extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(cajeroName, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(CajeroDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(CajeroDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cajeroCode, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -167,21 +192,6 @@ public class Home_Cajero extends javax.swing.JFrame {
         getContentPane().add(CajeroData, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 380, 80));
 
         ClienteData.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setText("Num. Fact.:");
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel5.setText("Fecha:");
-
-        numFactLabel.setText("codVenta");
-        numFactLabel.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                numFactLabelComponentShown(evt);
-            }
-        });
-
-        fechaEmi.setText("dd/mm/aa");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("CI/RUC:");
@@ -223,58 +233,55 @@ public class Home_Cajero extends javax.swing.JFrame {
             }
         });
 
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel16.setText("Dirección:");
+
         javax.swing.GroupLayout ClienteDataLayout = new javax.swing.GroupLayout(ClienteData);
         ClienteData.setLayout(ClienteDataLayout);
         ClienteDataLayout.setHorizontalGroup(
             ClienteDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ClienteDataLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(ClienteDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(18, 18, 18)
+                .addGroup(ClienteDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(ClienteDataLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addComponent(jLabel6)
                         .addGap(18, 18, 18)
-                        .addComponent(fechaEmi, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cliTelef, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cliMail, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(ClienteDataLayout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel8)
-                        .addGap(17, 17, 17)
-                        .addComponent(cliTelef, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(ClienteDataLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(numFactLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cliMail)))
-                .addGap(25, 25, 25))
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(clienteDireccion)))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         ClienteDataLayout.setVerticalGroup(
             ClienteDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ClienteDataLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(ClienteDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(fechaEmi)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel8)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cliTelef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel16)
+                    .addComponent(clienteDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(ClienteDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(numFactLabel)
                     .addComponent(jLabel6)
                     .addComponent(jLabel9)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cliMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cliMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(cliTelef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9))
         );
 
@@ -298,17 +305,46 @@ public class Home_Cajero extends javax.swing.JFrame {
             }
         });
 
+        numFactLabel.setText("codVenta");
+        numFactLabel.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                numFactLabelComponentShown(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setText("Num. Fact.:");
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setText("Fecha:");
+
+        fechaEmi.setText("dd/mm/aa");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(944, Short.MAX_VALUE)
+                .addGap(14, 14, 14)
+                .addComponent(jLabel5)
+                .addGap(18, 18, 18)
+                .addComponent(fechaEmi, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(numFactLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 624, Short.MAX_VALUE)
                 .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(logoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel4)
+                .addComponent(numFactLabel))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel5)
+                .addComponent(fechaEmi))
+            .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 40));
@@ -450,7 +486,8 @@ public class Home_Cajero extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("AgregarProducto");
+        jButton1.setBackground(new java.awt.Color(204, 255, 255));
+        jButton1.setText("Agregar Producto");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AgregarProductoActionPerformed(evt);
@@ -465,17 +502,17 @@ public class Home_Cajero extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cantidadField, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cantidadField, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
                 .addComponent(jLabel15)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ProductBox, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addGap(35, 35, 35)
+                .addComponent(ProductBox, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(159, 159, 159)
                 .addComponent(jButton1)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addGap(17, 17, 17))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -487,10 +524,10 @@ public class Home_Cajero extends javax.swing.JFrame {
                     .addComponent(cantidadField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1)
                     .addComponent(jLabel15))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 770, -1));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 1080, 40));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/radiant-gradient.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 600));
@@ -503,7 +540,7 @@ public class Home_Cajero extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void numFactLabelComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_numFactLabelComponentShown
-                // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_numFactLabelComponentShown
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -527,7 +564,7 @@ public class Home_Cajero extends javax.swing.JFrame {
     }//GEN-LAST:event_anularventaButtonActionPerformed
 
     private void finventaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finventaButtonActionPerformed
-        // TODO add your handling code here:
+         
     }//GEN-LAST:event_finventaButtonActionPerformed
 
     private void anularventaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_anularventaButtonMouseClicked
@@ -536,22 +573,22 @@ public class Home_Cajero extends javax.swing.JFrame {
     }//GEN-LAST:event_anularventaButtonMouseClicked
 
     private void finventaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_finventaButtonMouseClicked
-       Metodo_pago metodo = new Metodo_pago();
-       metodo.setVisible(true);
+        Metodo_pago metodo = new Metodo_pago();
+        metodo.setVisible(true);
     }//GEN-LAST:event_finventaButtonMouseClicked
 
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
-           Login login = new Login();
-           login.setVisible(true);
-           this.setVisible(false);
+        Login login = new Login();
+        login.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_logoutButtonMouseClicked
 
     private void cantidadFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantidadFieldActionPerformed
-        
+
     }//GEN-LAST:event_cantidadFieldActionPerformed
 
     private void ProductBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProductBoxActionPerformed
-        try {          
+        try {
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
 
             String query = "SELECT nombre_prod FROM productos";
@@ -562,51 +599,127 @@ public class Home_Cajero extends javax.swing.JFrame {
 
             while (resultSet.next()) {
                 nombresProductos.add(resultSet.getString("nombre_prod"));
-            }         
-            
-            JComboBox<String> productBox = ProductBox; 
+            }
+
+            JComboBox<String> productBox = ProductBox;
             for (String nombreProducto : nombresProductos) {
                 productBox.addItem(nombreProducto);
             }
-            
+
             conn.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }//GEN-LAST:event_ProductBoxActionPerformed
 
+    
+    public static String formattedSubTotal;
+    public static String formattedIva;
+    public static String formattedTotalT;
+
+    public static String getFormattedSubTotal() {
+        return formattedSubTotal;
+    }
+
+    public static String getFormattedIva() {
+        return formattedIva;
+    }
+
+    public static String getFormattedTotalT() {
+        return formattedTotalT;
+    }
+    
+    
+    
     private void AgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarProductoActionPerformed
-       if(!"".equals(cantidadField.getText())){
-           String producto = (String)ProductBox.getSelectedItem();
-           DefaultTableModel modelo = (DefaultTableModel) sellProdTable.getModel();
-           try {          
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+        if (!"".equals(cantidadField.getText())) {
+            String producto = (String) ProductBox.getSelectedItem();
+            try {
+                Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
 
-            String query = "SELECT * FROM productos WHERE nombre_prod = " + "'" + producto + "'";
+                String query = "SELECT * FROM productos WHERE nombre_prod = ?";
 
-            Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
-            if (resultSet.next()) {
-                String Codigo = resultSet.getString("codigo_prod");
-                String Categoria = resultSet.getString("categoria_prod");
-                String Cantidad = cantidadField.getText();
-                String ValorU = resultSet.getString("valventa_prod");
-            while (resultSet.next()) {               
-                modelo.addRow(new Object[]{resultSet.getString(Codigo)});
-            }         
+                PreparedStatement preparedStatement = conn.prepareStatement(query);
+                preparedStatement.setString(1, producto);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                DefaultTableModel model = (DefaultTableModel) sellProdTable.getModel();
+                int rowCount = model.getRowCount();
+                int currentRow = rowCount;
+
+                boolean isDuplicate = false;
+
+                for (int i = 0; i < rowCount; i++) {
+                    String nombreExistente = (String) model.getValueAt(i, 1);
+                    if (nombreExistente.equals(producto)) {
+                        isDuplicate = true;
+                        break;
+                    }
+                }
+
+                if (!isDuplicate) {
+                    while (resultSet.next()) {
+                        model.addRow(new Object[7]);
+
+                        String codigo = resultSet.getString("codigo_prod");
+                        String nombre = resultSet.getString("nombre_prod");
+                        String categoria = resultSet.getString("categoria_prod");
+                        String cantidad = cantidadField.getText();
+                        int cantidadInt = Integer.parseInt(cantidad);
+                        int stock = Integer.parseInt(resultSet.getString("stock_prod"));
+                        double valorU = Double.parseDouble(resultSet.getString("valventa_prod"));
+                        double valorT = valorU * cantidadInt;
+
+                        if (stock >= cantidadInt) {
+                            sellProdTable.setValueAt(codigo, currentRow, 0);
+                            sellProdTable.setValueAt(nombre, currentRow, 1);
+                            sellProdTable.setValueAt(categoria, currentRow, 2);
+                            sellProdTable.setValueAt(cantidadInt, currentRow, 3);
+                            sellProdTable.setValueAt(valorU, currentRow, 4);
+                            sellProdTable.setValueAt(valorT, currentRow, 5);
+
+                            currentRow++;
+                            cantidadField.setText("");
+                            ProductBox.setSelectedIndex(0);
+
+                            double total = 0.0;
+                            double iva = 0.12;
+                            for (int i = 0; i < model.getRowCount(); i++) {
+                                double valorTotalFila = (double) model.getValueAt(i, 5); // Valor de la columna valorT
+                                total += valorTotalFila;
+                            }
+                            formattedSubTotal = String.format("%.2f", total);
+                            formattedIva = String.format("%.2f", iva);
+                            double TotalT = (total * iva) + total;
+                            formattedTotalT = String.format("%.2f", TotalT);
+                            
+                            
+                            subtotalLabel.setText(formattedSubTotal);
+                            ivaLabel.setText(formattedIva);
+                            totalLabel.setText(formattedTotalT);
+                            
+                            
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Stock no disponible");
+                            cantidadField.setText("");
+                            model.removeRow(currentRow);
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Producto ya ha sido agregado");
+                    cantidadField.setText("");
+                }
+
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-                   
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese una cantidad");
         }
-       }else{
-           JOptionPane.showMessageDialog(null, "Ingrese una cantidad");
-       }
     }//GEN-LAST:event_AgregarProductoActionPerformed
+
     
-    
-  
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel CajeroData;
     private javax.swing.JPanel ClienteData;
@@ -618,6 +731,7 @@ public class Home_Cajero extends javax.swing.JFrame {
     private javax.swing.JTextField cantidadField;
     private javax.swing.JTextField cliMail;
     private javax.swing.JTextField cliTelef;
+    private javax.swing.JTextField clienteDireccion;
     private javax.swing.JLabel fechaEmi;
     private javax.swing.JButton finventaButton;
     private javax.swing.JLabel ivaLabel;
@@ -629,6 +743,7 @@ public class Home_Cajero extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -654,5 +769,3 @@ public class Home_Cajero extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
-
-
