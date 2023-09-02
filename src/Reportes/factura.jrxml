@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="66af6a6d-3cb6-4d14-b6e0-708a0e9adb69">
-	<property name="ireport.zoom" value="1.331000000000008"/>
+	<property name="ireport.zoom" value="1.4641000000000104"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="493"/>
 	<parameter name="factura" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -183,7 +183,7 @@ where num_factura=$P{factura};]]>
 				<text><![CDATA[Dirección:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="300" y="228" width="100" height="20" uuid="233f9add-15f1-418b-b72e-9073b73c1b64"/>
+				<reportElement x="300" y="228" width="89" height="20" uuid="233f9add-15f1-418b-b72e-9073b73c1b64"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -196,8 +196,8 @@ where num_factura=$P{factura};]]>
 				</textElement>
 				<text><![CDATA[Correo electrónico:]]></text>
 			</staticText>
-			<textField pattern="dd-MMM-yy">
-				<reportElement x="400" y="228" width="100" height="20" uuid="5d2b973e-db79-4d80-aaaa-791231296320"/>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="389" y="228" width="100" height="20" uuid="5d2b973e-db79-4d80-aaaa-791231296320"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{fecha_emision}]]></textFieldExpression>
 			</textField>
@@ -245,7 +245,7 @@ where num_factura=$P{factura};]]>
 		</band>
 	</title>
 	<detail>
-		<band height="194">
+		<band height="209">
 			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==1]]></printWhenExpression>
 			<staticText>
 				<reportElement x="1" y="10" width="31" height="20" uuid="9af2696b-6df8-4098-b816-fa4e87858477"/>
@@ -318,16 +318,16 @@ where num_factura=$P{factura};]]>
 				<text><![CDATA[VALOR TOTAL]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="1" y="30" width="31" height="164" uuid="f83a6db6-ebc4-41bb-b61e-9d31fdd25686"/>
+				<reportElement x="1" y="30" width="31" height="179" uuid="f83a6db6-ebc4-41bb-b61e-9d31fdd25686"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="171" y="30" width="112" height="164" uuid="67ca103c-2c8f-4966-8631-9dd65fb3036d"/>
+				<reportElement x="171" y="30" width="112" height="179" uuid="67ca103c-2c8f-4966-8631-9dd65fb3036d"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="455" y="30" width="100" height="164" uuid="9b7e0550-56f4-4af3-ac73-c574974bcc1a"/>
+				<reportElement x="455" y="30" width="100" height="179" uuid="9b7e0550-56f4-4af3-ac73-c574974bcc1a"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="32" y="30" width="139" height="164" uuid="beaf3db3-0993-4d83-811f-06c7debf4c25"/>
+				<reportElement x="32" y="30" width="139" height="179" uuid="beaf3db3-0993-4d83-811f-06c7debf4c25"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="283" y="10" width="73" height="20" uuid="06e60b02-2f88-4b00-8af9-a24e88443d35"/>
@@ -344,10 +344,10 @@ where num_factura=$P{factura};]]>
 				<text><![CDATA[CANTIDAD]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="283" y="30" width="73" height="164" uuid="78bd1a28-2de2-40db-a2c8-11101598fcb6"/>
+				<reportElement x="283" y="30" width="73" height="179" uuid="78bd1a28-2de2-40db-a2c8-11101598fcb6"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="356" y="30" width="100" height="164" uuid="556ded48-5823-43db-8841-b4d509a5fdc9"/>
+				<reportElement x="356" y="30" width="100" height="179" uuid="556ded48-5823-43db-8841-b4d509a5fdc9"/>
 			</rectangle>
 			<subreport>
 				<reportElement x="1" y="30" width="554" height="100" uuid="4846cd1c-90c9-4b85-9b4c-93b3530519c3"/>
@@ -472,6 +472,14 @@ where num_factura=$P{factura};]]>
 				</textElement>
 				<text><![CDATA[Información Adicional]]></text>
 			</staticText>
+			<subreport>
+				<reportElement x="119" y="40" width="135" height="60" uuid="e3e6fb47-68e4-451a-bc47-db0023079eb8"/>
+				<subreportParameter name="n_factInfo">
+					<subreportParameterExpression><![CDATA[$P{factura}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "infoAddFact.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</columnFooter>
 	<pageFooter>

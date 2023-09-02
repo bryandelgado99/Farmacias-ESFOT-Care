@@ -8,11 +8,13 @@ package Vista;
  *
  * @author bryan
  */
+/*
 public class Reportes extends javax.swing.JFrame {
 
     /**
      * Creates new form Reportes
      */
+/*
     public Reportes() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -246,7 +248,7 @@ public class Reportes extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/*
     private void homeMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeMenuMouseClicked
         this.setVisible(false);
         Home_Admin homin = new Home_Admin();
@@ -280,7 +282,7 @@ public class Reportes extends javax.swing.JFrame {
     private void fechaBusInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaBusInputActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fechaBusInputActionPerformed
-
+/*
     private void jButtonBuscarCajeroCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarCajeroCodActionPerformed
         // TODO add your handling code here:
         String codigoinput = fechaBusInput.getText();
@@ -309,7 +311,7 @@ public class Reportes extends javax.swing.JFrame {
                     rowc++;
                 }
                 */
-
+/*
                 int rowCount = cajeroTable.getRowCount();
                 for (int i = 1; i < rowCount; i++) {
                     for (int j = 0; j < 5; j++) {
@@ -426,7 +428,7 @@ public class Reportes extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_reporteGeneralBtnActionPerformed
 
-
+*/
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField codfactInput;
     private javax.swing.JMenu empleadosMenu;
