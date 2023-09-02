@@ -4,6 +4,9 @@
  */
 package Vista;
 
+import static Vista.Home_Cajero.formattedTotalT;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author bryan
@@ -16,17 +19,10 @@ public class Efectivo extends javax.swing.JFrame {
     public Efectivo() {
         initComponents();
         this.setLocationRelativeTo(null);
-        
+
         String Total = Vista.Home_Cajero.getFormattedTotalT();
-        int TotalT = Integer.parseInt(Total);
         totalLabel.setText(Total);
-        
-        String Dinero = dineroInput.getText();
-        int dineroT = Integer.parseInt(Dinero);
-        
-        int cambio = dineroT - TotalT;
-        String cambioT = Integer.toString(cambio);
-        vueltoLabel.setText(cambioT);
+
     }
 
     /**
@@ -49,6 +45,7 @@ public class Efectivo extends javax.swing.JFrame {
         vueltoLabel = new javax.swing.JLabel();
         pagarButton = new javax.swing.JButton();
         cambiarMetodoButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -106,8 +103,8 @@ public class Efectivo extends javax.swing.JFrame {
                                     .addComponent(jLabel4))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(vueltoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(dineroInput, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))))))
+                                    .addComponent(vueltoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
+                                    .addComponent(dineroInput))))))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -153,6 +150,14 @@ public class Efectivo extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setBackground(new java.awt.Color(0, 255, 255));
+        jButton1.setText("Ingresar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -162,7 +167,8 @@ public class Efectivo extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pagarButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cambiarMetodoButton, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(cambiarMetodoButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35))
         );
         jPanel1Layout.setVerticalGroup(
@@ -171,9 +177,11 @@ public class Efectivo extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(66, 66, 66)
                 .addComponent(pagarButton)
-                .addGap(62, 62, 62)
+                .addGap(30, 30, 30)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(cambiarMetodoButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(43, 43, 43))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 240));
@@ -186,26 +194,48 @@ public class Efectivo extends javax.swing.JFrame {
     }//GEN-LAST:event_dineroInputActionPerformed
 
     private void pagarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pagarButtonActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_pagarButtonActionPerformed
 
     private void cambiarMetodoButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cambiarMetodoButtonMouseClicked
-      Metodo_pago metopag = new Metodo_pago();
-      metopag.setVisible(true);
-      this.setVisible(false);
+        Metodo_pago metopag = new Metodo_pago();
+        metopag.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_cambiarMetodoButtonMouseClicked
 
     private void pagarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pagarButtonMouseClicked
-        Metodo_pago metopag = new Metodo_pago();
-        metopag.setVisible(false);
-        this.setVisible(false);
-        Confirmacion_pago confipag = new Confirmacion_pago();
-        confipag.setVisible(true);
+        if (!"".equals(dineroInput.getText())) {
+            Metodo_pago metopag = new Metodo_pago();
+            metopag.setVisible(false);
+            this.setVisible(false);
+            Confirmacion_pago confipag = new Confirmacion_pago();
+            confipag.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Pague por la compra!");
+        }
     }//GEN-LAST:event_pagarButtonMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String Total = Vista.Home_Cajero.getFormattedTotalT();
+        Total = Total.replace(",", ".");
+        double TotalT = Double.parseDouble(Total);
+        String Dinero = dineroInput.getText();
+        double dineroT = Double.parseDouble(Dinero);
+
+        if (dineroT > TotalT) {
+            double cambio = dineroT - TotalT;
+            String formattedTotal = String.format("%.2f", cambio);
+            vueltoLabel.setText(formattedTotal);
+        } else {
+            JOptionPane.showMessageDialog(null, "Falta Dinero!");
+            dineroInput.setText("");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cambiarMetodoButton;
     private javax.swing.JTextField dineroInput;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
