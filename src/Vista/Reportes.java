@@ -3,18 +3,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Vista;
-
+import java.sql.*;
 /**
  *
  * @author bryan
  */
-/*
+
 public class Reportes extends javax.swing.JFrame {
 
     /**
      * Creates new form Reportes
      */
-/*
+    
+    public static final String DB_URL = "jdbc:mysql://localhost/esfot-care";
+    public static final String USER = "root";
+    public static final String PASSWORD = "root2023";
+
     public Reportes() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -32,7 +36,7 @@ public class Reportes extends javax.swing.JFrame {
 
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        reporteTable = new javax.swing.JTable();
         fechaBusInput = new javax.swing.JTextField();
         jButtonBuscarCajeroCod = new javax.swing.JButton();
         reporteCajeroBtn = new javax.swing.JButton();
@@ -62,7 +66,7 @@ public class Reportes extends javax.swing.JFrame {
         jLabel5.setText("Buscar por fecha:");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        reporteTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -88,12 +92,12 @@ public class Reportes extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
+        jScrollPane1.setViewportView(reporteTable);
+        if (reporteTable.getColumnModel().getColumnCount() > 0) {
+            reporteTable.getColumnModel().getColumn(0).setResizable(false);
+            reporteTable.getColumnModel().getColumn(1).setResizable(false);
+            reporteTable.getColumnModel().getColumn(2).setResizable(false);
+            reporteTable.getColumnModel().getColumn(3).setResizable(false);
         }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 1130, 390));
@@ -248,7 +252,7 @@ public class Reportes extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-/*
+
     private void homeMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeMenuMouseClicked
         this.setVisible(false);
         Home_Admin homin = new Home_Admin();
@@ -282,7 +286,7 @@ public class Reportes extends javax.swing.JFrame {
     private void fechaBusInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaBusInputActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fechaBusInputActionPerformed
-/*
+
     private void jButtonBuscarCajeroCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarCajeroCodActionPerformed
         // TODO add your handling code here:
         String codigoinput = fechaBusInput.getText();
@@ -293,7 +297,7 @@ public class Reportes extends javax.swing.JFrame {
             stmt.setString(1, codigoinput);
             ResultSet rs = stmt.executeQuery();
 
-            cajeroTable.getModel();
+            reporteTable.getModel();
 
             //Logica para busqueda
             int row = 0;
@@ -311,11 +315,11 @@ public class Reportes extends javax.swing.JFrame {
                     rowc++;
                 }
                 */
-/*
-                int rowCount = cajeroTable.getRowCount();
+
+                int rowCount = reporteTable.getRowCount();
                 for (int i = 1; i < rowCount; i++) {
                     for (int j = 0; j < 5; j++) {
-                        cajeroTable.setValueAt("", i, j);
+                        reporteTable.setValueAt("", i, j);
                     }
                 }
 
@@ -329,11 +333,11 @@ public class Reportes extends javax.swing.JFrame {
                 String password = rs.getString("password_caj");
                 String codigoAdmin = rs.getString("Administradores_codigo_admin");
 
-                cajeroTable.setValueAt(codigo, row, 0);
-                cajeroTable.setValueAt(nombre + " " + apellido, row, 1);
-                cajeroTable.setValueAt(ci, row, 2);
-                cajeroTable.setValueAt(telefono, row, 3);
-                cajeroTable.setValueAt(direccion, row, 4);
+                reporteTable.setValueAt(codigo, row, 0);
+                reporteTable.setValueAt(nombre + " " + apellido, row, 1);
+                reporteTable.setValueAt(ci, row, 2);
+                reporteTable.setValueAt(telefono, row, 3);
+                reporteTable.setValueAt(direccion, row, 4);
 
                 //prueba de conexion
                 System.out.println("Código: " + codigo);
@@ -360,18 +364,18 @@ public class Reportes extends javax.swing.JFrame {
             PreparedStatement stmt = conn.prepareStatement(Query);
             ResultSet rs = stmt.executeQuery();
 
-            cajeroTable.getModel();
+            reporteTable.getModel();
 
             int row = 0;
 
             //prueba conexion
             while (rs.next()) {
 
-                cajeroTable.setValueAt("", row, 0);
-                cajeroTable.setValueAt("", row, 1);
-                cajeroTable.setValueAt("", row, 2);
-                cajeroTable.setValueAt("", row, 3);
-                cajeroTable.setValueAt("", row, 4);
+                reporteTable.setValueAt("", row, 0);
+                reporteTable.setValueAt("", row, 1);
+                reporteTable.setValueAt("", row, 2);
+                reporteTable.setValueAt("", row, 3);
+                reporteTable.setValueAt("", row, 4);
 
                 String codigo = rs.getString("codigo_caj");
                 String nombre = rs.getString("nombre_caj");
@@ -383,11 +387,11 @@ public class Reportes extends javax.swing.JFrame {
                 String password = rs.getString("password_caj");
                 String codigoAdmin = rs.getString("Administradores_codigo_admin");
 
-                cajeroTable.setValueAt(codigo, row, 0);
-                cajeroTable.setValueAt(nombre + " " + apellido, row, 1);
-                cajeroTable.setValueAt(ci, row, 2);
-                cajeroTable.setValueAt(telefono, row, 3);
-                cajeroTable.setValueAt(direccion, row, 4);
+                reporteTable.setValueAt(codigo, row, 0);
+                reporteTable.setValueAt(nombre + " " + apellido, row, 1);
+                reporteTable.setValueAt(ci, row, 2);
+                reporteTable.setValueAt(telefono, row, 3);
+                reporteTable.setValueAt(direccion, row, 4);
 
                 row++;
 
@@ -428,7 +432,7 @@ public class Reportes extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_reporteGeneralBtnActionPerformed
 
-*/
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField codfactInput;
     private javax.swing.JMenu empleadosMenu;
@@ -449,9 +453,9 @@ public class Reportes extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton reporteCajeroBtn;
     private javax.swing.JButton reporteGeneralBtn;
+    private javax.swing.JTable reporteTable;
     private javax.swing.JMenuItem reporteVentaField;
     private javax.swing.JMenu reportesMenu;
     // End of variables declaration//GEN-END:variables

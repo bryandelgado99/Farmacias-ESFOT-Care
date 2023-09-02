@@ -20,7 +20,7 @@ public class Lista_Empleado extends javax.swing.JFrame {
     public static final String PASSWORD = "root2023";
 
     /**
-     * Creates new form Lista_Empleado
+     * Creates new form ListaEmpleado
      */
     public Lista_Empleado() {
         initComponents();
