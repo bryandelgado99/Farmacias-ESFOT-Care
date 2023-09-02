@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="66af6a6d-3cb6-4d14-b6e0-708a0e9adb69">
-	<property name="ireport.zoom" value="1.4641000000000104"/>
+	<property name="ireport.zoom" value="1.3310000000000113"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="493"/>
+	<property name="ireport.y" value="314"/>
 	<parameter name="factura" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -245,7 +245,7 @@ where num_factura=$P{factura};]]>
 		</band>
 	</title>
 	<detail>
-		<band height="209">
+		<band height="338">
 			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==1]]></printWhenExpression>
 			<staticText>
 				<reportElement x="1" y="10" width="31" height="20" uuid="9af2696b-6df8-4098-b816-fa4e87858477"/>
@@ -357,85 +357,11 @@ where num_factura=$P{factura};]]>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detalleFact.jasper"]]></subreportExpression>
 			</subreport>
-		</band>
-	</detail>
-	<columnFooter>
-		<band height="123" splitType="Stretch">
 			<rectangle>
-				<reportElement x="11" y="40" width="243" height="60" uuid="0fd24602-b2bb-407b-9712-579701495f4d"/>
+				<reportElement x="19" y="249" width="243" height="60" uuid="0fd24602-b2bb-407b-9712-579701495f4d"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="356" y="0" width="99" height="20" uuid="ec63a989-afa3-4db8-8657-2b7cbc44c0aa"/>
-				<box topPadding="2" leftPadding="2" bottomPadding="2">
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Subtotal:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="356" y="20" width="99" height="20" uuid="adc20621-5505-490f-949b-b569b8547449"/>
-				<box topPadding="2" leftPadding="2" bottomPadding="2">
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[IVA (12%):]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="356" y="40" width="99" height="20" uuid="533a1eb7-8d3b-4c73-b1d5-f26f4851d7c1"/>
-				<box topPadding="2" leftPadding="2" bottomPadding="2">
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[ICE (8%):]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="356" y="60" width="99" height="20" uuid="400ea22c-c0ea-4f82-bc8a-70f61a9f96a0"/>
-				<box topPadding="2" leftPadding="2" bottomPadding="2">
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Descuento:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="356" y="80" width="99" height="20" uuid="d016dc99-0fdf-461e-941b-d4f9f646d30d"/>
-				<box topPadding="2" leftPadding="2" bottomPadding="2">
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Total a pagar:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="19" y="40" width="100" height="20" uuid="232c6503-271c-4dbf-9de9-06ee155f3ee9"/>
+				<reportElement x="27" y="249" width="100" height="20" uuid="232c6503-271c-4dbf-9de9-06ee155f3ee9"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
@@ -443,7 +369,7 @@ where num_factura=$P{factura};]]>
 				<text><![CDATA[Nombre del cajero:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="19" y="60" width="100" height="20" uuid="f4fa4c2c-d56a-44d9-a39a-59331a8faead"/>
+				<reportElement x="27" y="269" width="100" height="20" uuid="f4fa4c2c-d56a-44d9-a39a-59331a8faead"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
@@ -451,7 +377,7 @@ where num_factura=$P{factura};]]>
 				<text><![CDATA[Código cajero:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="19" y="80" width="100" height="20" uuid="11ded509-8845-4e1b-b683-3e3c07fa0cda"/>
+				<reportElement x="27" y="289" width="100" height="20" uuid="11ded509-8845-4e1b-b683-3e3c07fa0cda"/>
 				<box leftPadding="2" bottomPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
@@ -459,7 +385,7 @@ where num_factura=$P{factura};]]>
 				<text><![CDATA[Fecha de emisión:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="11" y="20" width="243" height="20" uuid="683c8ec8-8404-40fd-bcbc-e468aded8177"/>
+				<reportElement x="19" y="229" width="243" height="20" uuid="683c8ec8-8404-40fd-bcbc-e468aded8177"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -473,15 +399,85 @@ where num_factura=$P{factura};]]>
 				<text><![CDATA[Información Adicional]]></text>
 			</staticText>
 			<subreport>
-				<reportElement x="119" y="40" width="135" height="60" uuid="e3e6fb47-68e4-451a-bc47-db0023079eb8"/>
+				<reportElement x="127" y="249" width="135" height="60" uuid="e3e6fb47-68e4-451a-bc47-db0023079eb8"/>
 				<subreportParameter name="n_factInfo">
 					<subreportParameterExpression><![CDATA[$P{factura}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "infoAddFact.jasper"]]></subreportExpression>
 			</subreport>
+			<staticText>
+				<reportElement x="356" y="209" width="100" height="20" uuid="ec63a989-afa3-4db8-8657-2b7cbc44c0aa"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Subtotal:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="356" y="229" width="100" height="20" uuid="adc20621-5505-490f-949b-b569b8547449"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[IVA (12%):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="356" y="249" width="100" height="20" uuid="533a1eb7-8d3b-4c73-b1d5-f26f4851d7c1"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ICE (8%):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="356" y="269" width="100" height="20" uuid="400ea22c-c0ea-4f82-bc8a-70f61a9f96a0"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descuento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="356" y="289" width="100" height="20" uuid="d016dc99-0fdf-461e-941b-d4f9f646d30d"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total a pagar:]]></text>
+			</staticText>
 		</band>
-	</columnFooter>
+	</detail>
 	<pageFooter>
 		<band height="54" splitType="Stretch"/>
 	</pageFooter>
