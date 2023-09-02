@@ -3,22 +3,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Vista;
-import java.sql.*;
+
 /**
  *
  * @author bryan
  */
+/*
 public class Reportes extends javax.swing.JFrame {
 
     /**
      * Creates new form Reportes
      */
-    
-    public static final String DB_URL = "jdbc:mysql://localhost/esfot-care";
-    public static final String USER = "root";
-    public static final String PASSWORD = "root2023";
-
-    
+/*
     public Reportes() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -36,7 +32,7 @@ public class Reportes extends javax.swing.JFrame {
 
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        cajeroTable = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable();
         fechaBusInput = new javax.swing.JTextField();
         jButtonBuscarCajeroCod = new javax.swing.JButton();
         reporteCajeroBtn = new javax.swing.JButton();
@@ -66,7 +62,7 @@ public class Reportes extends javax.swing.JFrame {
         jLabel5.setText("Buscar por fecha:");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, -1));
 
-        cajeroTable.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -92,12 +88,12 @@ public class Reportes extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(cajeroTable);
-        if (cajeroTable.getColumnModel().getColumnCount() > 0) {
-            cajeroTable.getColumnModel().getColumn(0).setResizable(false);
-            cajeroTable.getColumnModel().getColumn(1).setResizable(false);
-            cajeroTable.getColumnModel().getColumn(2).setResizable(false);
-            cajeroTable.getColumnModel().getColumn(3).setResizable(false);
+        jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(1).setResizable(false);
+            jTable1.getColumnModel().getColumn(2).setResizable(false);
+            jTable1.getColumnModel().getColumn(3).setResizable(false);
         }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 1130, 390));
@@ -158,7 +154,7 @@ public class Reportes extends javax.swing.JFrame {
                 jButtonDesplegarCajerosActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonDesplegarCajeros, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 130, -1, -1));
+        getContentPane().add(jButtonDesplegarCajeros, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 50, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel6.setText("Buscar por código de factura:");
@@ -252,7 +248,7 @@ public class Reportes extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/*
     private void homeMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeMenuMouseClicked
         this.setVisible(false);
         Home_Admin homin = new Home_Admin();
@@ -286,7 +282,7 @@ public class Reportes extends javax.swing.JFrame {
     private void fechaBusInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaBusInputActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fechaBusInputActionPerformed
-
+/*
     private void jButtonBuscarCajeroCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarCajeroCodActionPerformed
         // TODO add your handling code here:
         String codigoinput = fechaBusInput.getText();
@@ -315,7 +311,7 @@ public class Reportes extends javax.swing.JFrame {
                     rowc++;
                 }
                 */
-
+/*
                 int rowCount = cajeroTable.getRowCount();
                 for (int i = 1; i < rowCount; i++) {
                     for (int j = 0; j < 5; j++) {
@@ -432,9 +428,8 @@ public class Reportes extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_reporteGeneralBtnActionPerformed
 
-
+*/
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable cajeroTable;
     private javax.swing.JTextField codfactInput;
     private javax.swing.JMenu empleadosMenu;
     private javax.swing.JTextField fechaBusInput;
@@ -454,6 +449,7 @@ public class Reportes extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JButton reporteCajeroBtn;
     private javax.swing.JButton reporteGeneralBtn;
     private javax.swing.JMenuItem reporteVentaField;
