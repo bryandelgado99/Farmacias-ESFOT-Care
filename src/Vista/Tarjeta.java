@@ -17,6 +17,9 @@ public class Tarjeta extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         prosPago.setVisible(false);
+        
+        String Total = Vista.Home_Cajero.getFormattedTotalT();
+        totalLabel.setText(Total);
     }
 
     /**

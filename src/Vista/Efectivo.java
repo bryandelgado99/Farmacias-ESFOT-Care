@@ -16,6 +16,17 @@ public class Efectivo extends javax.swing.JFrame {
     public Efectivo() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
+        String Total = Vista.Home_Cajero.getFormattedTotalT();
+        int TotalT = Integer.parseInt(Total);
+        totalLabel.setText(Total);
+        
+        String Dinero = dineroInput.getText();
+        int dineroT = Integer.parseInt(Dinero);
+        
+        int cambio = dineroT - TotalT;
+        String cambioT = Integer.toString(cambio);
+        vueltoLabel.setText(cambioT);
     }
 
     /**
@@ -35,7 +46,7 @@ public class Efectivo extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         dineroInput = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        vueltoLabel = new javax.swing.JLabel();
         pagarButton = new javax.swing.JButton();
         cambiarMetodoButton = new javax.swing.JButton();
 
@@ -60,7 +71,6 @@ public class Efectivo extends javax.swing.JFrame {
         jLabel3.setText("Total entregado:");
 
         dineroInput.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        dineroInput.setText("------");
         dineroInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dineroInputActionPerformed(evt);
@@ -70,9 +80,9 @@ public class Efectivo extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Cambio:");
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel5.setText("-----");
+        vueltoLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        vueltoLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        vueltoLabel.setText("-----");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -96,7 +106,7 @@ public class Efectivo extends javax.swing.JFrame {
                                     .addComponent(jLabel4))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(vueltoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(dineroInput, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))))))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
@@ -116,7 +126,7 @@ public class Efectivo extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+                    .addComponent(vueltoLabel))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
 
@@ -200,10 +210,10 @@ public class Efectivo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton pagarButton;
     private javax.swing.JLabel totalLabel;
+    private javax.swing.JLabel vueltoLabel;
     // End of variables declaration//GEN-END:variables
 }
