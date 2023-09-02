@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="66af6a6d-3cb6-4d14-b6e0-708a0e9adb69">
-	<property name="ireport.zoom" value="2.853116706110009"/>
-	<property name="ireport.x" value="56"/>
-	<property name="ireport.y" value="1394"/>
+	<property name="ireport.zoom" value="2.143588810000013"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="619"/>
 	<parameter name="n_factura" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -245,7 +245,7 @@ JOIN clientes CLI on CAB.Clientes_ci_cli=CLI.ci_cli
 		<band height="194">
 			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==1]]></printWhenExpression>
 			<staticText>
-				<reportElement x="1" y="10" width="42" height="20" uuid="9af2696b-6df8-4098-b816-fa4e87858477"/>
+				<reportElement x="1" y="10" width="31" height="20" uuid="9af2696b-6df8-4098-b816-fa4e87858477"/>
 				<box leftPadding="1" rightPadding="1">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -259,7 +259,7 @@ JOIN clientes CLI on CAB.Clientes_ci_cli=CLI.ci_cli
 				<text><![CDATA[ITEM]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="43" y="10" width="201" height="20" uuid="d313bb5f-a568-4dd8-8730-9d500f4cc768"/>
+				<reportElement x="32" y="10" width="139" height="20" uuid="d313bb5f-a568-4dd8-8730-9d500f4cc768"/>
 				<box leftPadding="1" rightPadding="1">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -273,7 +273,7 @@ JOIN clientes CLI on CAB.Clientes_ci_cli=CLI.ci_cli
 				<text><![CDATA[NOMBRE DEL PRODUCTO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="244" y="10" width="112" height="20" uuid="8cefcff1-ec92-4a16-a1a7-a8d345bde19d"/>
+				<reportElement x="171" y="10" width="112" height="20" uuid="8cefcff1-ec92-4a16-a1a7-a8d345bde19d"/>
 				<box leftPadding="1" rightPadding="1">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -315,20 +315,37 @@ JOIN clientes CLI on CAB.Clientes_ci_cli=CLI.ci_cli
 				<text><![CDATA[VALOR TOTAL]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="1" y="30" width="42" height="164" uuid="f83a6db6-ebc4-41bb-b61e-9d31fdd25686"/>
+				<reportElement x="1" y="30" width="31" height="164" uuid="f83a6db6-ebc4-41bb-b61e-9d31fdd25686"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="244" y="30" width="112" height="164" uuid="67ca103c-2c8f-4966-8631-9dd65fb3036d"/>
+				<reportElement x="171" y="30" width="112" height="164" uuid="67ca103c-2c8f-4966-8631-9dd65fb3036d"/>
 			</rectangle>
 			<rectangle>
 				<reportElement x="455" y="30" width="100" height="164" uuid="9b7e0550-56f4-4af3-ac73-c574974bcc1a"/>
 			</rectangle>
-			<line>
-				<reportElement x="43" y="193" width="201" height="1" uuid="54db5e36-5444-491c-88df-af8b8022fbfb"/>
-			</line>
-			<line>
-				<reportElement x="356" y="193" width="99" height="1" uuid="54ef8d3c-9fd7-4dfa-95a3-f1a3da67d2b4"/>
-			</line>
+			<rectangle>
+				<reportElement x="32" y="30" width="139" height="164" uuid="beaf3db3-0993-4d83-811f-06c7debf4c25"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="283" y="10" width="73" height="20" uuid="06e60b02-2f88-4b00-8af9-a24e88443d35"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="283" y="30" width="73" height="164" uuid="78bd1a28-2de2-40db-a2c8-11101598fcb6"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="356" y="30" width="99" height="164" uuid="556ded48-5823-43db-8841-b4d509a5fdc9"/>
+			</rectangle>
 		</band>
 	</detail>
 	<columnFooter>
