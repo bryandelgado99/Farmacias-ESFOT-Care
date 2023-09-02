@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="66af6a6d-3cb6-4d14-b6e0-708a0e9adb69">
+	<property name="ireport.zoom" value="1.4641000000000015"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="2"/>
+	<queryString>
+		<![CDATA[select * from cabecera_fac CAB, detalle_fac DET;]]>
+	</queryString>
+	<field name="num_factura" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Clientes_ci_cli" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_emision" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Cajeros_codigo_caj" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="subtotal_fac" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="iva_fac" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descuento_fac" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total_pagar" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="metodo_pago" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codigo_det" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Cabecera_Fac_num_factura" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Productos_codigo_prod" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cantidad" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="valor_venta" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total_det" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="168" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="20" width="192" height="95" uuid="816c2b60-6103-4f8f-9f1a-ed82bb9193f7"/>
+				<imageExpression><![CDATA["C:\\Users\\Brithany\\OneDrive - Escuela Politécnica Nacional\\TERCER SEMESTRE\\2. POO\\Proyecto-Farmacia--2do-Bimestre\\src\\Images\\logo_2.png"]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement x="211" y="0" width="344" height="168" uuid="8ff581f2-b806-4411-8378-108c1a7f9869"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="211" y="0" width="344" height="20" uuid="8316ac13-5e70-4e28-a8bd-47a35c931087"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección: Av. Isabel la Católica y Alfredo Mena Caamaño]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="211" y="20" width="344" height="20" uuid="d14dea41-2762-4423-85ec-78780796099c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Teléfono: 22887588 / 0999 999 9999]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="211" y="40" width="344" height="20" uuid="aab20559-fbf1-4afb-9697-7f7aa0a79867"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Obligado a llevar contabilidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="211" y="95" width="344" height="20" uuid="8828bec9-1960-4ae3-a847-7be038e09b6f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RUC: 17506299778001]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="211" y="115" width="344" height="20" uuid="945583a2-856f-4a0b-be96-3c252a090b25"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Aut. SRI: 121514478]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="211" y="135" width="344" height="20" uuid="2b1b94c7-8b2a-47be-aa8b-1ad64a51aa00"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de autorización: 19/08/2023]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="135" width="86" height="20" uuid="2dba6732-14e6-4ad4-8781-3d1854c83f75"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FACTURA NRO. ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="143" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="15" width="555" height="128" uuid="cd53dfb3-0fb7-4f39-98d1-8ac04603a2a4"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="18" y="25" width="119" height="20" uuid="dd408a5f-0ad3-4e74-b5bc-dd7e1c7f23ff"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombres y Apellidos:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="55" width="100" height="20" uuid="6753d632-0a74-4317-882f-e64d503ebf09"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[C.I / RUC:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="85" width="100" height="20" uuid="712dbcd6-b4fa-472c-b109-5045636aa05c"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Teléfono:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="113" width="100" height="20" uuid="6d9dc662-4636-4838-b799-48f428259218"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Método de pago:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="287" y="25" width="100" height="20" uuid="2181ca80-9910-4365-b2c3-8688d9085513"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="287" y="55" width="100" height="20" uuid="233f9add-15f1-418b-b72e-9073b73c1b64"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de emisión:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="287" y="85" width="100" height="20" uuid="0320d51e-9585-4c4f-b14b-e1268967ac03"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Correo electrónico:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
