@@ -56,7 +56,7 @@ public class Home_Cajero extends javax.swing.JFrame {
         }
 
         Date fecha = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         fechaEmi.setText(sdf.format(fecha));
 
     }
@@ -96,7 +96,7 @@ public class Home_Cajero extends javax.swing.JFrame {
     public static String getCedula() {
         return cedula;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -583,13 +583,47 @@ public class Home_Cajero extends javax.swing.JFrame {
     private void finventaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_finventaButtonMouseClicked
         if (!"".equals(jTextField2.getText()) && !"".equals(jTextField1.getText()) && !"".equals(cliTelef.getText())
                 && !"".equals(clienteDireccion.getText()) && !"".equals(cliMail.getText()) && !"--------".equals(totalLabel.getText())) {
+            
+            DefaultTableModel model = (DefaultTableModel) sellProdTable.getModel();
+
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+
+            for (int i = 0; i < model.getRowCount(); i++) {
+                String codigoProducto = (String) model.getValueAt(i, 0); // Obtener el código del producto
+                int cantidadVendida = (int) model.getValueAt(i, 3); // Obtener la cantidad vendida
+
+                // Llamar al método para actualizar el stock
+                actualizarStock(conn, codigoProducto, cantidadVendida);
+            }
+
+            // Restablecer la tabla y otros campos
+            model.setRowCount(0); // Borrar todas las filas de la tabla
+            subtotalLabel.setText("0.00");
+            ivaLabel.setText("0.00");
+            totalLabel.setText("0.00");
+
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+            
             Metodo_pago metodo = new Metodo_pago();
             metodo.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Complete la venta del cliente!");
         }
     }//GEN-LAST:event_finventaButtonMouseClicked
-
+    
+    private void actualizarStock(Connection conn, String codigoProducto, int cantidadVendida) throws SQLException {
+    String updateQuery = "UPDATE productos SET stock_prod = stock_prod - ? WHERE codigo_prod = ?";
+    PreparedStatement updateStatement = conn.prepareStatement(updateQuery);
+    updateStatement.setInt(1, cantidadVendida);
+    updateStatement.setString(2, codigoProducto);
+    updateStatement.executeUpdate();
+    updateStatement.close();
+}
+    
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
         Login login = new Login();
         login.setVisible(true);
@@ -681,6 +715,7 @@ public class Home_Cajero extends javax.swing.JFrame {
                         double valorT = valorU * cantidadInt;
 
                         if (stock >= cantidadInt) {
+                            
                             sellProdTable.setValueAt(codigo, currentRow, 0);
                             sellProdTable.setValueAt(nombre, currentRow, 1);
                             sellProdTable.setValueAt(categoria, currentRow, 2);
