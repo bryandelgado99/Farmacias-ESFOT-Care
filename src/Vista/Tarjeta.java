@@ -3,13 +3,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Vista;
-
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 /**
  *
  * @author bryan
  */
 public class Tarjeta extends javax.swing.JFrame {
-
+    public static final String DB_URL = "jdbc:mysql://localhost/esfot-care";
+    public static final String USER = "root";
+    public static final String PASSWORD = "root2023";
     /**
      * Creates new form Tarjeta
      */
@@ -193,6 +199,118 @@ public class Tarjeta extends javax.swing.JFrame {
 
     private void pagarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pagarButtonActionPerformed
         // TODO add your handling code here:
+                    // TODO add your handling code here:
+        
+        
+        //primero ingresar el cliente
+        String ci = Vista.Home_Cajero.getCedula();
+        String nombre = Vista.Home_Cajero.getNombre();
+        String apellido = Vista.Home_Cajero.getApellido();
+        String telefono = Vista.Home_Cajero.getTelefono();
+        String email = Vista.Home_Cajero.getEmail();
+        String direccion = Vista.Home_Cajero.getDireccion();
+        
+        // agregacion de compra
+        // Obtener la fecha y hora actual de Java
+        Date fechaActual = new Date();
+        // Formatear la fecha como una cadena de caracteres en el formato deseado
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaFormateada = sdf.format(fechaActual);
+
+        String cajero = Vista.Login.getCod_caj();
+        String subStr = Vista.Home_Cajero.getFormattedSubTotal();
+        double subtotal = Double.parseDouble(subStr);
+        String ivStr = Vista.Home_Cajero.getFormattedIva();
+        double iva= Double.parseDouble(ivStr);
+        String toStr = Vista.Home_Cajero.getFormattedTotalT();
+        double total = Double.parseDouble(toStr);
+        
+        //detalle de factura
+        
+        
+        List<String> codigoCompra = Vista.Home_Cajero.codigoCompra;
+        List<Integer> cantidadcompra = Vista.Home_Cajero.cantidadCompra;
+        List<Double> valorUnitario = Vista.Home_Cajero.getValorUnitario();
+        List<Double> valorTotalUnitario = Vista.Home_Cajero.getValorTotalUnitario();
+
+    try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
+            //primero ingresamos el cliente para que se puede hacer la factura
+            String queryClienteCompra = "INSERT INTO `ESFOT-CARE`.`Clientes` " +
+                           "VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement stmtcli = conn.prepareStatement(queryClienteCompra);
+            stmtcli.setString(1, ci);
+            stmtcli.setString(2, apellido);
+            stmtcli.setString(3, nombre);
+            stmtcli.setString(4, telefono);
+            stmtcli.setString(5, email);
+            stmtcli.setString(6, direccion);
+
+            int rowsAffected = stmtcli.executeUpdate(); // Ejecutar la consulta y obtener el número de filas afectadas
+
+            // Verificar si la inserción fue exitosa
+            if (rowsAffected > 0) {
+                System.out.println("Inserción exitosa.");
+            } else {
+                System.out.println("No se insertaron registros.");
+            }
+            
+
+            // cabafactura
+            String queryCab = "INSERT INTO `ESFOT-CARE`.`Cabecera_Fac` " +
+                      "(`Clientes_ci_cli`, `fecha_emision`, `Cajeros_codigo_caj`, `subtotal_fac`, `iva_fac`, `descuento_fac`, `total_pagar`, `metodo_pago`) " +
+                      "VALUES (?, ?, ?, ?, ?, 0.00, ?, 'Tarjeta')";
+    
+    // Configuramos el PreparedStatement para obtener el número de factura generado
+    PreparedStatement stmtcab = conn.prepareStatement(queryCab, Statement.RETURN_GENERATED_KEYS);
+    stmtcab.setString(1, ci);
+    stmtcab.setString(2, fechaFormateada);
+    stmtcab.setString(3, cajero);
+    stmtcab.setDouble(4, subtotal);
+    stmtcab.setDouble(5, iva);
+    stmtcab.setDouble(6, total);
+    
+    
+
+    int rowsAffectedCab = stmtcab.executeUpdate();
+
+    if (rowsAffectedCab > 0) {
+        // Obtenemos el número de factura generado
+        ResultSet generatedKeys = stmtcab.getGeneratedKeys();
+        if (generatedKeys.next()) {
+            int num_factura = generatedKeys.getInt(1); // Suponiendo que num_factura es de tipo INT
+            
+            // Ahora podemos usar num_factura al insertar en Detalle_Fac
+            String querydetFact = "INSERT INTO `ESFOT-CARE`.`Detalle_Fac` " +
+                                  "(`Cabecera_Fac_num_factura`, `Productos_codigo_prod`, `cantidad`, `valor_venta`, `total_det`) " +
+                                  "VALUES (?, ?, ?, ?, ?)";
+            
+            for (int i = 0; i < codigoCompra.size(); i++) {
+                PreparedStatement stmtdet = conn.prepareStatement(querydetFact);
+                stmtdet.setInt(1, num_factura);
+                stmtdet.setString(2, codigoCompra.get(i));
+                stmtdet.setInt(3, cantidadcompra.get(i));
+                stmtdet.setDouble(4, valorUnitario.get(i)); // Asegúrate de obtener el valor de venta adecuado
+                stmtdet.setDouble(5, valorTotalUnitario.get(i));   // Asegúrate de obtener el totalDet adecuado
+                
+                int rowsAffectedDet = stmtdet.executeUpdate();
+                
+                if (rowsAffectedDet > 0) {
+                    System.out.println("Inserción exitosa en Detalle_Fac.");
+                } else {
+                    System.out.println("No se insertaron registros en Detalle_Fac.");
+                }
+            }
+        }
+    }
+            
+            
+            
+            
+            
+        } catch (SQLException x) {
+            throw new RuntimeException(x);
+        }
+
     }//GEN-LAST:event_pagarButtonActionPerformed
 
     private void cambiarMetodoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiarMetodoButtonActionPerformed
