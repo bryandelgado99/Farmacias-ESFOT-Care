@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3da0894c-df46-4f72-a585-0f31e5455418">
-	<property name="ireport.zoom" value="2.3579476910000023"/>
+	<property name="ireport.zoom" value="1.771561000000002"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="408"/>
+	<property name="ireport.y" value="289"/>
 	<style name="table">
 		<box>
 			<topPen lineWidth="1.0" lineColor="#000000"/>
@@ -77,15 +77,15 @@ JOIN productos prod ON det.Productos_codigo_prod = prod.codigo_prod;]]>
 	<parameter name="cod_caj" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="nom_caj" class="java.lang.String">
+	<parameter name="apel_caj" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="apel_caj" class="java.lang.String">
+	<parameter name="name_caj" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select * from cajeros
-where codigo_caj=$P{cod_caj} or (nombre_caj LIKE $P{nom_caj} and apellido_caj=$P{apel_caj})]]>
+WHERE codigo_caj=$P{cod_caj} or (nombre_caj like $P{name_caj} and apellido_caj like $P{apel_caj})]]>
 	</queryString>
 	<field name="codigo_caj" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
