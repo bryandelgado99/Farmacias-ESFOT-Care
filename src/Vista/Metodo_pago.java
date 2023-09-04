@@ -18,7 +18,7 @@ public class Metodo_pago extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         
-        String nomcliN = Vista.Home_Cajero.getNomCli();
+        String nomcliN = Vista.Home_Cajero.getNombre();
         String cedulaN = Vista.Home_Cajero.getCedula();
         
         nomCli.setText(nomcliN);
