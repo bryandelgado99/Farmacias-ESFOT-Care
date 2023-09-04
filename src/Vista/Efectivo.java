@@ -5,6 +5,9 @@
 package Vista;
 
 import javax.swing.JOptionPane;
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -12,6 +15,10 @@ import javax.swing.JOptionPane;
  */
 public class Efectivo extends javax.swing.JFrame {
 
+    public static final String DB_URL = "jdbc:mysql://localhost/esfot-care";
+    public static final String USER = "root";
+    public static final String PASSWORD = "root2023";
+    
     /**
      * Creates new form Efectivo
      */
@@ -196,7 +203,100 @@ public class Efectivo extends javax.swing.JFrame {
     }//GEN-LAST:event_dineroInputActionPerformed
 
     private void pagarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pagarButtonActionPerformed
-        // TODO add your handling code here:
+                // TODO add your handling code here:
+        
+        
+        //primero ingresar el cliente
+        String ci = Vista.Home_Cajero.getCedula();
+        String nombre = Vista.Home_Cajero.getNombre();
+        String apellido = Vista.Home_Cajero.getApellido();
+        String telefono = Vista.Home_Cajero.getTelefono();
+        String email = Vista.Home_Cajero.getEmail();
+        String direccion = Vista.Home_Cajero.getDireccion();
+        
+        // agregacion de compra
+        // Obtener la fecha y hora actual de Java
+        Date fechaActual = new Date();
+        // Formatear la fecha como una cadena de caracteres en el formato deseado
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaFormateada = sdf.format(fechaActual);
+
+        String cajero = Vista.Login.getCod_caj();
+        String subStr = Vista.Home_Cajero.getFormattedSubTotal();
+        double subtotal = Double.parseDouble(subStr);
+        String ivStr = Vista.Home_Cajero.getFormattedIva();
+        double iva= Double.parseDouble(ivStr);
+        String toStr = Vista.Home_Cajero.getFormattedTotalT();
+        double total = Double.parseDouble(toStr);
+
+    try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
+            //primero ingresamos el cliente para que se puede hacer la factura
+            String queryClienteCompra = "INSERT INTO `ESFOT-CARE`.`Clientes` " +
+                           "VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement stmtcli = conn.prepareStatement(queryClienteCompra);
+            stmtcli.setString(1, ci);
+            stmtcli.setString(2, apellido);
+            stmtcli.setString(3, nombre);
+            stmtcli.setString(4, telefono);
+            stmtcli.setString(5, email);
+            stmtcli.setString(6, direccion);
+
+            int rowsAffected = stmtcli.executeUpdate(); // Ejecutar la consulta y obtener el número de filas afectadas
+
+            // Verificar si la inserción fue exitosa
+            if (rowsAffected > 0) {
+                System.out.println("Inserción exitosa.");
+            } else {
+                System.out.println("No se insertaron registros.");
+            }
+            
+
+            // cabafactura
+            String queryCab = "INSERT INTO `ESFOT-CARE`.`Cabecera_Fac` \n" +
+"(`Clientes_ci_cli`, `fecha_emision`, `Cajeros_codigo_caj`, `subtotal_fac`, `iva_fac`, `descuento_fac`, `total_pagar`, `metodo_pago`)\n" +
+"VALUES\n" +
+"(?, ?, ?, ?, ?, 0.00, ?, 'Efectivo');";
+            PreparedStatement stmtcab = conn.prepareStatement(queryCab);
+            stmtcab.setString(1, ci );
+            stmtcab.setString(2, fechaFormateada);
+            stmtcab.setString(3, cajero);
+            stmtcab.setDouble(4, subtotal);
+            stmtcab.setDouble(5, iva);
+            stmtcab.setDouble(6, total);
+            
+            int rowsAffectedCab = stmtcab.executeUpdate();
+            // Verificar si la inserción fue exitosa
+            if (rowsAffectedCab > 0) {
+                System.out.println("Inserción exitosa.");
+            } else {
+                System.out.println("No se insertaron registros.");
+            }
+            
+            String querydetFact = "INSERT INTO `ESFOT-CARE`.`Detalle_Fac`\n" +
+"(`Cabecera_Fac_num_factura`, `Productos_codigo_prod`, `cantidad`, `valor_venta`, `total_det`)\n" +
+"VALUES\n" +
+"(@num_factura, 'BASS7012', 2, 50.00, 100.00);";
+            PreparedStatement stmtdet = conn.prepareStatement(querydetFact);
+            
+            stmtdet.setString(1, ci );
+            stmtdet.setString(2, fechaFormateada);
+            stmtdet.setString(3, cajero);
+            stmtdet.setDouble(4, subtotal);
+            stmtdet.setDouble(5, iva);
+            stmtdet.setDouble(6, total);
+            
+            int rowsAffectedDet = stmtdet.executeUpdate();
+            // Verificar si la inserción fue exitosa
+            if (rowsAffectedDet > 0) {
+                System.out.println("Inserción exitosa.");
+            } else {
+                System.out.println("No se insertaron registros.");
+            }
+            
+        } catch (SQLException x) {
+            throw new RuntimeException(x);
+        }
+
     }//GEN-LAST:event_pagarButtonActionPerformed
 
     private void cambiarMetodoButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cambiarMetodoButtonMouseClicked
