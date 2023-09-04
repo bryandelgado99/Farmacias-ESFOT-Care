@@ -8,7 +8,8 @@ import javax.swing.JOptionPane;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+import java.util.ArrayList;
+import java.util.List;
 /**
  *
  * @author bryan
@@ -228,6 +229,14 @@ public class Efectivo extends javax.swing.JFrame {
         double iva= Double.parseDouble(ivStr);
         String toStr = Vista.Home_Cajero.getFormattedTotalT();
         double total = Double.parseDouble(toStr);
+        
+        //detalle de factura
+        
+        
+        List<String> codigoCompra = Vista.Home_Cajero.codigoCompra;
+        List<Integer> cantidadcompra = Vista.Home_Cajero.cantidadCompra;
+        List<Double> valorUnitario = Vista.Home_Cajero.getValorUnitario();
+        List<Double> valorTotalUnitario = Vista.Home_Cajero.getValorTotalUnitario();
 
     try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
             //primero ingresamos el cliente para que se puede hacer la factura
@@ -252,46 +261,56 @@ public class Efectivo extends javax.swing.JFrame {
             
 
             // cabafactura
-            String queryCab = "INSERT INTO `ESFOT-CARE`.`Cabecera_Fac` \n" +
-"(`Clientes_ci_cli`, `fecha_emision`, `Cajeros_codigo_caj`, `subtotal_fac`, `iva_fac`, `descuento_fac`, `total_pagar`, `metodo_pago`)\n" +
-"VALUES\n" +
-"(?, ?, ?, ?, ?, 0.00, ?, 'Efectivo');";
-            PreparedStatement stmtcab = conn.prepareStatement(queryCab);
-            stmtcab.setString(1, ci );
-            stmtcab.setString(2, fechaFormateada);
-            stmtcab.setString(3, cajero);
-            stmtcab.setDouble(4, subtotal);
-            stmtcab.setDouble(5, iva);
-            stmtcab.setDouble(6, total);
+            String queryCab = "INSERT INTO `ESFOT-CARE`.`Cabecera_Fac` " +
+                      "(`Clientes_ci_cli`, `fecha_emision`, `Cajeros_codigo_caj`, `subtotal_fac`, `iva_fac`, `descuento_fac`, `total_pagar`, `metodo_pago`) " +
+                      "VALUES (?, ?, ?, ?, ?, 0.00, ?, 'Efectivo')";
+    
+    // Configuramos el PreparedStatement para obtener el número de factura generado
+    PreparedStatement stmtcab = conn.prepareStatement(queryCab, Statement.RETURN_GENERATED_KEYS);
+    stmtcab.setString(1, ci);
+    stmtcab.setString(2, fechaFormateada);
+    stmtcab.setString(3, cajero);
+    stmtcab.setDouble(4, subtotal);
+    stmtcab.setDouble(5, iva);
+    stmtcab.setDouble(6, total);
+    
+    
+
+    int rowsAffectedCab = stmtcab.executeUpdate();
+
+    if (rowsAffectedCab > 0) {
+        // Obtenemos el número de factura generado
+        ResultSet generatedKeys = stmtcab.getGeneratedKeys();
+        if (generatedKeys.next()) {
+            int num_factura = generatedKeys.getInt(1); // Suponiendo que num_factura es de tipo INT
             
-            int rowsAffectedCab = stmtcab.executeUpdate();
-            // Verificar si la inserción fue exitosa
-            if (rowsAffectedCab > 0) {
-                System.out.println("Inserción exitosa.");
-            } else {
-                System.out.println("No se insertaron registros.");
+            // Ahora podemos usar num_factura al insertar en Detalle_Fac
+            String querydetFact = "INSERT INTO `ESFOT-CARE`.`Detalle_Fac` " +
+                                  "(`Cabecera_Fac_num_factura`, `Productos_codigo_prod`, `cantidad`, `valor_venta`, `total_det`) " +
+                                  "VALUES (?, ?, ?, ?, ?)";
+            
+            for (int i = 0; i < codigoCompra.size(); i++) {
+                PreparedStatement stmtdet = conn.prepareStatement(querydetFact);
+                stmtdet.setInt(1, num_factura);
+                stmtdet.setString(2, codigoCompra.get(i));
+                stmtdet.setInt(3, cantidadcompra.get(i));
+                stmtdet.setDouble(4, valorUnitario.get(i)); // Asegúrate de obtener el valor de venta adecuado
+                stmtdet.setDouble(5, valorTotalUnitario.get(i));   // Asegúrate de obtener el totalDet adecuado
+                
+                int rowsAffectedDet = stmtdet.executeUpdate();
+                
+                if (rowsAffectedDet > 0) {
+                    System.out.println("Inserción exitosa en Detalle_Fac.");
+                } else {
+                    System.out.println("No se insertaron registros en Detalle_Fac.");
+                }
             }
+        }
+    }
             
-            String querydetFact = "INSERT INTO `ESFOT-CARE`.`Detalle_Fac`\n" +
-"(`Cabecera_Fac_num_factura`, `Productos_codigo_prod`, `cantidad`, `valor_venta`, `total_det`)\n" +
-"VALUES\n" +
-"(@num_factura, 'BASS7012', 2, 50.00, 100.00);";
-            PreparedStatement stmtdet = conn.prepareStatement(querydetFact);
             
-            stmtdet.setString(1, ci );
-            stmtdet.setString(2, fechaFormateada);
-            stmtdet.setString(3, cajero);
-            stmtdet.setDouble(4, subtotal);
-            stmtdet.setDouble(5, iva);
-            stmtdet.setDouble(6, total);
             
-            int rowsAffectedDet = stmtdet.executeUpdate();
-            // Verificar si la inserción fue exitosa
-            if (rowsAffectedDet > 0) {
-                System.out.println("Inserción exitosa.");
-            } else {
-                System.out.println("No se insertaron registros.");
-            }
+            
             
         } catch (SQLException x) {
             throw new RuntimeException(x);
