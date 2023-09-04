@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -62,7 +64,14 @@ public class Home_Cajero extends javax.swing.JFrame {
     }
     private int numFacActual = 0;
 
-    private void num_factura() {
+    public static int countTa;
+
+    public static int getCountTa() {
+        return countTa;
+    }
+    
+    
+    public void num_factura() {
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
             String Query = "SELECT COUNT(*) from cabecera_fac";
             PreparedStatement stmt = conn.prepareStatement(Query);
@@ -70,7 +79,7 @@ public class Home_Cajero extends javax.swing.JFrame {
 
             if (rs.next()) {
                 int count = rs.getInt(1);
-                int countTa = count + 1;
+                countTa = count + 1;
                 String countT = Integer.toString(countTa);
                 numFactLabel.setText(countT);
                 System.out.println(count);
@@ -741,10 +750,37 @@ public class Home_Cajero extends javax.swing.JFrame {
         return formattedTotalT;
     }
 
+    
+    public static List<String> codigoCompra = new ArrayList<>();
+    public static List<Integer> cantidadCompra = new ArrayList<>();
+    public static List<Double> valorUnitario = new ArrayList<>();
+    public static List<Double> valorTotalUnitario = new ArrayList<>();
+    
+    public static List<String> getCodigoCompra() {
+        return codigoCompra;
+    }
 
+    public static List<Integer> getCantidadCompra() {
+        return cantidadCompra;
+    }
+
+    public static List<Double> getValorUnitario() {
+        return valorUnitario;
+    }
+
+    public static List<Double> getValorTotalUnitario() {
+        return valorTotalUnitario;
+    }
+    
+    
+    
+    
+    
+    
     private void AgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarProductoActionPerformed
         if (!"".equals(cantidadField.getText())) {
             String producto = (String) ProductBox.getSelectedItem();
+            
             try {
                 Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
 
@@ -779,7 +815,9 @@ public class Home_Cajero extends javax.swing.JFrame {
                         int stock = Integer.parseInt(resultSet.getString("stock_prod"));
                         double valorU = Double.parseDouble(resultSet.getString("valventa_prod"));
                         double valorT = valorU * cantidadInt;
-
+                        
+                        
+                        
                         if (stock >= cantidadInt) {
                             
                             sellProdTable.setValueAt(codigo, currentRow, 0);
@@ -788,8 +826,36 @@ public class Home_Cajero extends javax.swing.JFrame {
                             sellProdTable.setValueAt(cantidadInt, currentRow, 3);
                             sellProdTable.setValueAt(valorU, currentRow, 4);
                             sellProdTable.setValueAt(valorT, currentRow, 5);
+                            
+                            /*
+                            Object coobj = sellProdTable.getValueAt(currentRow, 0);
+                            String codcompra = String.valueOf(coobj);
+                            
+                            Object cantidadobj = sellProdTable.getValueAt(currentRow, 3);
+                            int cantidadEsp = Integer.parseInt(cantidadobj.toString());
+                            
+                            Object valorObjtuni = sellProdTable.getValueAt(currentRow, 4);
+                            double valorUnitarioCompra = Double.parseDouble(valorObjtuni.toString());
+                            String valoruni = String.valueOf(valorObjtuni);
+                            
+                            Object vTpObj = sellProdTable.getValueAt(currentRow, 5);
+                            double valorTotalProducto = Double.parseDouble(vTpObj.toString());
+                            String valortotal = String.valueOf(vTpObj);
+                            */
+                            
+                            
+                            codigoCompra.add(codigo);
+                            cantidadCompra.add(cantidadInt);
+                            valorUnitario.add(valorU);
+                            valorTotalUnitario.add(valorT);
+                            
+                            System.out.println(codigoCompra);
+                            System.out.println(cantidadCompra);
+                           
 
+                            
                             currentRow++;
+                            
                             cantidadField.setText("");
                             ProductBox.setSelectedIndex(0);
 
@@ -811,17 +877,24 @@ public class Home_Cajero extends javax.swing.JFrame {
                             ivaLabel.setText(formattedIva);
                             totalLabel.setText(formattedTotalT);
 
+                            
+
                         } else {
                             JOptionPane.showMessageDialog(null, "Stock no disponible");
                             cantidadField.setText("");
                             model.removeRow(currentRow);
                         }
+                        
+                        
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Producto ya ha sido agregado");
                     cantidadField.setText("");
                 }
-
+                   
+                
+                
+                
                 conn.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
