@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3da0894c-df46-4f72-a585-0f31e5455418">
 	<property name="ireport.zoom" value="1.771561000000002"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="289"/>
+	<property name="ireport.y" value="5"/>
 	<style name="table">
 		<box>
 			<topPen lineWidth="1.0" lineColor="#000000"/>
@@ -51,29 +51,30 @@
 			<bottomPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<subDataset name="Ds_tableVentasCajero" uuid="83f84754-1d63-4ab0-a983-cc5fcb0be6fa">
-		<queryString language="SQL">
-			<![CDATA[SELECT 
-    ROW_NUMBER() OVER (ORDER BY det.Productos_codigo_prod) AS Item,
-    prod.nombre_prod as Nombre_Prod, 
-    det.Productos_codigo_prod as Codigo_Prod,
-    det.cantidad as cantidad,
-    prod.valventa_prod as valorUnitario,
-    prod.valventa_prod * det.cantidad AS Valor_total
-FROM detalle_fac det
-JOIN productos prod ON det.Productos_codigo_prod = prod.codigo_prod;]]>
-		</queryString>
-		<field name="Item" class="java.math.BigInteger"/>
-		<field name="Nombre_Prod" class="java.lang.String">
-			<fieldDescription><![CDATA[]]></fieldDescription>
-		</field>
-		<field name="Codigo_Prod" class="java.lang.String"/>
-		<field name="cantidad" class="java.lang.Integer">
-			<fieldDescription><![CDATA[]]></fieldDescription>
-		</field>
-		<field name="valorUnitario" class="java.math.BigDecimal"/>
-		<field name="Valor_total" class="java.math.BigDecimal"/>
-	</subDataset>
+	<style name="table 2">
+		<box>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
 	<parameter name="cod_caj" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -83,35 +84,15 @@ JOIN productos prod ON det.Productos_codigo_prod = prod.codigo_prod;]]>
 	<parameter name="name_caj" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Brithany\\OneDrive - Escuela Politécnica Nacional\\TERCER SEMESTRE\\2. POO\\Proyecto-Farmacia--2do-Bimestre\\src\\Reportes\\"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[select * from cajeros
-WHERE codigo_caj=$P{cod_caj} or (nombre_caj like $P{name_caj} and apellido_caj like $P{apel_caj})]]>
+		<![CDATA[select concat(nombre_caj,' ',apellido_caj) as nom_apel_caj, codigo_caj from cajeros
+WHERE codigo_caj=$P{cod_caj} or (nombre_caj like $P{name_caj} and apellido_caj like $P{apel_caj});]]>
 	</queryString>
+	<field name="nom_apel_caj" class="java.lang.String"/>
 	<field name="codigo_caj" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="nombre_caj" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="apellido_caj" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="ci_caj" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="telefono_caj" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="email_caj" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="direccion_caj" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="password_caj" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Administradores_codigo_admin" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<background>
@@ -149,7 +130,7 @@ Ventas realizadas por cada cajero]]></text>
 				<text><![CDATA[Nombres y Apellidos del cajero:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="13" y="39" width="159" height="20" uuid="e83e1f9d-7650-49d2-85f7-06a88d8325ca"/>
+				<reportElement x="13" y="39" width="105" height="20" uuid="e83e1f9d-7650-49d2-85f7-06a88d8325ca"/>
 				<textElement>
 					<font size="10" isBold="true"/>
 				</textElement>
@@ -169,10 +150,18 @@ Ventas realizadas por cada cajero]]></text>
 				</textElement>
 				<text><![CDATA[Ganancias obtenidas por cajero:]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="172" y="11" width="100" height="20" uuid="2eb3dc4f-5d51-435e-93e1-9d4295404cb8"/>
+				<textFieldExpression><![CDATA[$F{nom_apel_caj}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="118" y="39" width="100" height="20" uuid="bbc1e952-2e90-4d42-b26f-99a7cd2aff05"/>
+				<textFieldExpression><![CDATA[$F{codigo_caj}]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="157" splitType="Stretch">
 			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==1]]></printWhenExpression>
 			<staticText>
 				<reportElement x="0" y="0" width="118" height="20" uuid="6f62f443-6d8e-4923-8c05-43134c4e2452"/>
@@ -188,6 +177,14 @@ Ventas realizadas por cada cajero]]></text>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
+			<subreport>
+				<reportElement x="0" y="35" width="555" height="122" uuid="0167077a-e421-49a8-b7aa-c8fc509a0bb7"/>
+				<subreportParameter name="codigo_caj">
+					<subreportParameterExpression><![CDATA[$P{cod_caj}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "tablaVentasCajero.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 	<columnFooter>
