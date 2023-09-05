@@ -59,6 +59,7 @@ public class Agregar_cajero extends javax.swing.JFrame {
         apellidoInputCaj = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         agregarcajeroButton.setBackground(new java.awt.Color(255, 255, 255));
         agregarcajeroButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 3, true));
