@@ -683,9 +683,15 @@ public class Home_Cajero extends javax.swing.JFrame {
             cliTelef.setText("");
             cliMail.setText("");
             String numId = numFactLabel.getText();
+<<<<<<< HEAD
             int numeroId = Integer.parseInt(numId) + 1;
             String numeroIdT = String.valueOf(numeroId);
             numFactLabel.setText(numeroIdT);
+=======
+            int numIdT = Integer.parseInt(numId) + 1;
+            String numIdTotal = String.valueOf(numIdT);
+            numFactLabel.setText(numIdTotal);
+>>>>>>> b6c33fa0675e7a4cd9a7192038d01dc9bc545b2b
 
             conn.close();
         } catch (SQLException e) {

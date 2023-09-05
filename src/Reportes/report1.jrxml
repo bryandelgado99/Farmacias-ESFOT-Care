@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3da0894c-df46-4f72-a585-0f31e5455418">
-	<property name="ireport.zoom" value="2.3579476910000023"/>
+	<property name="ireport.zoom" value="1.9487171000000023"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="408"/>
+	<property name="ireport.y" value="96"/>
 	<style name="table">
 		<box>
 			<topPen lineWidth="1.0" lineColor="#000000"/>
@@ -51,69 +51,56 @@
 			<bottomPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<subDataset name="Ds_tableVentasCajero" uuid="83f84754-1d63-4ab0-a983-cc5fcb0be6fa">
-		<queryString language="SQL">
-			<![CDATA[SELECT 
-    ROW_NUMBER() OVER (ORDER BY det.Productos_codigo_prod) AS Item,
-    prod.nombre_prod as Nombre_Prod, 
-    det.Productos_codigo_prod as Codigo_Prod,
-    det.cantidad as cantidad,
-    prod.valventa_prod as valorUnitario,
-    prod.valventa_prod * det.cantidad AS Valor_total
-FROM detalle_fac det
-JOIN productos prod ON det.Productos_codigo_prod = prod.codigo_prod;]]>
-		</queryString>
-		<field name="Item" class="java.math.BigInteger"/>
-		<field name="Nombre_Prod" class="java.lang.String">
-			<fieldDescription><![CDATA[]]></fieldDescription>
-		</field>
-		<field name="Codigo_Prod" class="java.lang.String"/>
-		<field name="cantidad" class="java.lang.Integer">
-			<fieldDescription><![CDATA[]]></fieldDescription>
-		</field>
-		<field name="valorUnitario" class="java.math.BigDecimal"/>
-		<field name="Valor_total" class="java.math.BigDecimal"/>
-	</subDataset>
+	<style name="table 2">
+		<box>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
 	<parameter name="cod_caj" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="nom_caj" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="apel_caj" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="name_caj" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Brithany\\OneDrive - Escuela Politécnica Nacional\\TERCER SEMESTRE\\2. POO\\Proyecto-Farmacia--2do-Bimestre\\src\\Reportes\\"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[select * from cajeros
-where codigo_caj=$P{cod_caj} or (nombre_caj LIKE $P{nom_caj} and apellido_caj=$P{apel_caj})]]>
+		<![CDATA[select concat(nombre_caj,' ',apellido_caj) as nom_apel_caj, codigo_caj ,count(*) as n_Ventas_caj, sum(DET.cantidad*PROD.valventa_prod)as sumValor
+from  productos PROD JOIN detalle_fac DET 
+ON PROD.codigo_prod=DET.Productos_codigo_prod 
+join cabecera_fac CAB ON DET.Cabecera_Fac_num_factura=CAB.num_factura
+join cajeros CAJ on CAB.Cajeros_codigo_caj=CAJ.codigo_caj
+Where CAJ.codigo_caj=$P{cod_caj}]]>
 	</queryString>
+	<field name="nom_apel_caj" class="java.lang.String"/>
 	<field name="codigo_caj" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="nombre_caj" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="apellido_caj" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="ci_caj" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="telefono_caj" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="email_caj" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="direccion_caj" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="password_caj" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Administradores_codigo_admin" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
+	<field name="n_Ventas_caj" class="java.lang.Long"/>
+	<field name="sumValor" class="java.math.BigDecimal"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -134,6 +121,10 @@ where codigo_caj=$P{cod_caj} or (nombre_caj LIKE $P{nom_caj} and apellido_caj=$P
 				<text><![CDATA[Reporte de Ventas Periódico 
 Ventas realizadas por cada cajero]]></text>
 			</staticText>
+			<image>
+				<reportElement x="35" y="0" width="183" height="79" uuid="bf2d4253-d281-4e52-b3d0-9ee5c3c3b420"/>
+				<imageExpression><![CDATA["C:\\Users\\Brithany\\OneDrive - Escuela Politécnica Nacional\\TERCER SEMESTRE\\2. POO\\Proyecto-Farmacia--2do-Bimestre\\src\\Images\\logo_2.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<columnHeader>
@@ -149,53 +140,212 @@ Ventas realizadas por cada cajero]]></text>
 				<text><![CDATA[Nombres y Apellidos del cajero:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="13" y="39" width="159" height="20" uuid="e83e1f9d-7650-49d2-85f7-06a88d8325ca"/>
+				<reportElement x="13" y="39" width="105" height="20" uuid="e83e1f9d-7650-49d2-85f7-06a88d8325ca"/>
 				<textElement>
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Código de empleado:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="304" y="11" width="170" height="20" uuid="906a4c62-2dc1-441d-bd06-2f477c7a30ec"/>
+				<reportElement x="304" y="11" width="134" height="20" uuid="906a4c62-2dc1-441d-bd06-2f477c7a30ec"/>
 				<textElement>
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total de ventas realizadas:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="304" y="39" width="193" height="20" uuid="25650fb5-01f2-40c4-a40f-ff7a4d4560ef"/>
+				<reportElement x="304" y="39" width="157" height="20" uuid="25650fb5-01f2-40c4-a40f-ff7a4d4560ef"/>
 				<textElement>
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Ganancias obtenidas por cajero:]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="172" y="11" width="100" height="20" uuid="2eb3dc4f-5d51-435e-93e1-9d4295404cb8"/>
+				<textFieldExpression><![CDATA[$F{nom_apel_caj}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="118" y="39" width="100" height="20" uuid="bbc1e952-2e90-4d42-b26f-99a7cd2aff05"/>
+				<textFieldExpression><![CDATA[$F{codigo_caj}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="438" y="11" width="100" height="20" uuid="3cd449b5-3762-46aa-a570-9b5511ca1bff"/>
+				<textFieldExpression><![CDATA[$F{n_Ventas_caj}]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="364" splitType="Stretch">
 			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==1]]></printWhenExpression>
 			<staticText>
-				<reportElement x="0" y="0" width="118" height="20" uuid="6f62f443-6d8e-4923-8c05-43134c4e2452"/>
+				<reportElement x="0" y="0" width="131" height="20" uuid="6f62f443-6d8e-4923-8c05-43134c4e2452"/>
 				<box leftPadding="4"/>
 				<textElement verticalAlignment="Middle">
-					<font size="11"/>
+					<font size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Desglose de productos]]></text>
+				<text><![CDATA[Desglose de Productos]]></text>
 			</staticText>
 			<line>
-				<reportElement x="118" y="10" width="437" height="1" forecolor="#BDD9DD" uuid="e5d6932d-625d-4944-a48f-819df80110fe"/>
+				<reportElement x="131" y="10" width="424" height="2" forecolor="#BDD9DD" uuid="e5d6932d-625d-4944-a48f-819df80110fe"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
+			<staticText>
+				<reportElement x="355" y="306" width="103" height="39" uuid="aefdfe44-7471-4a5d-bab7-9733cc77389b"/>
+				<box leftPadding="9">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Impuestos generados]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="31" y="52" width="139" height="214" uuid="b59e9ed8-b455-4bbd-895a-1345a8df2bc6"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="170" y="32" width="112" height="20" uuid="85f9cd0d-84eb-4d2a-b99a-2e89c12aeb27"/>
+				<box leftPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CÓDIGO PRODUCTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="458" y="32" width="97" height="20" uuid="3c970d31-9dff-4300-88c7-339652f6603e"/>
+				<box leftPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALOR TOTAL]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="458" y="52" width="97" height="214" uuid="f85b0da0-c0b7-4f84-b624-43bf6a473576"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="52" width="31" height="214" uuid="0fe95481-f558-46c8-97df-030aebab019a"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="32" width="31" height="20" uuid="12e37450-94fa-4983-a61c-5203ec861268"/>
+				<box leftPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ITEM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="31" y="32" width="139" height="20" uuid="e4789b22-4779-449c-b8d2-6569aa5f6e9b"/>
+				<box leftPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE DEL PRODUCTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="355" y="32" width="103" height="20" uuid="22e62ba8-1ed1-4a40-ada6-c4f697f3f0e8"/>
+				<box leftPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALOR UNITARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="355" y="266" width="103" height="40" uuid="d90d1593-a8d8-47fa-b5c1-9e71ee592758"/>
+				<box leftPadding="9">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Vendido sin IVA]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="458" y="266" width="97" height="40" uuid="df7c1ab7-45a9-4575-8c39-26138aa3346f"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="170" y="52" width="112" height="214" uuid="27214874-c7bf-4294-b815-9eab0820b338"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="458" y="306" width="97" height="39" uuid="0c28db15-1f84-46cf-a4b7-2df36b3eca2a"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="282" y="52" width="73" height="214" uuid="d5cc8d66-c846-48af-ac51-6e7ea8a709b6"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="355" y="52" width="103" height="214" uuid="c3f1fbde-6c9c-458c-ba83-dae232baa00a"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="282" y="32" width="73" height="20" uuid="34031d09-6e3d-4d9b-b5ce-1f90c4ae4fa3"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="52" width="555" height="100" uuid="dd9baffe-2be9-427a-aed6-fc709a618eb8"/>
+				<subreportParameter name="codigo_caj">
+					<subreportParameterExpression><![CDATA[$P{cod_caj}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "tablaVentasCajero.jasper"]]></subreportExpression>
+			</subreport>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="458" y="266" width="97" height="40" uuid="7de6bbbe-1f13-43eb-924c-38920258eb61"/>
+				<box leftPadding="6"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{sumValor}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
 		<band height="45" splitType="Stretch"/>
 	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch"/>
 	</summary>

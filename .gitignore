@@ -6,3 +6,13 @@
 dist/README.TXT
 /nbproject/private/
 /build/
+build/classes/Vista/Confirmacion_pago$1.class
+build/classes/Vista/Confirmacion_pago$2.class
+build/classes/Vista/Confirmacion_pago.class
+build/classes/Vista/Confirmacion_pago$1.class
+build/classes/Vista/Confirmacion_pago$2.class
+build/classes/Vista/Confirmacion_pago.class
+build/classes/Vista/Confirmacion_pago.form
+build/classes/Vista/Efectivo.class
+build/classes/Vista/Home_Cajero.class
+*.form

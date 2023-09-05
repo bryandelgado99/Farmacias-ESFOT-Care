@@ -3,13 +3,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Vista;
-
+import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 /**
  *
  * @author bryan
  */
 public class Confirmacion_pago extends javax.swing.JFrame {
 
+    public static final String DB_URL = "jdbc:mysql://localhost/esfot-care";
+    public static final String USER = "root";
+    public static final String PASSWORD = "root2023";
     /**
      * Creates new form Confirmacion_pago
      */
@@ -182,6 +197,11 @@ public class Confirmacion_pago extends javax.swing.JFrame {
         generarFacturaButton.setBackground(new java.awt.Color(204, 255, 204));
         generarFacturaButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         generarFacturaButton.setText("Generar Factura");
+        generarFacturaButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                generarFacturaButtonMouseClicked(evt);
+            }
+        });
         generarFacturaButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 generarFacturaButtonActionPerformed(evt);
@@ -264,8 +284,30 @@ public class Confirmacion_pago extends javax.swing.JFrame {
     }//GEN-LAST:event_exitButtpnMouseClicked
 
     private void generarFacturaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarFacturaButtonActionPerformed
-        // TODO add your handling code here:
+        String informeOrigen="C:\\Users\\Brithany\\OneDrive - Escuela Politécnica Nacional\\TERCER SEMESTRE\\2. POO\\Proyecto-Farmacia--2do-Bimestre\\src\\Reportes\\factura.jrxml"; 
+        String informeDestino="";
+        try {
+            Connection conn=DriverManager.getConnection(DB_URL,USER,PASSWORD);
+            //Compilar el archivo jxrml
+            JasperReport jasperReport= JasperCompileManager.compileReport(informeOrigen);
+            Map parametro=new HashMap();
+            parametro.put("factura",3);
+            //Creación del informe con JasperPrint
+            JasperPrint jp=JasperFillManager.fillReport(jasperReport,parametro, conn);
+            //Exportar el formato deseado 
+            JasperExportManager.exportReportToPdf(jp);
+            //Visualizar el archivo con JasperViewer
+            JasperViewer.viewReport(jp);          
+        } catch (JRException | SQLException ex) {
+            Logger.getLogger(Confirmacion_pago.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+            
     }//GEN-LAST:event_generarFacturaButtonActionPerformed
+
+    private void generarFacturaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_generarFacturaButtonMouseClicked
+       
+    }//GEN-LAST:event_generarFacturaButtonMouseClicked
 
  
 
