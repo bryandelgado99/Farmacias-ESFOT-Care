@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -282,22 +284,20 @@ public class Confirmacion_pago extends javax.swing.JFrame {
     }//GEN-LAST:event_exitButtpnMouseClicked
 
     private void generarFacturaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarFacturaButtonActionPerformed
-              
+        String informeOrigen="C:\\Users\\Brithany\\OneDrive - Escuela Politécnica Nacional\\TERCER SEMESTRE\\2. POO\\Proyecto-Farmacia--2do-Bimestre\\src\\Reportes\\factura.jrxml"; 
+        String informeDestino="";
         try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
-            String RUTALOCAL=System.getProperty("user.dir");
+            Connection conn=DriverManager.getConnection(DB_URL,USER,PASSWORD);
+            //Compilar el archivo jxrml
+            JasperReport jasperReport= JasperCompileManager.compileReport(informeOrigen);
             Map parametro=new HashMap();
             parametro.put("factura",3);
-            //llenado de la factura
-            JasperPrint jprint=JasperFillManager.fillReport(RUTALOCAL+"/src/Reportes/factura.jasper",parametro,conn);
-            
-            //vista de la factura
-            JasperViewer view= new JasperViewer(jprint, false);
-            view.setTitle("FACTURA");
-            view.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-     
-            view.setVisible(true);
-        
+            //Creación del informe con JasperPrint
+            JasperPrint jp=JasperFillManager.fillReport(jasperReport,parametro, conn);
+            //Exportar el formato deseado 
+            JasperExportManager.exportReportToPdf(jp);
+            //Visualizar el archivo con JasperViewer
+            JasperViewer.viewReport(jp);          
         } catch (JRException | SQLException ex) {
             Logger.getLogger(Confirmacion_pago.class.getName()).log(Level.SEVERE, null, ex);
         }
