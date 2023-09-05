@@ -677,6 +677,11 @@ public class Home_Cajero extends javax.swing.JFrame {
             subtotalLabel.setText("0.00");
             ivaLabel.setText("0.00");
             totalLabel.setText("0.00");
+            textNombreCompleto.setText("");
+            ciLabel.setText("");
+            clienteDireccion.setText("");
+            cliTelef.setText("");
+            cliMail.setText("");
 
             conn.close();
         } catch (SQLException e) {
