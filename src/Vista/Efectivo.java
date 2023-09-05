@@ -224,11 +224,14 @@ public class Efectivo extends javax.swing.JFrame {
 
         String cajero = Vista.Login.getCod_caj();
         String subStr = Vista.Home_Cajero.getFormattedSubTotal();
-        double subtotal = Double.parseDouble(subStr);
+        String SubTotalT = subStr.replace(",", ".");
+        double subtotal = Double.parseDouble(SubTotalT);
         String ivStr = Vista.Home_Cajero.getFormattedIva();
-        double iva= Double.parseDouble(ivStr);
+        String ivStrT = ivStr.replace(",", ".");
+        double iva= Double.parseDouble(ivStrT);
         String toStr = Vista.Home_Cajero.getFormattedTotalT();
-        double total = Double.parseDouble(toStr);
+        String toStrT = toStr.replace(",", ".");
+        double total = Double.parseDouble(toStrT);
         
         //detalle de factura
         
