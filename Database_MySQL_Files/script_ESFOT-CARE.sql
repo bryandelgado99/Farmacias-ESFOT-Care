@@ -62,10 +62,11 @@ CREATE TABLE IF NOT EXISTS `ESFOT-CARE`.`Administradores` (
   `telefono_admin` VARCHAR(10) NULL,
   `email_admin` VARCHAR(80) NOT NULL,
   `direccion_admin` VARCHAR(45) NULL,
-  `password_admin` VARCHAR(20) NOT NULL,
+  `password_admin` VARCHAR(64) NOT NULL,
   PRIMARY KEY (`codigo_admin`))
 ENGINE = InnoDB;
 
+/*
 insert into `ESFOT-CARE`.`Administradores`
 values
 ('R8G613','Rayan','García','1700997430','0948542047','rayan@gmail.com','Lumbisi','8vx61l'),
@@ -73,6 +74,13 @@ values
 -- ('G6M486','Gemma','Cantero','1711806498','0977107932','gemma@gmail.com','Vicentina','s9ba6x'),
 -- ('M2S301','Melany','Sangucho','1753650389','0996364236','melany01-03@hotmail.com','Monjas','gd9d16'),
 -- ('V9N112','Vanessa','Navas','1760347403','0977359178','nessa@hotmail.com','El Tejar','lj8sa2');
+*/
+
+-- insert usando hash para proteccion de contraseñas
+insert into `ESFOT-CARE`.`Administradores`
+values
+('R8G613','Rayan','García','1700997430','0948542047','rayan@gmail.com','Lumbisi',sha2('8vx61l',256)),
+('L4X315','Lorena','Xu','1701147670','0957310021','lorexu@gmail.com','La Primavera',sha2('ih35dn',256));
 
 -- -----------------------------------------------------
 -- Table `ESFOT-CARE`.`Cajeros`
@@ -87,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `ESFOT-CARE`.`Cajeros` (
   `telefono_caj` VARCHAR(10) NULL,
   `email_caj` VARCHAR(80) NULL,
   `direccion_caj` VARCHAR(100) NULL,
-  `password_caj` VARCHAR(20) NOT NULL,
+  `password_caj` VARCHAR(64) NOT NULL,
   `Administradores_codigo_admin` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`codigo_caj`),
   CONSTRAINT `fk_Cajeros_Administradores1`
@@ -99,6 +107,7 @@ ENGINE = InnoDB;
 
 CREATE INDEX `fk_Cajeros_Administradores1_idx` ON `ESFOT-CARE`.`Cajeros` (`Administradores_codigo_admin` ASC) VISIBLE;
 
+/*
 insert into `ESFOT-CARE`.`Cajeros`
 values
 ('I1V658','Ines','Vilar','1788274926','0958861495','ines@hotmail.com','Miravalle','d35sd','L4X315'),
@@ -106,6 +115,16 @@ values
 ('J3F186','Javier','Ferre','1787163923','0986103085','javi@gmail.com','El Arenal','86tr6','L4X315'),
 ('P4S135','Paola','Suarez','1784380830','0979696941','pao@gmail.com','La Viña','jyt35','R8G613'),
 ('D5S251','David','Gaspar','1710837469','0994701543','davo@hotmail.com','La Armenia','95hd5a','R8G613');
+*/
+
+-- insert usando hash para proteccion de contraseñas sha2('8vx61l',256) 
+insert into `ESFOT-CARE`.`Cajeros`
+values
+('I1V658','Ines','Vilar','1788274926','0958861495','ines@hotmail.com','Miravalle',sha2('d35sd',256),'L4X315'),
+('G2S156','Graciela','Sastre','1719858499','0960133309','graciela@hotmail.com','Villa Vega',sha2('8hd6h',256),'R8G613'),
+('J3F186','Javier','Ferre','1787163923','0986103085','javi@gmail.com','El Arenal',sha2('86tr6',256),'L4X315'),
+('P4S135','Paola','Suarez','1784380830','0979696941','pao@gmail.com','La Viña',sha2('jyt35',256),'R8G613'),
+('D5S251','David','Gaspar','1710837469','0994701543','davo@hotmail.com','La Armenia',sha2('95hd5a',256),'R8G613');
 
 -- -----------------------------------------------------
 -- Table `ESFOT-CARE`.`Clientes`
@@ -137,10 +156,10 @@ CREATE TABLE IF NOT EXISTS `ESFOT-CARE`.`Cabecera_Fac` (
   `Clientes_ci_cli` VARCHAR(13) NOT NULL,
   `fecha_emision` DATE NOT NULL,
   `Cajeros_codigo_caj` VARCHAR(45) NOT NULL,
-  `subtotal_fac` DECIMAL(4,2) NULL,
-  `iva_fac` DECIMAL(4,2) NULL,
-  `descuento_fac` DECIMAL(4,2) NULL,
-  `total_pagar` DECIMAL(4,2) NULL,
+  `subtotal_fac` DECIMAL(6,2) NULL,
+  `iva_fac` DECIMAL(6,2) NULL,
+  `descuento_fac` DECIMAL(6,2) NULL,
+  `total_pagar` DECIMAL(8,2) NULL,
   `metodo_pago` VARCHAR(45) NULL,
   check (`metodo_pago` in ('Efectivo','Tarjeta')),
   PRIMARY KEY (`num_factura`),
@@ -175,8 +194,8 @@ CREATE TABLE IF NOT EXISTS `ESFOT-CARE`.`Detalle_Fac` (
   `Cabecera_Fac_num_factura` INT NOT NULL,
   `Productos_codigo_prod` VARCHAR(15) NOT NULL,
   `cantidad` INT NOT NULL,
-  `valor_venta` DECIMAL(4,2) NULL,
-  `total_det` DECIMAL(4,2) NULL,
+  `valor_venta` DECIMAL(6,2) NULL,
+  `total_det` DECIMAL(6,2) NULL,
   PRIMARY KEY (`codigo_det`),
   CONSTRAINT `fk_Detalle_Fac_Productos1`
     FOREIGN KEY (`Productos_codigo_prod`)
