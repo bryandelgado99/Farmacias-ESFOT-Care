@@ -106,7 +106,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Roboto" size="12" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="C&#xe9;dula / C&#xf3;digo de administ.:"/>
+                <Property name="text" type="java.lang.String" value="C&#xf3;digo de administrador:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
@@ -198,7 +198,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Roboto" size="12" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="C&#xe9;dula / C&#xf3;digo de cajero:"/>
+                <Property name="text" type="java.lang.String" value="C&#xf3;digo de cajero:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel6">
