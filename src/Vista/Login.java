@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  *
@@ -192,7 +194,7 @@ public class Login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Usuario o contraseña incorrectos!","Error",JOptionPane.ERROR_MESSAGE);
                 limpiarRegistro(admiInput,pass_admiInput); 
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (ClassNotFoundException | NoSuchAlgorithmException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_ingresarButtonActionPerformed
@@ -218,7 +220,7 @@ public class Login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Usuario o contraseña incorrectos!","Error",JOptionPane.ERROR_MESSAGE);
                 limpiarRegistro(cajeroInput,cajero_passInput);        
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (ClassNotFoundException | NoSuchAlgorithmException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_ingresarButton2ActionPerformed
@@ -256,22 +258,26 @@ public class Login extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
         //metodo para verificar credenciales
-    public boolean iniciarSesionDB(String tabla, String cod_user, String ci_user, String password_user, String cod_in,String ci_in, String password_in) throws ClassNotFoundException{
-        String QUERY = "SELECT "+cod_user+","+ci_user+","+password_user+" from "+tabla+" where "+cod_user+" = ? or "+ci_user+" = ?";
+    public boolean iniciarSesionDB(String tabla, String cod_user, String ci_user, String password_user, String cod_in,String ci_in, String password_in) throws ClassNotFoundException, NoSuchAlgorithmException{
+        String QUERY = "SELECT "+cod_user+","+ci_user+","+password_user+
+                       " from "+tabla+
+                       " where ("+cod_user+" = ? || "+ci_user+" = ?) and "+password_user+" = ?";
         try(
                 Connection connection = DriverManager.getConnection(DB_URL, USER,PASSWORD);
                 PreparedStatement statement = connection.prepareStatement(QUERY);
                 ){
+                String passwordHash = calcularHashSHA256(password_in);
                 statement.setString(1,cod_in);
                 statement.setString(2,ci_in);
+                statement.setString(3, passwordHash);
                 ResultSet resultSet = statement.executeQuery();
                 
             while(resultSet.next()){
                 String obtenerCod = resultSet.getString(cod_user);
                 String obtenerCI = resultSet.getString(ci_user);
                 String obtenerPass = resultSet.getString(password_user);
-                if((cod_in.equals(obtenerCod) && password_in.equals(obtenerPass)) | 
-                    (ci_in.equals(obtenerCI) && password_in.equals(obtenerPass))){
+                if((cod_in.equals(obtenerCod) && passwordHash.equals(obtenerPass)) | 
+                    (ci_in.equals(obtenerCI) && passwordHash.equals(obtenerPass))){
                     return true;
                 }
             }
@@ -285,6 +291,22 @@ public class Login extends javax.swing.JFrame {
     private void limpiarRegistro(JTextField userInput, JPasswordField passInput){
         userInput.setText(null);
         passInput.setText(null);
+    }
+    
+    //metodo para calculo de hash con sha256
+    public static String calcularHashSHA256(String input) throws NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hashBytes = digest.digest(input.getBytes());
+        StringBuilder hexString = new StringBuilder(2 * hashBytes.length);
+
+        for (byte hashByte : hashBytes) {
+            String hex = Integer.toHexString(0xff & hashByte);
+            if (hex.length() == 1) {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+        }
+        return hexString.toString();
     }
 }
 
