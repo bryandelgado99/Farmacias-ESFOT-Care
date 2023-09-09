@@ -4,6 +4,15 @@
  */
 package Vista;
 
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.HeadlessException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -786,8 +795,59 @@ public class Home_Cajero extends javax.swing.JFrame {
         return valorTotalUnitario;
     }
     
+    public  void pdf(){
+        Document doc=new Document();
+        try{
+            PdfWriter.getInstance(doc, new FileOutputStream("Facturas/Factura.pdf"));
+            Image logo= Image.getInstance("src/Images/logo_2.png");
+            logo.scaleToFit(150, 200);
+            logo.setAlignment(Chunk.ALIGN_CENTER);
+            doc.open();
+            PdfPTable detFact=new PdfPTable(6);
+            detFact.addCell("ITEM");
+            detFact.addCell("NOMBRE DEL PRODUCTO");
+            detFact.addCell("CÓDIGO DEL CÓDIGO PRODUCTO");
+            detFact.addCell("CANTIDAD");
+            detFact.addCell("VALOR UNITARIO");
+            detFact.addCell("VALOR TOTAL");
+            
+            try{
+                Connection con=DriverManager.getConnection(DB_URL,USER,PASSWORD);
+                String queryDet="select \n"+
+                "ROW_NUMBER() OVER (ORDER BY DET.Productos_codigo_prod) AS ITEM,\n" +
+                "det.Productos_codigo_prod AS CODÍGO_PRODUCTO,\n" +
+                "prod.nombre_prod AS NOMBRE_DEL_PRODUCTO,\n" +
+                "det.cantidad AS CANTIDAD,\n" +
+                "prod.valventa_prod AS VALOR_UNITARIO,\n" +
+                "prod.valventa_prod * det.cantidad AS VALOR_TOTAL\n" +
+                "from cabecera_fac CAB JOIN detalle_fac DET ON CAB.num_factura=DET.Cabecera_Fac_num_factura JOIN\n" +
+                "productos PROD ON det.Productos_codigo_prod = prod.codigo_prod\n" +
+                "where num_factura='"+countTa+"';";
+                PreparedStatement pst=con.prepareStatement(queryDet);
+                
+                ResultSet rs=pst.executeQuery();
+                
+                if(rs.next()){
+                    do{
+                        detFact.addCell(rs.getString(1));
+                        detFact.addCell(rs.getString(2));
+                        detFact.addCell(rs.getString(3));
+                        detFact.addCell(rs.getString(4));
+                        detFact.addCell(rs.getString(5));
+                        detFact.addCell(rs.getString(6));      
+                    }while(rs.next());
+                    doc.add(detFact);         
+                }
+            }catch(DocumentException | SQLException e){   
+            }
+            doc.close();
+            JOptionPane.showMessageDialog(null,"Factura Creada");
+        }catch(DocumentException | HeadlessException | IOException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
     
-    
+     
     
     
     
