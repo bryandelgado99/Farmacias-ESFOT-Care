@@ -800,14 +800,15 @@ public class Home_Cajero extends javax.swing.JFrame {
     }
     
     public void pdf(){
-        Document doc=new Document();
-        try{
-            PdfWriter.getInstance(doc, new FileOutputStream("src/PDF/Factura.pdf"));
-            Image logo= Image.getInstance("src/Images/logo_2.png");
+        Document doc = new Document();
+
+        try {
+            PdfWriter.getInstance(doc, new FileOutputStream("src/PDF/Factura_" + (getCountTa() - 1)+ ".pdf"));
+            Image logo = Image.getInstance("src/Images/logo_2.png");
             logo.scaleToFit(150, 200);
             logo.setAlignment(Chunk.ALIGN_CENTER);
-            
-            Paragraph dataEmpresa=new Paragraph();
+
+            Paragraph dataEmpresa = new Paragraph();
             //--encabezado---
             dataEmpresa.setAlignment(Paragraph.ALIGN_CENTER);
             dataEmpresa.add("Dirección: Av. Isabel la Católica y Alfredo Mena Caamaño\n" +
@@ -816,52 +817,62 @@ public class Home_Cajero extends javax.swing.JFrame {
                             "RUC: 17506299778001\n" +
                             "Aut. SRI: 121514478\n" +
                             "Fecha de autorización: 19/08/2023");
-            dataEmpresa.setFont(FontFactory.getFont("Sans serif",11,Font.BOLD,BaseColor.BLACK));
-            
+            dataEmpresa.setFont(FontFactory.getFont("Sans serif", 11, Font.BOLD, BaseColor.BLACK));
+
             doc.open();
             doc.add(logo);
             doc.add(dataEmpresa);
             //---Detalle Factura
-            PdfPTable detFact=new PdfPTable(6);
+            PdfPTable detFact = new PdfPTable(6);
             detFact.addCell("ITEM");
             detFact.addCell("NOMBRE DEL PRODUCTO");
             detFact.addCell("CÓDIGO DEL CÓDIGO PRODUCTO");
             detFact.addCell("CANTIDAD");
             detFact.addCell("VALOR UNITARIO");
             detFact.addCell("VALOR TOTAL");
-            
-            try{
-                Connection con=DriverManager.getConnection(DB_URL,USER,PASSWORD);
-                String queryDet="select"+
-                "ROW_NUMBER() OVER (ORDER BY DET.Productos_codigo_prod) AS ITEM,"+
-                "det.Productos_codigo_prod AS CODÍGO_PRODUCTO,"+
-                "prod.nombre_prod AS NOMBRE_DEL_PRODUCTO,"+
-                "det.cantidad AS CANTIDAD,"+
-                "prod.valventa_prod AS VALOR_UNITARIO,"+
-                "prod.valventa_prod * det.cantidad AS VALOR_TOTAL"+
-                "from cabecera_fac CAB JOIN detalle_fac DET ON CAB.num_factura=DET.Cabecera_Fac_num_factura JOIN"+
-                "productos PROD ON det.Productos_codigo_prod = prod.codigo_prod";
-                
-                PreparedStatement pst=con.prepareStatement(queryDet);
-                
-                ResultSet rs=pst.executeQuery();
-                
-                if(rs.next()){
-                    do{
-                        detFact.addCell(rs.getString(1));
-                        detFact.addCell(rs.getString(2));
-                        detFact.addCell(rs.getString(3));
-                        detFact.addCell(rs.getString(4));
-                        detFact.addCell(rs.getString(5));
-                        detFact.addCell(rs.getString(6));      
-                    }while(rs.next());
-                    doc.add(detFact);         
+
+            try {
+                Connection con = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+                String queryDet = "SELECT\n" +
+                        "    ROW_NUMBER() OVER (ORDER BY DET.Productos_codigo_prod) AS ITEM,\n" +
+                        "    det.Productos_codigo_prod AS CODÍGO_PRODUCTO,\n" +
+                        "    prod.nombre_prod AS NOMBRE_DEL_PRODUCTO,\n" +
+                        "    det.cantidad AS CANTIDAD,\n" +
+                        "    prod.valventa_prod AS VALOR_UNITARIO,\n" +
+                        "    prod.valventa_prod * det.cantidad AS VALOR_TOTAL\n" +
+                        "FROM\n" +
+                        "    cabecera_fac CAB\n" +
+                        "JOIN\n" +
+                        "    detalle_fac DET ON CAB.num_factura = DET.Cabecera_Fac_num_factura\n" +
+                        "JOIN\n" +
+                        "    productos PROD ON DET.Productos_codigo_prod = PROD.codigo_prod\n" +
+                        "WHERE\n" +
+                        "    CAB.num_factura = ?";
+
+                PreparedStatement pst = con.prepareStatement(queryDet);
+                pst.setInt(1, getCountTa() - 1 );
+                ResultSet rs = pst.executeQuery();
+                System.out.println("dsfsdf: " + (getCountTa() - 1));
+
+                if (rs.next()) {
+                    do {
+                        // Agregar cada valor a la tabla detFact
+                        detFact.addCell(rs.getString("ITEM"));
+                        detFact.addCell(rs.getString("CODÍGO_PRODUCTO"));
+                        detFact.addCell(rs.getString("NOMBRE_DEL_PRODUCTO"));
+                        detFact.addCell(rs.getString("CANTIDAD"));
+                        detFact.addCell(rs.getString("VALOR_UNITARIO"));
+                        detFact.addCell(rs.getString("VALOR_TOTAL"));
+                    } while (rs.next());
+                    doc.add(detFact);
                 }
-            }catch(DocumentException | SQLException e){   
+            } catch (DocumentException | SQLException e) {
+                e.printStackTrace();
             }
             doc.close();
-            JOptionPane.showMessageDialog(null,"Factura Creada");
-        }catch(DocumentException | HeadlessException | IOException e){
+            JOptionPane.showMessageDialog(null, "Factura Creada");
+            
+        } catch (DocumentException | HeadlessException | IOException e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }
