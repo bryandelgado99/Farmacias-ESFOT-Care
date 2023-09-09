@@ -833,13 +833,13 @@ public class Home_Cajero extends javax.swing.JFrame {
             try{
                 Connection con=DriverManager.getConnection(DB_URL,USER,PASSWORD);
                 String queryDet="select"+
-                "ROW_NUMBER() OVER (ORDER BY DET.Productos_codigo_prod) AS ITEM,\n" +
-                "det.Productos_codigo_prod AS CODÍGO_PRODUCTO,\n" +
-                "prod.nombre_prod AS NOMBRE_DEL_PRODUCTO,\n" +
-                "det.cantidad AS CANTIDAD,\n" +
-                "prod.valventa_prod AS VALOR_UNITARIO,\n" +
-                "prod.valventa_prod * det.cantidad AS VALOR_TOTAL\n" +
-                "from cabecera_fac CAB JOIN detalle_fac DET ON CAB.num_factura=DET.Cabecera_Fac_num_factura JOIN\n" +
+                "ROW_NUMBER() OVER (ORDER BY DET.Productos_codigo_prod) AS ITEM,"+
+                "det.Productos_codigo_prod AS CODÍGO_PRODUCTO,"+
+                "prod.nombre_prod AS NOMBRE_DEL_PRODUCTO,"+
+                "det.cantidad AS CANTIDAD,"+
+                "prod.valventa_prod AS VALOR_UNITARIO,"+
+                "prod.valventa_prod * det.cantidad AS VALOR_TOTAL"+
+                "from cabecera_fac CAB JOIN detalle_fac DET ON CAB.num_factura=DET.Cabecera_Fac_num_factura JOIN"+
                 "productos PROD ON det.Productos_codigo_prod = prod.codigo_prod";
                 
                 PreparedStatement pst=con.prepareStatement(queryDet);
