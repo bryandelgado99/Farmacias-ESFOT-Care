@@ -4,10 +4,14 @@
  */
 package Vista;
 
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.HeadlessException;
@@ -795,14 +799,29 @@ public class Home_Cajero extends javax.swing.JFrame {
         return valorTotalUnitario;
     }
     
-    public  void pdf(){
+    public void pdf(){
         Document doc=new Document();
         try{
-            PdfWriter.getInstance(doc, new FileOutputStream("Facturas/Factura.pdf"));
+            PdfWriter.getInstance(doc, new FileOutputStream("src/PDF/Factura.pdf"));
             Image logo= Image.getInstance("src/Images/logo_2.png");
             logo.scaleToFit(150, 200);
             logo.setAlignment(Chunk.ALIGN_CENTER);
+            
+            Paragraph dataEmpresa=new Paragraph();
+            //--encabezado---
+            dataEmpresa.setAlignment(Paragraph.ALIGN_CENTER);
+            dataEmpresa.add("Dirección: Av. Isabel la Católica y Alfredo Mena Caamaño\n" +
+                            "Teléfono: 22887588 / 0999 999 9999\n" +
+                            "Obligado a llevar contabilidad\n\n" +
+                            "RUC: 17506299778001\n" +
+                            "Aut. SRI: 121514478\n" +
+                            "Fecha de autorización: 19/08/2023");
+            dataEmpresa.setFont(FontFactory.getFont("Sans serif",11,Font.BOLD,BaseColor.BLACK));
+            
             doc.open();
+            doc.add(logo);
+            doc.add(dataEmpresa);
+            //---Detalle Factura
             PdfPTable detFact=new PdfPTable(6);
             detFact.addCell("ITEM");
             detFact.addCell("NOMBRE DEL PRODUCTO");
@@ -813,7 +832,7 @@ public class Home_Cajero extends javax.swing.JFrame {
             
             try{
                 Connection con=DriverManager.getConnection(DB_URL,USER,PASSWORD);
-                String queryDet="select \n"+
+                String queryDet="select"+
                 "ROW_NUMBER() OVER (ORDER BY DET.Productos_codigo_prod) AS ITEM,\n" +
                 "det.Productos_codigo_prod AS CODÍGO_PRODUCTO,\n" +
                 "prod.nombre_prod AS NOMBRE_DEL_PRODUCTO,\n" +
@@ -821,8 +840,8 @@ public class Home_Cajero extends javax.swing.JFrame {
                 "prod.valventa_prod AS VALOR_UNITARIO,\n" +
                 "prod.valventa_prod * det.cantidad AS VALOR_TOTAL\n" +
                 "from cabecera_fac CAB JOIN detalle_fac DET ON CAB.num_factura=DET.Cabecera_Fac_num_factura JOIN\n" +
-                "productos PROD ON det.Productos_codigo_prod = prod.codigo_prod\n" +
-                "where num_factura='"+countTa+"';";
+                "productos PROD ON det.Productos_codigo_prod = prod.codigo_prod";
+                
                 PreparedStatement pst=con.prepareStatement(queryDet);
                 
                 ResultSet rs=pst.executeQuery();
