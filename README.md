@@ -30,8 +30,44 @@ Todo el proyecto se realizó mediante el IDE Netbeans, las librería de Absolute
 - ### Requisitos del sistema
   - JDK version: 20.0 o posterior
   - Versión de MySQL: 8.0
-
+    - Usuario DB: root
+    - Password DB: root2023
 ## Desarrollo
+- Login del sistema  
+  ![login](Capturas/login.png)
+- ### Admministrador
+    - Home de administrador con notificaciones de alerta
+      ![home_admin](Capturas/home_admin.png)
+    - Listado de empleados
+      ![listado_empleados](Capturas/lista_empleados.png)
+        - Agregar Empleados
+          ![agregar_emp](Capturas/agregar_cajero.png)
+        - Eliminar empleados
+          ![quitar_emp](Capturas/eliminar_cajero.png)
+    - Listado de Productos en inventario
+      ![lista_prd](Capturas/inventario.png)
+        - Agregar producto
+          ![add_prd](Capturas/agregar_producto.png)
+        - Eliminar producto
+          ![quitar_prd](Capturas/eliminar_producto.png)
+        - Modificar Stock de cualquier producto
+          ![modif_stock](Capturas/modificar_stock.png)
+    - Reportes de ventas
+      ![reportes](Capturas/vista_reportes.png)
+        - Generación de reportes en PDF de ventas por cada cajero
+          ![pdf_reporte]()
+- ### Cajero
+    - Pantalla principal del cajero
+      ![pantalla_cajero](Capturas/home_cajero.png)
+    - Realización de venta
+      ![realizacion_venta](https://github.com/bryandelgado99/Proyecto-Farmacia--2do-Bimestre/blob/b6025b4e5aa06390f34210d8a838b6fa4045fd47/Capturas/realizacion%20de%20venta.png)
+      - No se pueden repetir productos  
+        ![](Capturas/no_repeticion.png)
+      - Pago efectivo presenta ventana para devolucion de dinero  
+        ![](Capturas/pago_efectivo.png)
+    - Aprobación de pago y generación de factura en PDF  
+      ![](Capturas/pago_realizado.png)
+      ![factura](Capturas/ejemplo_factura.png)
 ## Funcionalidades
 Este proyecto permite generar un sistema para una farmacia que posee un CRUD como elemento base, en un sistema Vista-Controlador. Este mismo permite realizar las accione spor cajero y administrador, de la siguiente clasificación de actividades:
 - ### Administrador
@@ -48,8 +84,18 @@ Este proyecto permite generar un sistema para una farmacia que posee un CRUD com
     - El pago con tarjeta es visual, se genera de manera automática.
   - Generación de factura de cliente en formato PDF.
 ## Conclusiones
+- Complejidad de la Regulación Farmacéutica: El sector farmacéutico está altamente regulado en la mayoría de los países. Concluir que se necesita un profundo conocimiento de las regulaciones locales y nacionales para asegurarse de que el sistema cumpla con todos los requisitos legales, como el registro y seguimiento de productos, la gestión de recetas médicas y la privacidad de los datos de los pacientes.
+
+- Interfaz de Usuario Amigable: Una de las conclusiones clave es que la interfaz de usuario debe ser intuitiva y fácil de usar para el personal de la farmacia. Esto implica la necesidad de diseñar una interfaz amigable que permita a los empleados realizar tareas como la gestión de inventario, la atención al cliente y la venta de productos de manera eficiente.
+
+- Gestión de Inventarios y Caducidades: La gestión de inventarios en una farmacia es crítica para garantizar la disponibilidad de medicamentos y productos. El sistema debe ser capaz de llevar un registro en tiempo real de los niveles de inventario y alertar sobre productos próximos a vencer o caducados, lo que requiere una base de datos eficiente y un seguimiento constante.
+
+- Seguridad y Privacidad de Datos: Otra conclusión importante es que se debe garantizar la seguridad y privacidad de los datos de los pacientes y la información financiera. Esto implica implementar medidas de seguridad robustas, como la encriptación de datos y el acceso controlado al sistema, para proteger la información sensible.
+
+- Integración con Sistemas Externos: En el contexto de la atención médica, es común que una farmacia deba interactuar con otros sistemas, como sistemas de seguros médicos o sistemas de atención médica electrónica (EHR). Concluir que es esencial la capacidad de integración de su sistema de gestión y venta con otros sistemas para facilitar la facturación, el procesamiento de reclamos y la coordinación de la atención médica.
+
 ## Anexos
 - ### Documentación
   - [Actividades del Proyecto](https://www.notion.so/Esquemas-y-Resultados-67fe02e9a2784f1087546e5faff61e94)
   - [Archivos Externos](https://www.notion.so/Archivos-externos-7e8bd1359d49442dba2ce7f4342e7669)
- 
+  - [Link del video explicativo]()
