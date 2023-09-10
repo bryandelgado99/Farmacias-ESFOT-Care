@@ -55,9 +55,6 @@ public class Lista_Empleado extends javax.swing.JFrame {
         empleadosMenu = new javax.swing.JMenu();
         inventarioMenu = new javax.swing.JMenu();
         reportesMenu = new javax.swing.JMenu();
-        reporteStock = new javax.swing.JMenuItem();
-        jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem3 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -212,26 +209,11 @@ public class Lista_Empleado extends javax.swing.JFrame {
 
         reportesMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/books.png"))); // NOI18N
         reportesMenu.setText("Reportes");
-
-        reporteStock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/report_2.png"))); // NOI18N
-        reporteStock.setText("Reporte de Venta");
-        reporteStock.addMouseListener(new java.awt.event.MouseAdapter() {
+        reportesMenu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                reporteStockMouseClicked(evt);
+                reportesMenuMouseClicked(evt);
             }
         });
-        reporteStock.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reporteStockActionPerformed(evt);
-            }
-        });
-        reportesMenu.add(reporteStock);
-        reportesMenu.add(jSeparator1);
-
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/file.png"))); // NOI18N
-        jMenuItem3.setText("Reporte de Stock");
-        reportesMenu.add(jMenuItem3);
-
         jMenuBar1.add(reportesMenu);
 
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/sign-out-alt.png"))); // NOI18N
@@ -257,10 +239,6 @@ public class Lista_Empleado extends javax.swing.JFrame {
     private void inventarioMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventarioMenuActionPerformed
 
     }//GEN-LAST:event_inventarioMenuActionPerformed
-
-    private void reporteStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteStockActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_reporteStockActionPerformed
 
     private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
         this.setVisible(false);
@@ -432,11 +410,11 @@ public class Lista_Empleado extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonBuscarCajeroCodActionPerformed
 
-    private void reporteStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reporteStockMouseClicked
-        Reportes reporte_venta = new Reportes();
-        this.setVisible(false);
-        reporte_venta.setVisible(true);
-    }//GEN-LAST:event_reporteStockMouseClicked
+    private void reportesMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportesMenuMouseClicked
+       Reportes reporte = new Reportes();
+       this.setVisible(false);
+       reporte.setVisible(true);
+    }//GEN-LAST:event_reportesMenuMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarCajero;
@@ -455,10 +433,7 @@ public class Lista_Empleado extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JMenuItem reporteStock;
     private javax.swing.JMenu reportesMenu;
     // End of variables declaration//GEN-END:variables
 }

@@ -108,7 +108,7 @@ public class Eliminar_producto extends javax.swing.JFrame {
             }
         });
 
-        descriptLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        descriptLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         jButtonBuscarDelete.setText("Buscar");
         jButtonBuscarDelete.addActionListener(new java.awt.event.ActionListener() {

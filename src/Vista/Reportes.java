@@ -54,9 +54,6 @@ public class Reportes extends javax.swing.JFrame {
         empleadosMenu = new javax.swing.JMenu();
         inventarioMenu = new javax.swing.JMenu();
         reportesMenu = new javax.swing.JMenu();
-        reporteVentaField = new javax.swing.JMenuItem();
-        jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem3 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -222,21 +219,6 @@ public class Reportes extends javax.swing.JFrame {
 
         reportesMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/books.png"))); // NOI18N
         reportesMenu.setText("Reportes");
-
-        reporteVentaField.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/report_2.png"))); // NOI18N
-        reporteVentaField.setText("Reporte de Venta");
-        reporteVentaField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reporteVentaFieldActionPerformed(evt);
-            }
-        });
-        reportesMenu.add(reporteVentaField);
-        reportesMenu.add(jSeparator1);
-
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/file.png"))); // NOI18N
-        jMenuItem3.setText("Reporte de Stock");
-        reportesMenu.add(jMenuItem3);
-
         jMenuBar1.add(reportesMenu);
 
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/sign-out-alt.png"))); // NOI18N
@@ -272,10 +254,6 @@ public class Reportes extends javax.swing.JFrame {
     private void inventarioMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventarioMenuActionPerformed
 
     }//GEN-LAST:event_inventarioMenuActionPerformed
-
-    private void reporteVentaFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteVentaFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_reporteVentaFieldActionPerformed
 
     private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
         this.setVisible(false);
@@ -450,13 +428,10 @@ public class Reportes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JButton reporteCajeroBtn;
     private javax.swing.JButton reporteGeneralBtn;
     private javax.swing.JTable reporteTable;
-    private javax.swing.JMenuItem reporteVentaField;
     private javax.swing.JMenu reportesMenu;
     // End of variables declaration//GEN-END:variables
 }

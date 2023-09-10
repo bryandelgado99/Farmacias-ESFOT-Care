@@ -803,7 +803,7 @@ public class Home_Cajero extends javax.swing.JFrame {
         Document doc = new Document();
 
         try {
-            PdfWriter.getInstance(doc, new FileOutputStream("src/PDF/Factura_" + (getCountTa() - 1)+ ".pdf"));
+            PdfWriter.getInstance(doc, new FileOutputStream("facturas_out/Factura_" + (getCountTa() - 1)+ ".pdf"));
             Image logo = Image.getInstance("src/Images/logo_2.png");
             logo.scaleToFit(150, 200);
             logo.setAlignment(Chunk.ALIGN_CENTER);
