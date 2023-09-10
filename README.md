@@ -30,6 +30,26 @@ Todo el proyecto se realizó mediante el IDE Netbeans, las librería de Absolute
 - ### Requisitos del sistema
   - JDK version: 20.0 o posterior
   - Versión de MySQL: 8.0
+
+## Desarrollo
+## Funcionalidades
+Este proyecto permite generar un sistema para una farmacia que posee un CRUD como elemento base, en un sistema Vista-Controlador. Este mismo permite realizar las accione spor cajero y administrador, de la siguiente clasificación de actividades:
+- ### Administrador
+  - Verificar la fluidez y acceder al sistema por su apartado correspondiente.
+  - Agregar y eliminar usuarios de tipo cajero.
+  - Agregar, mdificar y eliminar productos al inventario del sistema. Estos mismos será presentados en una tabla general.
+  - Gnerar un reporte de ventas por cada cajero, realizando una sumatoria total de venta de cada uno de estos.
+  - Generar y guardar un archivo PDF con los reportes.
+- ### Cajero
+  - Ingreso de datos de cliente para facturación.
+  - Selección de productos e ingreso de cantidades necesarias para la compra.
+  - Realización de venta y selección de métodos de pago.
+    - El pago con efectivo genera una operación, en el cual se ingresa el valor entregado (entero) y se devuelve el valor de devolución monetaria al cliente.
+    - El pago con tarjeta es visual, se genera de manera automática.
+  - Generación de factura de cliente en formato PDF.
+## Conclusiones
+## Anexos
 - ### Documentación
   - [Actividades del Proyecto](https://www.notion.so/Esquemas-y-Resultados-67fe02e9a2784f1087546e5faff61e94)
   - [Archivos Externos](https://www.notion.so/Archivos-externos-7e8bd1359d49442dba2ce7f4342e7669)
+ 
