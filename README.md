@@ -35,7 +35,7 @@ Todo el proyecto se realizó mediante el IDE Netbeans, las librería de Absolute
 ## Desarrollo
 - Login del sistema  
   ![login](Capturas/login.png)
-- ### Admministrador
+- ### Administrador
     - Home de administrador con notificaciones de alerta
       ![home_admin](Capturas/home_admin.png)
     - Listado de empleados
