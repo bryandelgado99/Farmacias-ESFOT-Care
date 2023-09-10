@@ -16,3 +16,6 @@ build/classes/Vista/Confirmacion_pago.form
 build/classes/Vista/Efectivo.class
 build/classes/Vista/Home_Cajero.class
 *.form
+/JavaApplication3/nbproject/private/
+/EnviarCorreo/nbproject/private/
+/EnviarCorreo/build/

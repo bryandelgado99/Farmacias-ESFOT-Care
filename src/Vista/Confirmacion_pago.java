@@ -4,6 +4,10 @@
  */
 package Vista;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.MessagingException;
+
 /**
  *
  * @author bryan
@@ -272,8 +276,8 @@ public class Confirmacion_pago extends javax.swing.JFrame {
     }//GEN-LAST:event_exitButtpnMouseClicked
 
     private void generarFacturaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarFacturaButtonActionPerformed
-    Home_Cajero factura=new Home_Cajero();
-    factura.pdf();
+        Home_Cajero factura = new Home_Cajero();
+ 
     }//GEN-LAST:event_generarFacturaButtonActionPerformed
 
     private void generarFacturaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_generarFacturaButtonMouseClicked
