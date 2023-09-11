@@ -802,6 +802,9 @@ public class Home_Cajero extends javax.swing.JFrame {
         return valorTotalUnitario;
     }
     
+    //varaible para encontrar el meotdo de pago
+    public static String metodopago;
+    
     public void pdf(){
         Document doc = new Document();
 
@@ -846,11 +849,29 @@ public class Home_Cajero extends javax.swing.JFrame {
             
             //---Datos del cliente
 
-            Paragraph dataCli1 =new Paragraph();
-            dataCli1.add("\n\tNombres y apellidos: "+apellido+" "+nombre+"\n\n"
-                    + "\tC.I/RUC: "+cedula+"\n\n"+
-                    "\tTélefono: "+telefono+"\n\n"+
-                    "\tMétodo de Pago: "+"\n\n\n");
+            try {
+                Connection concli = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+                String querycli = "SELECT * FROM cabecera_fac WHERE num_factura = ?";
+
+                PreparedStatement pst = concli.prepareStatement(querycli);
+
+                pst.setInt(1, (getCountTa()-1));
+
+                ResultSet rs = pst.executeQuery();
+                
+                if (rs.next()) {
+                    metodopago = rs.getString("metodo_pago");
+                    System.out.println("metodo:  " + metodopago + (getCountTa()-1));
+                } 
+                  
+
+                // Cerrar ResultSet, PreparedStatement y Connection cuando hayas terminado
+                rs.close();
+                pst.close();
+                concli.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             
             Paragraph dataCli2= new Paragraph();
             Date date=new Date();
