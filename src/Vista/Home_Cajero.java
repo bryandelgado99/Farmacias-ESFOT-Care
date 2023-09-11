@@ -837,8 +837,7 @@ public class Home_Cajero extends javax.swing.JFrame {
             saltoLinea.add(new Phrase(Chunk.NEWLINE));
             
             Paragraph nfactura=new Paragraph();
-            nfactura.add("FACTURA NRO.");
-            nfactura.setFont(fontEnc);
+            nfactura.add(new Phrase("FACTURA NRO."+(countTa-1),fontEnc));
             
             doc.open();
             doc.add(encabezado);
@@ -865,10 +864,11 @@ public class Home_Cajero extends javax.swing.JFrame {
             PdfPCell col1 =new PdfPCell(dataCli1);
             PdfPCell col2=new PdfPCell(new Phrase(""));
             PdfPCell col3=new PdfPCell(dataCli2);
-            col1.setBorder(3);
-            col2.setBorder(2);
-            col3.setBorder(3);
-            clientes.getDefaultCell().setBorder(4);
+            col1.setBorder(0);
+            col2.setBorder(0);
+            col3.setBorder(0);
+            clientes.getDefaultCell().setBorderWidth(1f);
+            clientes.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
             clientes.addCell(col1);
             clientes.addCell(col2);
             clientes.addCell(col3);
@@ -881,6 +881,7 @@ public class Home_Cajero extends javax.swing.JFrame {
             detFact.setWidthPercentage(100);
             float [] columnDet = new float[]{10f,33f,35f,17f,20f,20f};
             detFact.setWidths(columnDet);
+            detFact.getDefaultCell().setBorderWidth(1f);
             detFact.setHorizontalAlignment(Element.ALIGN_CENTER);
             detFact.addCell("ITEM");
             detFact.addCell("NOMBRE DEL PRODUCTO");
@@ -933,13 +934,39 @@ public class Home_Cajero extends javax.swing.JFrame {
              //--TOTALES
             PdfPTable subtotal = new PdfPTable(2);
             subtotal.setHorizontalAlignment(Element.ALIGN_RIGHT);
-            float [] colTotales=new float[]{20f,20f};
+            subtotal.setWidthPercentage(30);
+            float [] colTotales=new float[]{50f,50f};
             subtotal.setWidths(colTotales);
-            subtotal.addCell(new Phrase("Subtotal",fontEnc));
-            subtotal.addCell(new Phrase(formattedSubTotal));
-            
+            subtotal.addCell(new Phrase("Subtotal:",fontEnc));
+            subtotal.addCell(new Phrase(formattedSubTotal, fontEnc));
             doc.add(subtotal);
-           
+            
+            //iva
+            PdfPTable iva = new PdfPTable(2);
+            iva.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            iva.setWidthPercentage(29);
+            iva.setWidths(colTotales);
+            iva.addCell(new Phrase("Iva(12%):",fontEnc));
+            iva.addCell(new Phrase(formattedIva, fontEnc));
+            
+            //total a pagar
+            PdfPTable descuento = new PdfPTable(2);
+            descuento.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            descuento.setWidthPercentage(29);
+            descuento.setWidths(colTotales);
+            descuento.addCell(new Phrase("Descuento:",fontEnc));
+            descuento.addCell(new Phrase("",fontEnc));
+            
+            PdfPTable totalPagar = new PdfPTable(2);
+            totalPagar.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            totalPagar.setWidthPercentage(29);
+            totalPagar.setWidths(colTotales);
+            totalPagar.addCell(new Phrase("Total a Pagar:",fontEnc));
+            totalPagar.addCell(new Phrase( formattedTotalT,fontEnc));
+ 
+            doc.add(iva);
+            doc.add(descuento);
+            doc.add(totalPagar);
             doc.close();
             JOptionPane.showMessageDialog(null, "Factura Creada");
             
