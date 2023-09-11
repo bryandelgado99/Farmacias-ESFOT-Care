@@ -14,6 +14,7 @@ import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.HeadlessException;
@@ -809,6 +810,7 @@ public class Home_Cajero extends javax.swing.JFrame {
             Image logo = Image.getInstance("src/Images/logo_2.png");
             logo.scaleToFit(160, 210);
             logo.setAlignment(Chunk.ALIGN_CENTER);
+            Font fontEnc = new Font(Font.FontFamily.HELVETICA, 11, Font.BOLD);
             Paragraph dataEmpresa = new Paragraph();
             //--encabezado---
             
@@ -826,7 +828,7 @@ public class Home_Cajero extends javax.swing.JFrame {
                             "RUC: 17506299778001\n" +
                             "Aut. SRI: 121514478\n" +
                             "Fecha de autorización: 19/08/2023");
-            dataEmpresa.setFont(FontFactory.getFont("Sans serif", 11, Font.BOLD, BaseColor.BLACK));
+            dataEmpresa.setFont(fontEnc);
             encabezado.addCell(logo);
             encabezado.addCell("");
             encabezado.addCell(dataEmpresa);
@@ -836,7 +838,7 @@ public class Home_Cajero extends javax.swing.JFrame {
             
             Paragraph nfactura=new Paragraph();
             nfactura.add("FACTURA NRO.");
-            nfactura.setFont(FontFactory.getFont("Sans serif",11,Font.BOLD,BaseColor.BLACK));
+            nfactura.setFont(fontEnc);
             
             doc.open();
             doc.add(encabezado);
@@ -846,24 +848,30 @@ public class Home_Cajero extends javax.swing.JFrame {
             //---Datos del cliente
 
             Paragraph dataCli1 =new Paragraph();
-            dataCli1.add("Nombres y apellidos: "+apellido+" "+nombre+"\n\n"
-                    + "C.I/RUC: "+cedula+"\n\n"+
-                    "Télefono: "+telefono+"\n\n"+
-                    "Método de Pago: "+"\n");
+            dataCli1.add("\n\tNombres y apellidos: "+apellido+" "+nombre+"\n\n"
+                    + "\tC.I/RUC: "+cedula+"\n\n"+
+                    "\tTélefono: "+telefono+"\n\n"+
+                    "\tMétodo de Pago: "+"\n\n\n");
             
             Paragraph dataCli2= new Paragraph();
             Date date=new Date();
-            dataCli2.add("Dirección: "+direccion+"\n\n"+
-                    "Fecha emisión: "+new SimpleDateFormat("dd-mm-yyyy").format(date)+"\n\n"+
+            dataCli2.add("\nDirección: "+direccion+"\n\n"+
+                    "Fecha emisión: "+new SimpleDateFormat("dd-MM-yyyy").format(date)+"\n\n"+
                     "Correo electrónico: "+email+"\n\n");
             
             PdfPTable clientes=new PdfPTable(3);
             clientes.setWidthPercentage(100);
             clientes.setWidths(columnEnc);
-            
-            clientes.addCell(dataCli1);
-            clientes.addCell("");
-            clientes.addCell(dataCli2);
+            PdfPCell col1 =new PdfPCell(dataCli1);
+            PdfPCell col2=new PdfPCell(new Phrase(""));
+            PdfPCell col3=new PdfPCell(dataCli2);
+            col1.setBorder(3);
+            col2.setBorder(2);
+            col3.setBorder(3);
+            clientes.getDefaultCell().setBorder(4);
+            clientes.addCell(col1);
+            clientes.addCell(col2);
+            clientes.addCell(col3);
             
             doc.add(clientes);
             doc.add(saltoLinea);
@@ -880,6 +888,9 @@ public class Home_Cajero extends javax.swing.JFrame {
             detFact.addCell("CANTIDAD");
             detFact.addCell("VALOR UNITARIO");
             detFact.addCell("VALOR TOTAL");
+            
+            
+            
 
             try {
                 Connection con = DriverManager.getConnection(DB_URL, USER, PASSWORD);
@@ -908,8 +919,8 @@ public class Home_Cajero extends javax.swing.JFrame {
                     do {
                         // Agregar cada valor a la tabla detFact
                         detFact.addCell(rs.getString("ITEM"));
-                        detFact.addCell(rs.getString("CODÍGO_PRODUCTO"));
                         detFact.addCell(rs.getString("NOMBRE_DEL_PRODUCTO"));
+                        detFact.addCell(rs.getString("CODÍGO_PRODUCTO"));
                         detFact.addCell(rs.getString("CANTIDAD"));
                         detFact.addCell(rs.getString("VALOR_UNITARIO"));
                         detFact.addCell(rs.getString("VALOR_TOTAL"));
@@ -919,6 +930,16 @@ public class Home_Cajero extends javax.swing.JFrame {
             } catch (DocumentException | SQLException e) {
                 e.printStackTrace();
             }
+             //--TOTALES
+            PdfPTable subtotal = new PdfPTable(2);
+            subtotal.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            float [] colTotales=new float[]{20f,20f};
+            subtotal.setWidths(colTotales);
+            subtotal.addCell(new Phrase("Subtotal",fontEnc));
+            subtotal.addCell(new Phrase(formattedSubTotal));
+            
+            doc.add(subtotal);
+           
             doc.close();
             JOptionPane.showMessageDialog(null, "Factura Creada");
             
