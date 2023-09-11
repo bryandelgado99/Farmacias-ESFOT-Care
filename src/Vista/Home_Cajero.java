@@ -874,7 +874,7 @@ public class Home_Cajero extends javax.swing.JFrame {
             }
             
             Paragraph dataCli1 =new Paragraph();
-            dataCli1.add("\n\t\tNombres y apellidos: "+apellido+" "+nombre+"\n\n"+
+            dataCli1.add("\nNombres y apellidos: "+apellido+" "+nombre+"\n\n"+
             "C.I/RUC: "+cedula+"\n\n"+
             "Télefono: "+telefono+"\n\n"+
             "Método de Pago: "+metodopago+"\n\n");
@@ -970,7 +970,7 @@ public class Home_Cajero extends javax.swing.JFrame {
             subtotal.setWidths(colTotales);
             subtotal.getDefaultCell().setBorderWidth(1f);
             subtotal.addCell(new Phrase("Subtotal:",fontEnc));
-            subtotal.addCell(new Phrase(formattedSubTotal, fontEnc));
+            subtotal.addCell(new Phrase("$"+formattedSubTotal, fontEnc));
             doc.add(subtotal);
             
             //iva
@@ -980,7 +980,7 @@ public class Home_Cajero extends javax.swing.JFrame {
             iva.setWidths(colTotales);
             iva.getDefaultCell().setBorderWidth(1f);
             iva.addCell(new Phrase("Iva(12%):",fontEnc));
-            iva.addCell(new Phrase(formattedIva, fontEnc));
+            iva.addCell(new Phrase("$"+formattedIva, fontEnc));
             
             //total a pagar
             PdfPTable descuento = new PdfPTable(2);
@@ -989,7 +989,7 @@ public class Home_Cajero extends javax.swing.JFrame {
             descuento.setWidths(colTotales);
             descuento.getDefaultCell().setBorderWidth(1f);
             descuento.addCell(new Phrase("Descuento:",fontEnc));
-            descuento.addCell(new Phrase("",fontEnc));
+            descuento.addCell(new Phrase("$",fontEnc));
             
             PdfPTable totalPagar = new PdfPTable(2);
             totalPagar.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -997,11 +997,35 @@ public class Home_Cajero extends javax.swing.JFrame {
             totalPagar.setWidths(colTotales);
             totalPagar.getDefaultCell().setBorderWidth(1f);
             totalPagar.addCell(new Phrase("Total a Pagar:",fontEnc));
-            totalPagar.addCell(new Phrase( formattedTotalT,fontEnc));
+            totalPagar.addCell(new Phrase( "$"+formattedTotalT,fontEnc));
  
             doc.add(iva);
             doc.add(descuento);
             doc.add(totalPagar);
+            
+            //---Datos del cajero
+            doc.add(saltoLinea);
+            PdfPTable infolabel = new PdfPTable(1);
+            infolabel.setHorizontalAlignment(Element.ALIGN_LEFT);
+            infolabel.setWidthPercentage(45f);
+            infolabel.getDefaultCell().setBorderWidth(1f);
+            infolabel.addCell(new Phrase("\nInformación Adicional\n",fontEnc));
+            
+            doc.add(infolabel);
+            
+            PdfPTable infoCaj=new PdfPTable(1);
+            infoCaj.setHorizontalAlignment(Element.ALIGN_LEFT);
+            infoCaj.setWidthPercentage(45f);
+            PdfPCell col1caj =new PdfPCell(new Phrase("\nNombre del cajero: "+cajeroName.getText()+"\n\n"+
+                    "Código cajero: "+cajeroCode.getText()+"\n\n"+
+                    "Fecha de emisión: "+fechaEmi.getText()+"\n\n"));
+            
+            
+            infoCaj.getDefaultCell().setBorderWidth(1f);
+            infoCaj.addCell(col1caj);
+            
+            doc.add(infoCaj);
+ 
             doc.close();
             JOptionPane.showMessageDialog(null, "Factura Creada");
             
