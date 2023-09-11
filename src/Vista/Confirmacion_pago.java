@@ -277,6 +277,7 @@ public class Confirmacion_pago extends javax.swing.JFrame {
 
     private void generarFacturaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarFacturaButtonActionPerformed
         Home_Cajero factura = new Home_Cajero();
+        factura.pdf();
  
     }//GEN-LAST:event_generarFacturaButtonActionPerformed
 

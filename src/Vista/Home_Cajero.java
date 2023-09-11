@@ -8,10 +8,12 @@ import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.HeadlessException;
@@ -805,11 +807,18 @@ public class Home_Cajero extends javax.swing.JFrame {
         try {
             PdfWriter.getInstance(doc, new FileOutputStream("facturas_out/Factura_" + (getCountTa() - 1)+ ".pdf"));
             Image logo = Image.getInstance("src/Images/logo_2.png");
-            logo.scaleToFit(150, 200);
+            logo.scaleToFit(160, 210);
             logo.setAlignment(Chunk.ALIGN_CENTER);
-
             Paragraph dataEmpresa = new Paragraph();
             //--encabezado---
+            
+            PdfPTable encabezado=new PdfPTable(3);
+            encabezado.setWidthPercentage(100);
+            encabezado.getDefaultCell().setBorder(0);
+            
+            float [] columnEnc=new float[]{80f,10f,80f};
+            encabezado.setWidths(columnEnc);
+            encabezado.setHorizontalAlignment(Element.ALIGN_MIDDLE);
             dataEmpresa.setAlignment(Paragraph.ALIGN_CENTER);
             dataEmpresa.add("Dirección: Av. Isabel la Católica y Alfredo Mena Caamaño\n" +
                             "Teléfono: 22887588 / 0999 999 9999\n" +
@@ -818,12 +827,53 @@ public class Home_Cajero extends javax.swing.JFrame {
                             "Aut. SRI: 121514478\n" +
                             "Fecha de autorización: 19/08/2023");
             dataEmpresa.setFont(FontFactory.getFont("Sans serif", 11, Font.BOLD, BaseColor.BLACK));
-
+            encabezado.addCell(logo);
+            encabezado.addCell("");
+            encabezado.addCell(dataEmpresa);
+            
+            Paragraph saltoLinea =new Paragraph();
+            saltoLinea.add(new Phrase(Chunk.NEWLINE));
+            
+            Paragraph nfactura=new Paragraph();
+            nfactura.add("FACTURA NRO.");
+            nfactura.setFont(FontFactory.getFont("Sans serif",11,Font.BOLD,BaseColor.BLACK));
+            
             doc.open();
-            doc.add(logo);
-            doc.add(dataEmpresa);
+            doc.add(encabezado);
+            doc.add(nfactura);
+            doc.add(saltoLinea);
+            
+            //---Datos del cliente
+
+            Paragraph dataCli1 =new Paragraph();
+            dataCli1.add("Nombres y apellidos: "+apellido+" "+nombre+"\n\n"
+                    + "C.I/RUC: "+cedula+"\n\n"+
+                    "Télefono: "+telefono+"\n\n"+
+                    "Método de Pago: "+"\n");
+            
+            Paragraph dataCli2= new Paragraph();
+            Date date=new Date();
+            dataCli2.add("Dirección: "+direccion+"\n\n"+
+                    "Fecha emisión: "+new SimpleDateFormat("dd-mm-yyyy").format(date)+"\n\n"+
+                    "Correo electrónico: "+email+"\n\n");
+            
+            PdfPTable clientes=new PdfPTable(3);
+            clientes.setWidthPercentage(100);
+            clientes.setWidths(columnEnc);
+            
+            clientes.addCell(dataCli1);
+            clientes.addCell("");
+            clientes.addCell(dataCli2);
+            
+            doc.add(clientes);
+            doc.add(saltoLinea);
+            
             //---Detalle Factura
             PdfPTable detFact = new PdfPTable(6);
+            detFact.setWidthPercentage(100);
+            float [] columnDet = new float[]{10f,33f,35f,17f,20f,20f};
+            detFact.setWidths(columnDet);
+            detFact.setHorizontalAlignment(Element.ALIGN_CENTER);
             detFact.addCell("ITEM");
             detFact.addCell("NOMBRE DEL PRODUCTO");
             detFact.addCell("CÓDIGO DEL CÓDIGO PRODUCTO");
@@ -835,8 +885,8 @@ public class Home_Cajero extends javax.swing.JFrame {
                 Connection con = DriverManager.getConnection(DB_URL, USER, PASSWORD);
                 String queryDet = "SELECT\n" +
                         "    ROW_NUMBER() OVER (ORDER BY DET.Productos_codigo_prod) AS ITEM,\n" +
-                        "    det.Productos_codigo_prod AS CODÍGO_PRODUCTO,\n" +
                         "    prod.nombre_prod AS NOMBRE_DEL_PRODUCTO,\n" +
+                        "    det.Productos_codigo_prod AS CODÍGO_PRODUCTO,\n" +
                         "    det.cantidad AS CANTIDAD,\n" +
                         "    prod.valventa_prod AS VALOR_UNITARIO,\n" +
                         "    prod.valventa_prod * det.cantidad AS VALOR_TOTAL\n" +
