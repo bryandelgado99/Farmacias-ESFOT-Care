@@ -872,8 +872,12 @@ public class Home_Cajero extends javax.swing.JFrame {
             clientes.addCell(col1);
             clientes.addCell(col2);
             clientes.addCell(col3);
+            PdfPTable clientesCell = new PdfPTable(1);
+            clientesCell.addCell(clientes);
+            clientesCell.setWidthPercentage(100);
+            clientesCell.getDefaultCell().setBorderWidth(1f);
+            doc.add(clientesCell);
             
-            doc.add(clientes);
             doc.add(saltoLinea);
             
             //---Detalle Factura
@@ -934,9 +938,10 @@ public class Home_Cajero extends javax.swing.JFrame {
              //--TOTALES
             PdfPTable subtotal = new PdfPTable(2);
             subtotal.setHorizontalAlignment(Element.ALIGN_RIGHT);
-            subtotal.setWidthPercentage(30);
+            subtotal.setWidthPercentage(29.5f);
             float [] colTotales=new float[]{50f,50f};
             subtotal.setWidths(colTotales);
+            subtotal.getDefaultCell().setBorderWidth(1f);
             subtotal.addCell(new Phrase("Subtotal:",fontEnc));
             subtotal.addCell(new Phrase(formattedSubTotal, fontEnc));
             doc.add(subtotal);
@@ -944,23 +949,26 @@ public class Home_Cajero extends javax.swing.JFrame {
             //iva
             PdfPTable iva = new PdfPTable(2);
             iva.setHorizontalAlignment(Element.ALIGN_RIGHT);
-            iva.setWidthPercentage(29);
+            iva.setWidthPercentage(29.5f);
             iva.setWidths(colTotales);
+            iva.getDefaultCell().setBorderWidth(1f);
             iva.addCell(new Phrase("Iva(12%):",fontEnc));
             iva.addCell(new Phrase(formattedIva, fontEnc));
             
             //total a pagar
             PdfPTable descuento = new PdfPTable(2);
             descuento.setHorizontalAlignment(Element.ALIGN_RIGHT);
-            descuento.setWidthPercentage(29);
+            descuento.setWidthPercentage(29.5f);
             descuento.setWidths(colTotales);
+            descuento.getDefaultCell().setBorderWidth(1f);
             descuento.addCell(new Phrase("Descuento:",fontEnc));
             descuento.addCell(new Phrase("",fontEnc));
             
             PdfPTable totalPagar = new PdfPTable(2);
             totalPagar.setHorizontalAlignment(Element.ALIGN_RIGHT);
-            totalPagar.setWidthPercentage(29);
+            totalPagar.setWidthPercentage(29.5f);
             totalPagar.setWidths(colTotales);
+            totalPagar.getDefaultCell().setBorderWidth(1f);
             totalPagar.addCell(new Phrase("Total a Pagar:",fontEnc));
             totalPagar.addCell(new Phrase( formattedTotalT,fontEnc));
  
