@@ -873,6 +873,12 @@ public class Home_Cajero extends javax.swing.JFrame {
                 e.printStackTrace();
             }
             
+            Paragraph dataCli1 =new Paragraph();
+            dataCli1.add("\n\t\tNombres y apellidos: "+apellido+" "+nombre+"\n\n"+
+            "C.I/RUC: "+cedula+"\n\n"+
+            "Télefono: "+telefono+"\n\n"+
+            "Método de Pago: "+metodopago+"\n\n");
+            
             Paragraph dataCli2= new Paragraph();
             Date date=new Date();
             dataCli2.add("\nDirección: "+direccion+"\n\n"+
@@ -896,7 +902,7 @@ public class Home_Cajero extends javax.swing.JFrame {
             PdfPTable clientesCell = new PdfPTable(1);
             clientesCell.addCell(clientes);
             clientesCell.setWidthPercentage(100);
-            clientesCell.getDefaultCell().setBorderWidth(1f);
+            clientesCell.getDefaultCell().setBorderWidth(2f);
             doc.add(clientesCell);
             
             doc.add(saltoLinea);
