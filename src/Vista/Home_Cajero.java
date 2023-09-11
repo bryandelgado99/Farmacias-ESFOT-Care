@@ -17,7 +17,9 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Desktop;
 import java.awt.HeadlessException;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.*;
@@ -809,7 +811,10 @@ public class Home_Cajero extends javax.swing.JFrame {
         Document doc = new Document();
 
         try {
-            PdfWriter.getInstance(doc, new FileOutputStream("facturas_out/Factura_" + (getCountTa() - 1)+ ".pdf"));
+            FileOutputStream archivo;
+            File file =new File("facturas_out/Factura_" + (getCountTa() - 1)+ ".pdf");
+            archivo=new FileOutputStream(file);
+            PdfWriter.getInstance(doc, archivo);
             Image logo = Image.getInstance("src/Images/logo_2.png");
             logo.scaleToFit(160, 210);
             logo.setAlignment(Chunk.ALIGN_CENTER);
@@ -1027,6 +1032,9 @@ public class Home_Cajero extends javax.swing.JFrame {
             doc.add(infoCaj);
  
             doc.close();
+            archivo.close();
+            Desktop.getDesktop().open(file);
+            
             JOptionPane.showMessageDialog(null, "Factura Creada");
             
         } catch (DocumentException | HeadlessException | IOException e) {
