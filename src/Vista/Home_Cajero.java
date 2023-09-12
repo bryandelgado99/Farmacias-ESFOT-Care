@@ -932,20 +932,22 @@ public class Home_Cajero extends javax.swing.JFrame {
             try {
                 Connection con = DriverManager.getConnection(DB_URL, USER, PASSWORD);
                 String queryDet = "SELECT\n" +
-                        "    ROW_NUMBER() OVER (ORDER BY DET.Productos_codigo_prod) AS ITEM,\n" +
-                        "    prod.nombre_prod AS NOMBRE_DEL_PRODUCTO,\n" +
-                        "    det.Productos_codigo_prod AS CODÍGO_PRODUCTO,\n" +
-                        "    det.cantidad AS CANTIDAD,\n" +
-                        "    prod.valventa_prod AS VALOR_UNITARIO,\n" +
-                        "    prod.valventa_prod * det.cantidad AS VALOR_TOTAL\n" +
-                        "FROM\n" +
-                        "    cabecera_fac CAB\n" +
-                        "JOIN\n" +
-                        "    detalle_fac DET ON CAB.num_factura = DET.Cabecera_Fac_num_factura\n" +
-                        "JOIN\n" +
-                        "    productos PROD ON DET.Productos_codigo_prod = PROD.codigo_prod\n" +
-                        "WHERE\n" +
-                        "    CAB.num_factura = ?";
+                    "    ROW_NUMBER() OVER (ORDER BY DET.Cabecera_Fac_num_factura) AS ITEM,\n" +
+                    "    PROD.nombre_prod AS NOMBRE_PROD,\n" +
+                    "    DET.Productos_codigo_prod AS COD_PROD,\n" +
+                    "    DET.cantidad AS CANTIDAD,\n" +
+                    "    PROD.valventa_prod AS PRECIO_UNI,\n" +
+                    "    (PROD.valventa_prod * DET.cantidad) AS Valor_total\n" +
+                    "FROM\n" +
+                    "    cajeros CAJ\n" +
+                    "JOIN\n" +
+                    "    cabecera_fac CAB ON CAJ.codigo_caj = CAB.Cajeros_codigo_caj\n" +
+                    "JOIN\n" +
+                    "    detalle_fac DET ON CAB.num_factura = DET.Cabecera_Fac_num_factura\n" +
+                    "JOIN\n" +
+                    "    productos PROD ON DET.Productos_codigo_prod = PROD.codigo_prod\n" +
+                    "WHERE\n" +
+                    "    CAJ.codigo_caj = ?";   
 
                 PreparedStatement pst = con.prepareStatement(queryDet);
                 pst.setInt(1, getCountTa() - 1 );
