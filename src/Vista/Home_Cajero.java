@@ -829,7 +829,7 @@ public class Home_Cajero extends javax.swing.JFrame {
             float [] columnEnc=new float[]{80f,10f,80f};
             encabezado.setWidths(columnEnc);
             encabezado.setHorizontalAlignment(Element.ALIGN_MIDDLE);
-            dataEmpresa.setAlignment(Paragraph.ALIGN_CENTER);
+            dataEmpresa.setAlignment(Element.ALIGN_CENTER);
             dataEmpresa.add("Dirección: Av. Isabel la Católica y Alfredo Mena Caamaño\n" +
                             "Teléfono: 22887588 / 0999 999 9999\n" +
                             "Obligado a llevar contabilidad\n\n" +
@@ -878,17 +878,17 @@ public class Home_Cajero extends javax.swing.JFrame {
                 e.printStackTrace();
             }
             
-            Paragraph dataCli1 =new Paragraph();
-            dataCli1.add("\nNombres y apellidos: "+apellido+" "+nombre+"\n\n"+
+            Paragraph dataCli1 =new Paragraph("\nNombres y apellidos: "+apellido+" "+nombre+"\n\n"+
             "C.I/RUC: "+cedula+"\n\n"+
             "Télefono: "+telefono+"\n\n"+
-            "Método de Pago: "+metodopago+"\n\n");
+            "Método de Pago: "+metodopago+"\n\n",fontEnc);
             
-            Paragraph dataCli2= new Paragraph();
+            
             Date date=new Date();
-            dataCli2.add("\nDirección: "+direccion+"\n\n"+
+            Paragraph dataCli2= new Paragraph("\nDirección: "+direccion+"\n\n"+
                     "Fecha emisión: "+new SimpleDateFormat("dd-MM-yyyy").format(date)+"\n\n"+
-                    "Correo electrónico: "+email+"\n\n");
+                    "Correo electrónico: "+email+"\n\n",fontEnc);
+            
             
             PdfPTable clientes=new PdfPTable(3);
             clientes.setWidthPercentage(100);

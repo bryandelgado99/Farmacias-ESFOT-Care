@@ -3,7 +3,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Vista;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.*;
+import javax.swing.JOptionPane;
 /**
  *
  * @author bryan
@@ -18,6 +34,8 @@ public class Reportes extends javax.swing.JFrame {
     public static final String DB_URL = "jdbc:mysql://localhost/esfot-care";
     public static final String USER = "root";
     public static final String PASSWORD = "root2023";
+    
+    public static String codCajero;
 
     public Reportes() {
         initComponents();
@@ -37,13 +55,11 @@ public class Reportes extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         reporteTable = new javax.swing.JTable();
-        fechaBusInput = new javax.swing.JTextField();
+        codCajeroInput = new javax.swing.JTextField();
         jButtonBuscarCajeroCod = new javax.swing.JButton();
         reporteCajeroBtn = new javax.swing.JButton();
         reporteGeneralBtn = new javax.swing.JButton();
         jButtonDesplegarCajeros = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
-        codfactInput = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -60,7 +76,7 @@ public class Reportes extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setText("Buscar por fecha:");
+        jLabel5.setText("Buscar por código de cajero:");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, -1));
 
         reporteTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -99,13 +115,13 @@ public class Reportes extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 1130, 390));
 
-        fechaBusInput.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        fechaBusInput.addActionListener(new java.awt.event.ActionListener() {
+        codCajeroInput.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        codCajeroInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fechaBusInputActionPerformed(evt);
+                codCajeroInputActionPerformed(evt);
             }
         });
-        getContentPane().add(fechaBusInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, 130, 30));
+        getContentPane().add(codCajeroInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 120, 130, 30));
 
         jButtonBuscarCajeroCod.setText("Buscar");
         jButtonBuscarCajeroCod.addActionListener(new java.awt.event.ActionListener() {
@@ -113,7 +129,7 @@ public class Reportes extends javax.swing.JFrame {
                 jButtonBuscarCajeroCodActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonBuscarCajeroCod, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 120, 90, 30));
+        getContentPane().add(jButtonBuscarCajeroCod, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 120, 90, 30));
 
         reporteCajeroBtn.setBackground(new java.awt.Color(204, 255, 204));
         reporteCajeroBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -157,20 +173,8 @@ public class Reportes extends javax.swing.JFrame {
         });
         getContentPane().add(jButtonDesplegarCajeros, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 50, -1, -1));
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel6.setText("Buscar por código de factura:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, -1, -1));
-
-        codfactInput.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        codfactInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                codfactInputActionPerformed(evt);
-            }
-        });
-        getContentPane().add(codfactInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 120, 130, 30));
-
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo_2.png"))); // NOI18N
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 20, -1, -1));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 20, -1, 90));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 21)); // NOI18N
         jLabel4.setText("Reportes de Ventas");
@@ -261,13 +265,13 @@ public class Reportes extends javax.swing.JFrame {
         login.setVisible(true);
     }//GEN-LAST:event_jMenu1MouseClicked
 
-    private void fechaBusInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaBusInputActionPerformed
+    private void codCajeroInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codCajeroInputActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_fechaBusInputActionPerformed
+    }//GEN-LAST:event_codCajeroInputActionPerformed
 
     private void jButtonBuscarCajeroCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarCajeroCodActionPerformed
         // TODO add your handling code here:
-        String codigoinput = fechaBusInput.getText();
+        String codigoinput = codCajeroInput.getText();
 
         try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)){
             String Query = "SELECT * FROM cajeros WHERE codigo_caj = ?";
@@ -390,16 +394,166 @@ public class Reportes extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonDesplegarCajerosActionPerformed
 
-    private void codfactInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codfactInputActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_codfactInputActionPerformed
-
     private void reporteCajeroBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reporteCajeroBtnMouseClicked
         
     }//GEN-LAST:event_reporteCajeroBtnMouseClicked
 
     private void reporteCajeroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteCajeroBtnActionPerformed
-        // TODO add your handling code here:
+
+           codCajero=codCajeroInput.getText();
+           Document doc = new Document();
+            try {
+            FileOutputStream archivo;
+            File file =new File("Reportes/Reporte_cajero_"+codCajero+".pdf");
+            archivo=new FileOutputStream(file);
+            PdfWriter.getInstance(doc, archivo);
+            Image logo = Image.getInstance("src/Images/logo_2.png");
+            logo.scaleToFit(200, 210);
+            logo.setAlignment(Element.ALIGN_CENTER);
+            
+            PdfPTable title=new PdfPTable(3);
+            title.setHorizontalAlignment(Element.ALIGN_MIDDLE);
+            title.setWidthPercentage(100);
+            float [] columnEnc=new float[]{80f,10f,80f};
+            title.setWidths(columnEnc);
+            Font fontEnc = new Font(Font.FontFamily.HELVETICA, 11, Font.BOLD);
+            
+            Paragraph t1=new Paragraph("\nReporte de Ventas Periódico\n\nVentas realizadas por cada cajero",fontEnc);
+            t1.setIndentationRight(CENTER_ALIGNMENT);
+            PdfPCell col3t1=new PdfPCell(t1);
+            PdfPCell col2=new PdfPCell(new Phrase(""));
+            PdfPCell col1img=new PdfPCell(logo);
+            
+            col1img.setBorder(0);
+            col2.setBorder(0);
+            col3t1.setBorderWidthTop(1f);
+            col3t1.setBorderWidthBottom(1f);
+            col3t1.setBorderWidthLeft(1f);
+            col3t1.setBorderWidthRight(1f);
+            col3t1.setPadding(2f);
+            //title.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
+            
+            title.addCell(col1img);
+            title.addCell(col2);
+            title.addCell(col3t1);
+            
+            doc.open();
+            doc.add(title);
+            
+            //datos cajero
+            
+            Paragraph dataCaj1 =new Paragraph("\nNombres y apellidos del cajero: "+"\n\n"+
+            "Código de empleado: "+"\n\n",fontEnc);
+            
+            
+            Paragraph dataCaj2= new Paragraph("\nTotal ventas realizadas: "+"\n\n"+
+                    "Ganancias Obtenidas: "+"\n\n",fontEnc);
+            
+            
+            PdfPTable cajero=new PdfPTable(3);
+            cajero.setWidthPercentage(100);
+            cajero.setWidths(columnEnc);
+            PdfPCell col1 =new PdfPCell(dataCaj1);
+            PdfPCell colcaj2=new PdfPCell(new Phrase(""));
+            PdfPCell col3=new PdfPCell(dataCaj2);
+            col1.setBorder(0);
+            colcaj2.setBorder(0);
+            col3.setBorder(0);
+            cajero.getDefaultCell().setBorderWidth(1f);
+            cajero.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
+            cajero.addCell(col1);
+            cajero.addCell(colcaj2);
+            cajero.addCell(col3);
+            PdfPTable cajeroCell = new PdfPTable(1);
+            cajeroCell.addCell(cajero);
+            cajeroCell.setWidthPercentage(100);
+            cajeroCell.getDefaultCell().setBorderWidth(2f);
+            
+            Paragraph saltoLinea =new Paragraph();
+            saltoLinea.add(new Phrase(Chunk.NEWLINE));
+            doc.add(saltoLinea);
+            doc.add(cajeroCell);
+            doc.add(saltoLinea);
+           
+           //--Detalle reporte
+            PdfPTable detReporte = new PdfPTable(6);
+            detReporte.setWidthPercentage(100);
+            float [] columnDet = new float[]{10f,33f,35f,17f,20f,20f};
+            detReporte.setWidths(columnDet);
+            detReporte.getDefaultCell().setBorderWidth(1f);
+            detReporte.setHorizontalAlignment(Element.ALIGN_CENTER);
+            detReporte.addCell("ITEM");
+            detReporte.addCell("NOMBRE DEL PRODUCTO");
+            detReporte.addCell("CÓDIGO DEL CÓDIGO PRODUCTO");
+            detReporte.addCell("CANTIDAD");
+            detReporte.addCell("VALOR UNITARIO");
+            detReporte.addCell("VALOR TOTAL");
+            
+            try {
+                Connection con = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+                String queryDet ="select\n"+
+                "ROW_NUMBER() OVER (ORDER BY DET.Cabecera_Fac_num_factura) AS ITEM,\n"+ 
+                "PROD. nombre_prod AS NOMBRE_PROD,\n"+
+                "DET.Productos_codigo_prod AS COD_PROD, DET.cantidad AS CANTIDAD,\n"+
+                "PROD.valventa_prod AS PRECIO_UNI,\n"+
+                "(PROD.valventa_prod*DET.cantidad) as Valor_total"+
+                "from cajeros CAJ JOIN cabecera_fac CAB ON CAJ.codigo_caj=CAB.Cajeros_codigo_caj"+
+                "JOIN detalle_fac DET ON CAB.num_factura=DET.Cabecera_Fac_num_factura"+
+                "JOIN productos PROD ON DET.Productos_codigo_prod=PROD.codigo_prod"+
+                "WHERE CAJ.codigo_caj=?;";
+
+                PreparedStatement pst = con.prepareStatement(queryDet);
+                pst.setString(1, codCajero);
+                ResultSet rs = pst.executeQuery();
+                
+
+                if (rs.next()) {
+                    do {
+                        // Agregar cada valor a la tabla detFact
+                        detReporte.addCell(rs.getString("ITEM"));
+                        detReporte.addCell(rs.getString("NOMBRE_PROD"));
+                        detReporte.addCell(rs.getString("COD_PROD"));
+                        detReporte.addCell(rs.getString("CANTIDAD"));
+                        detReporte.addCell(rs.getString("PRECIO_UNI"));
+                        detReporte.addCell(rs.getString("Valor_total"));
+                    } while (rs.next());
+                    doc.add(detReporte);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            
+            //totales
+           
+            PdfPTable totalsinIva = new PdfPTable(2);
+            totalsinIva.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            totalsinIva.setWidthPercentage(29.5f);
+            float [] colTotales=new float[]{50f,50f};
+            totalsinIva.setWidths(colTotales);
+            totalsinIva.getDefaultCell().setBorderWidth(1f);
+            totalsinIva.addCell(new Phrase("Total sin Iva:",fontEnc));
+            totalsinIva.addCell(new Phrase("$", fontEnc));
+            
+            
+            //iva
+            PdfPTable iva = new PdfPTable(2);
+            iva.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            iva.setWidthPercentage(29.5f);
+            iva.setWidths(colTotales);
+            iva.getDefaultCell().setBorderWidth(1f);
+            iva.addCell(new Phrase("Impuestos generados:",fontEnc));
+            iva.addCell(new Phrase("$", fontEnc));
+          
+            doc.add(totalsinIva);
+            doc.add(iva);
+        
+            doc.close();
+            archivo.close();
+            Desktop.getDesktop().open(file);
+            JOptionPane.showMessageDialog(null, "Reporte Creado");
+            }catch(DocumentException | IOException e){
+                JOptionPane.showMessageDialog(null, e);
+            }
     }//GEN-LAST:event_reporteCajeroBtnActionPerformed
 
     private void reporteGeneralBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reporteGeneralBtnMouseClicked
@@ -412,9 +566,8 @@ public class Reportes extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField codfactInput;
+    private javax.swing.JTextField codCajeroInput;
     private javax.swing.JMenu empleadosMenu;
-    private javax.swing.JTextField fechaBusInput;
     private javax.swing.JMenu homeMenu;
     private javax.swing.JMenu inventarioMenu;
     private javax.swing.JButton jButtonBuscarCajeroCod;
@@ -423,7 +576,6 @@ public class Reportes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu1;
