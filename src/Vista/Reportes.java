@@ -36,6 +36,10 @@ public class Reportes extends javax.swing.JFrame {
     public static final String PASSWORD = "root2023";
     
     public static String codCajero;
+    
+    public static String nomCompletocaj;
+    public static int nVentascaj;
+    public static double totalsinIva; 
 
     public Reportes() {
         initComponents();
@@ -330,7 +334,7 @@ public class Reportes extends javax.swing.JFrame {
                 reporteTable.setValueAt("", row, 6);
 
                 String numfact = rs.getString("num_factura");
-                String nombreC = rs.getString("nombreComp_caj");
+                nomCompletocaj = rs.getString("nombreComp_caj");
                 String codigo = rs.getString("codigo_caj");
                 String fecha = rs.getString("fecha_emision");
                 
@@ -340,7 +344,7 @@ public class Reportes extends javax.swing.JFrame {
                 
 
                 reporteTable.setValueAt(numfact, row, 0);
-                reporteTable.setValueAt(nombreC, row, 1);
+                reporteTable.setValueAt(nomCompletocaj, row, 1);
                 reporteTable.setValueAt(codigo, row, 2);
                 reporteTable.setValueAt(fecha, row, 3);
                 reporteTable.setValueAt(cedula, row, 4);
@@ -350,7 +354,7 @@ public class Reportes extends javax.swing.JFrame {
 
                 //prueba de conexion
                 System.out.println("Numero fact: " + numfact);
-                System.out.println("Nombre: " + nombreC);
+                System.out.println("Nombre: " + nomCompletocaj);
                 System.out.println("Codigo cajero: " + codigo);
                 System.out.println("fecha: " + fecha);
                 System.out.println("cedula: " + cedula);
@@ -478,12 +482,68 @@ public class Reportes extends javax.swing.JFrame {
             doc.add(title);
             
             //datos cajero
+              
+                try {
+                Connection conVentas = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+                String querycaj = "select count(*) as n_Ventas_caj from cabecera_fac CAB join cajeros CAJ on CAB.Cajeros_codigo_caj=CAJ.codigo_caj Where CAJ.codigo_caj=?;";
+
+                PreparedStatement pst = conVentas.prepareStatement(querycaj);
+
+                pst.setString(1,codCajero);
+
+                ResultSet rs = pst.executeQuery();
+                
+                if (rs.next()) {
+                    nVentascaj = rs.getInt("n_Ventas_caj");
+                    System.out.println("n ventas:  " +codCajero+" "+nVentascaj);
+                } 
+                  
+                // Cerrar ResultSet, PreparedStatement y Connection cuando hayas terminado
+                rs.close();
+                pst.close();
+                conVentas.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             
-            Paragraph dataCaj1 =new Paragraph("\nNombres y apellidos del cajero: "+"\n\n"+
-            "Código de empleado: "+"\n\n",fontEnc);
+            
+             try {
+                Connection contotalsinIva = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+                String querysinIva = "select codigo_caj, sum(DET.cantidad*PROD.valventa_prod) as sumaValor\n" +
+                "	from detalle_fac DET, productos PROD, cajeros CAJ, cabecera_fac CAB\n" +
+                "	WHERE DET.Productos_codigo_prod=PROD.codigo_prod and DET.Cabecera_Fac_num_factura=CAB.num_factura\n" +
+                "    and CAB.Cajeros_codigo_caj=CAJ.codigo_caj and codigo_caj=?\n" +
+                "group by codigo_caj;";
+
+              
+                PreparedStatement pst = contotalsinIva.prepareStatement(querysinIva);
+
+                pst.setString(1,codCajero);
+
+                ResultSet rs = pst.executeQuery();
+                
+                if (rs.next()) {
+                    totalsinIva = rs.getDouble("sumaValor");
+                    System.out.println("total sin iva:  " +codCajero+" "+totalsinIva);
+                } 
+                  
+
+                // Cerrar ResultSet, PreparedStatement y Connection cuando hayas terminado
+                rs.close();
+                pst.close();
+                contotalsinIva.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }    
+           
+          
             
             
-            Paragraph dataCaj2= new Paragraph("\nTotal ventas realizadas: "+"\n\n"+
+            Paragraph dataCaj1 =new Paragraph("\nNombres y apellidos del cajero: "+nomCompletocaj+"\n\n"+
+            "Código de empleado: "+codCajero+"\n\n",fontEnc);
+            
+            
+            Paragraph dataCaj2= new Paragraph("\nTotal ventas realizadas: "+nVentascaj+"\n\n"+
                     "Ganancias Obtenidas: "+"\n\n",fontEnc);
             
             
@@ -511,7 +571,7 @@ public class Reportes extends javax.swing.JFrame {
             doc.add(saltoLinea);
             doc.add(cajeroCell);
             doc.add(saltoLinea);
-           
+            
            //--Detalle reporte
             PdfPTable detReporte = new PdfPTable(6);
             detReporte.setWidthPercentage(100);
@@ -566,19 +626,16 @@ public class Reportes extends javax.swing.JFrame {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-// ...
-
-            
             //totales
            
-            PdfPTable totalsinIva = new PdfPTable(2);
-            totalsinIva.setHorizontalAlignment(Element.ALIGN_RIGHT);
-            totalsinIva.setWidthPercentage(29.5f);
+            PdfPTable totalsinIvaT = new PdfPTable(2);
+            totalsinIvaT.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            totalsinIvaT.setWidthPercentage(29.5f);
             float [] colTotales=new float[]{50f,50f};
-            totalsinIva.setWidths(colTotales);
-            totalsinIva.getDefaultCell().setBorderWidth(1f);
-            totalsinIva.addCell(new Phrase("Total sin Iva:",fontEnc));
-            totalsinIva.addCell(new Phrase("$", fontEnc));
+            totalsinIvaT.setWidths(colTotales);
+            totalsinIvaT.getDefaultCell().setBorderWidth(1f);
+            totalsinIvaT.addCell(new Phrase("Total sin Iva:",fontEnc));
+            totalsinIvaT.addCell(new Phrase("$"+totalsinIva, fontEnc));
             
             
             //iva
@@ -590,8 +647,10 @@ public class Reportes extends javax.swing.JFrame {
             iva.addCell(new Phrase("Impuestos generados:",fontEnc));
             iva.addCell(new Phrase("$", fontEnc));
           
-            doc.add(totalsinIva);
+            doc.add(totalsinIvaT);
             doc.add(iva);
+            
+            
         
             doc.close();
             archivo.close();
@@ -601,6 +660,9 @@ public class Reportes extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, e);
             }
     }//GEN-LAST:event_reporteCajeroBtnActionPerformed
+
+   
+
 
     private void reporteGeneralBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reporteGeneralBtnMouseClicked
         
