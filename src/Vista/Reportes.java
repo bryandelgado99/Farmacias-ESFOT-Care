@@ -40,6 +40,8 @@ public class Reportes extends javax.swing.JFrame {
     public static String nomCompletocaj;
     public static int nVentascaj;
     public static double totalsinIva; 
+    public static double totalG;
+    public static double totalImp;
 
     public Reportes() {
         initComponents();
@@ -62,7 +64,6 @@ public class Reportes extends javax.swing.JFrame {
         codCajeroInput = new javax.swing.JTextField();
         jButtonBuscarCajeroCod = new javax.swing.JButton();
         reporteCajeroBtn = new javax.swing.JButton();
-        reporteGeneralBtn = new javax.swing.JButton();
         jButtonDesplegarCajeros = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -174,24 +175,7 @@ public class Reportes extends javax.swing.JFrame {
                 reporteCajeroBtnActionPerformed(evt);
             }
         });
-        getContentPane().add(reporteCajeroBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 580, 270, -1));
-
-        reporteGeneralBtn.setBackground(new java.awt.Color(255, 153, 153));
-        reporteGeneralBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        reporteGeneralBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/report_1.png"))); // NOI18N
-        reporteGeneralBtn.setText("   Generar reporte general de ventas");
-        reporteGeneralBtn.setActionCommand("  Agregar Producto");
-        reporteGeneralBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                reporteGeneralBtnMouseClicked(evt);
-            }
-        });
-        reporteGeneralBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reporteGeneralBtnActionPerformed(evt);
-            }
-        });
-        getContentPane().add(reporteGeneralBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 580, 310, -1));
+        getContentPane().add(reporteCajeroBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 570, 270, -1));
 
         jButtonDesplegarCajeros.setText("Desplegar todo");
         jButtonDesplegarCajeros.addActionListener(new java.awt.event.ActionListener() {
@@ -307,7 +291,7 @@ public class Reportes extends javax.swing.JFrame {
                 "cab.fecha_emision, " +
                 "cab.Clientes_ci_cli, " +
                 "cab.total_pagar, " +
-                "cab.total_pagar - SUM(valcompra_prod * det.cantidad) AS ganancia_obtenida " +
+                "cab.subtotal_fac - SUM(valcompra_prod * det.cantidad) AS ganancia_obtenida " +
                 "FROM cabecera_fac cab " +
                 "INNER JOIN cajeros caj ON caj.codigo_caj = cab.Cajeros_codigo_caj " +
                 "INNER JOIN detalle_fac det ON det.Cabecera_Fac_num_factura = cab.num_factura " +
@@ -334,7 +318,7 @@ public class Reportes extends javax.swing.JFrame {
                 reporteTable.setValueAt("", row, 6);
 
                 String numfact = rs.getString("num_factura");
-                nomCompletocaj = rs.getString("nombreComp_caj");
+                String nombreC = rs.getString("nombreComp_caj");
                 String codigo = rs.getString("codigo_caj");
                 String fecha = rs.getString("fecha_emision");
                 
@@ -344,7 +328,7 @@ public class Reportes extends javax.swing.JFrame {
                 
 
                 reporteTable.setValueAt(numfact, row, 0);
-                reporteTable.setValueAt(nomCompletocaj, row, 1);
+                reporteTable.setValueAt(nombreC, row, 1);
                 reporteTable.setValueAt(codigo, row, 2);
                 reporteTable.setValueAt(fecha, row, 3);
                 reporteTable.setValueAt(cedula, row, 4);
@@ -353,8 +337,9 @@ public class Reportes extends javax.swing.JFrame {
                 row++;
 
                 //prueba de conexion
+                nomCompletocaj=nombreC;
                 System.out.println("Numero fact: " + numfact);
-                System.out.println("Nombre: " + nomCompletocaj);
+                System.out.println("Nombre: " + nombreC);
                 System.out.println("Codigo cajero: " + codigo);
                 System.out.println("fecha: " + fecha);
                 System.out.println("cedula: " + cedula);
@@ -377,7 +362,7 @@ public class Reportes extends javax.swing.JFrame {
                 "        cab.fecha_emision, \n" +
                 "        cab.Clientes_ci_cli, \n" +
                 "        cab.total_pagar,\n" +
-                "        cab.total_pagar - SUM(valcompra_prod * det.cantidad) AS ganancia_obtenida\n" +
+                "        cab.subtotal_fac - SUM(valcompra_prod * det.cantidad) AS ganancia_obtenida\n" +
                 "from cabecera_fac cab \n" +
                 "inner join cajeros caj on caj.codigo_caj = cab.Cajeros_codigo_caj\n" +
                 "inner join detalle_fac det on det.Cabecera_Fac_num_factura = cab.num_factura\n" +
@@ -535,8 +520,67 @@ public class Reportes extends javax.swing.JFrame {
             } catch (SQLException e) {
                 e.printStackTrace();
             }    
-           
-          
+
+             
+             /*
+        
+             */
+             
+            
+             try {
+                Connection conGanancias = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+                String queryGanancia = "select cab.num_factura, codigo_caj, subtotal_fac-(sum(DET.cantidad*PROD.valcompra_prod)) as sumaGanancia\n" +
+                "	from detalle_fac DET, productos PROD, cajeros CAJ, cabecera_fac CAB\n" +
+                "	WHERE DET.Productos_codigo_prod=PROD.codigo_prod and DET.Cabecera_Fac_num_factura=CAB.num_factura\n" +
+                "    and CAB.Cajeros_codigo_caj=CAJ.codigo_caj and codigo_caj=?\n" +
+                "group by codigo_caj, cab.num_factura;";
+
+              
+                PreparedStatement pst = conGanancias.prepareStatement(queryGanancia);
+
+                pst.setString(1,codCajero);
+
+                ResultSet rs = pst.executeQuery();
+                
+                if (rs.next()) {
+                    totalG = rs.getDouble("sumaGanancia");
+                    System.out.println("Ganancias:  " +codCajero+" "+totalG);
+                }
+              // Cerrar ResultSet, PreparedStatement y Connection cuando hayas terminado
+                rs.close();
+                pst.close();
+                conGanancias.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }  
+            
+             
+             try {
+                Connection conImpuestos = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+                String queryGanancia = "select codigo_caj, sum(iva_fac) as sumaImp\n" +
+                "	from cajeros CAJ, cabecera_fac CAB\n" +
+                "	WHERE CAB.Cajeros_codigo_caj=CAJ.codigo_caj and codigo_caj=?\n" +
+                "group by codigo_caj;";
+
+              
+                PreparedStatement pst = conImpuestos.prepareStatement(queryGanancia);
+
+                pst.setString(1,codCajero);
+
+                ResultSet rs = pst.executeQuery();
+                
+                if (rs.next()) {
+                    totalImp = rs.getDouble("sumaImp");
+                    System.out.println("Total impuestos:  " +codCajero+" "+totalImp);
+                }
+              // Cerrar ResultSet, PreparedStatement y Connection cuando hayas terminado
+                rs.close();
+                pst.close();
+                conImpuestos.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } 
+             
             
             
             Paragraph dataCaj1 =new Paragraph("\nNombres y apellidos del cajero: "+nomCompletocaj+"\n\n"+
@@ -544,7 +588,7 @@ public class Reportes extends javax.swing.JFrame {
             
             
             Paragraph dataCaj2= new Paragraph("\nTotal ventas realizadas: "+nVentascaj+"\n\n"+
-                    "Ganancias Obtenidas: "+"\n\n",fontEnc);
+                    "Ganancias Obtenidas: "+totalG+"\n\n",fontEnc);
             
             
             PdfPTable cajero=new PdfPTable(3);
@@ -645,7 +689,7 @@ public class Reportes extends javax.swing.JFrame {
             iva.setWidths(colTotales);
             iva.getDefaultCell().setBorderWidth(1f);
             iva.addCell(new Phrase("Impuestos generados:",fontEnc));
-            iva.addCell(new Phrase("$", fontEnc));
+            iva.addCell(new Phrase("$"+totalImp, fontEnc));
           
             doc.add(totalsinIvaT);
             doc.add(iva);
@@ -663,14 +707,6 @@ public class Reportes extends javax.swing.JFrame {
 
    
 
-
-    private void reporteGeneralBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reporteGeneralBtnMouseClicked
-        
-    }//GEN-LAST:event_reporteGeneralBtnMouseClicked
-
-    private void reporteGeneralBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteGeneralBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_reporteGeneralBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -690,7 +726,6 @@ public class Reportes extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton reporteCajeroBtn;
-    private javax.swing.JButton reporteGeneralBtn;
     private javax.swing.JTable reporteTable;
     private javax.swing.JMenu reportesMenu;
     // End of variables declaration//GEN-END:variables
