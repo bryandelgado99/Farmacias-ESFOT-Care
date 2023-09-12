@@ -342,7 +342,18 @@ public class Reportes extends javax.swing.JFrame {
         // TODO add your handling code here:
         // TODO add your handling code here:
         try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)){
-            String Query = "SELECT * FROM cajeros";
+            String Query = "select cab.num_factura, \n" +
+"		concat(caj.nombre_caj,' ',caj.apellido_caj) as nombreComp_caj, \n" +
+                "        caj.codigo_caj, \n" +
+                "        cab.fecha_emision, \n" +
+                "        cab.Clientes_ci_cli, \n" +
+                "        cab.total_pagar,\n" +
+                "        cab.total_pagar - SUM(valcompra_prod * det.cantidad) AS ganancia_obtenida\n" +
+                "from cabecera_fac cab \n" +
+                "inner join cajeros caj on caj.codigo_caj = cab.Cajeros_codigo_caj\n" +
+                "inner join detalle_fac det on det.Cabecera_Fac_num_factura = cab.num_factura\n" +
+                "inner join productos pro on pro.codigo_prod = det.Productos_codigo_prod\n" +
+                "group by cab.num_factura;";
             PreparedStatement stmt = conn.prepareStatement(Query);
             ResultSet rs = stmt.executeQuery();
 
@@ -358,35 +369,36 @@ public class Reportes extends javax.swing.JFrame {
                 reporteTable.setValueAt("", row, 2);
                 reporteTable.setValueAt("", row, 3);
                 reporteTable.setValueAt("", row, 4);
+                reporteTable.setValueAt("", row, 5);
+                reporteTable.setValueAt("", row, 6);
 
+                String numfact = rs.getString("num_factura");
+                String nombreC = rs.getString("nombreComp_caj");
                 String codigo = rs.getString("codigo_caj");
-                String nombre = rs.getString("nombre_caj");
-                String apellido = rs.getString("apellido_caj");
-                String ci = rs.getString("ci_caj");
-                String telefono = rs.getString("telefono_caj");
-                String email = rs.getString("email_caj");
-                String direccion = rs.getString("direccion_caj");
-                String password = rs.getString("password_caj");
-                String codigoAdmin = rs.getString("Administradores_codigo_admin");
+                String fecha = rs.getString("fecha_emision");
+                
+                String cedula = rs.getString("Clientes_ci_cli");
+                String total = rs.getString("total_pagar");
+                String ganancia = rs.getString("ganancia_obtenida");
+                
 
-                reporteTable.setValueAt(codigo, row, 0);
-                reporteTable.setValueAt(nombre + " " + apellido, row, 1);
-                reporteTable.setValueAt(ci, row, 2);
-                reporteTable.setValueAt(telefono, row, 3);
-                reporteTable.setValueAt(direccion, row, 4);
-
+                reporteTable.setValueAt(numfact, row, 0);
+                reporteTable.setValueAt(nombreC, row, 1);
+                reporteTable.setValueAt(codigo, row, 2);
+                reporteTable.setValueAt(fecha, row, 3);
+                reporteTable.setValueAt(cedula, row, 4);
+                reporteTable.setValueAt(total, row, 5);
+                reporteTable.setValueAt(ganancia, row, 6);
                 row++;
 
                 //prueba de conexion
-                System.out.println("Código: " + codigo);
-                System.out.println("Nombre: " + nombre);
-                System.out.println("Apellido: " + apellido);
-                System.out.println("CI: " + ci);
-                System.out.println("Teléfono: " + telefono);
-                System.out.println("Email: " + email);
-                System.out.println("Dirección: " + direccion);
-                System.out.println("Password: " + password);
-                System.out.println("Código de Admin: " + codigoAdmin);
+                System.out.println("Numero fact: " + numfact);
+                System.out.println("Nombre: " + nombreC);
+                System.out.println("Codigo cajero: " + codigo);
+                System.out.println("fecha: " + fecha);
+                System.out.println("cedula: " + cedula);
+                System.out.println("total: " + total);
+                System.out.println("Ganancias: "+ganancia);
                 System.out.println("----------");
             }
         } catch (SQLException x) {
