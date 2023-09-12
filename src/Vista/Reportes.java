@@ -295,20 +295,23 @@ public class Reportes extends javax.swing.JFrame {
 
     private void jButtonBuscarCajeroCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarCajeroCodActionPerformed
         // TODO add your handling code here:
+        codCajero=codCajeroInput.getText();
         try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)){
-            String Query = "select cab.num_factura, \n" +
-"		concat(caj.nombre_caj,' ',caj.apellido_caj) as nombreComp_caj, \n" +
-                "        caj.codigo_caj, \n" +
-                "        cab.fecha_emision, \n" +
-                "        cab.Clientes_ci_cli, \n" +
-                "        cab.total_pagar,\n" +
-                "        cab.total_pagar - SUM(valcompra_prod * det.cantidad) AS ganancia_obtenida\n" +
-                "from cabecera_fac cab \n" +
-                "inner join cajeros caj on caj.codigo_caj = cab.Cajeros_codigo_caj\n" +
-                "inner join detalle_fac det on det.Cabecera_Fac_num_factura = cab.num_factura\n" +
-                "inner join productos pro on pro.codigo_prod = det.Productos_codigo_prod\n" +
-                "group by cab.num_factura;";
+            String Query = "SELECT cab.num_factura, " +
+                "CONCAT(caj.nombre_caj, ' ', caj.apellido_caj) AS nombreComp_caj, " +
+                "caj.codigo_caj, " +
+                "cab.fecha_emision, " +
+                "cab.Clientes_ci_cli, " +
+                "cab.total_pagar, " +
+                "cab.total_pagar - SUM(valcompra_prod * det.cantidad) AS ganancia_obtenida " +
+                "FROM cabecera_fac cab " +
+                "INNER JOIN cajeros caj ON caj.codigo_caj = cab.Cajeros_codigo_caj " +
+                "INNER JOIN detalle_fac det ON det.Cabecera_Fac_num_factura = cab.num_factura " +
+                "INNER JOIN productos pro ON pro.codigo_prod = det.Productos_codigo_prod " +
+                "WHERE caj.codigo_caj = ? " + // Filtra por el código del cajero
+                "GROUP BY cab.num_factura;";
             PreparedStatement stmt = conn.prepareStatement(Query);
+            stmt.setString(1, codCajero);
             ResultSet rs = stmt.executeQuery();
 
             reporteTable.getModel();
@@ -316,7 +319,7 @@ public class Reportes extends javax.swing.JFrame {
             int row = 0;
 
             //prueba conexion
-            if (rs.next()) {
+            while (rs.next()) {
 
                 reporteTable.setValueAt("", row, 0);
                 reporteTable.setValueAt("", row, 1);
