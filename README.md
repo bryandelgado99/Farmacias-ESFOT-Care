@@ -2,7 +2,7 @@
   <a href=""><img src="https://github.com/bryandelgado99/Proyecto-Farmacia--2do-Bimestre/blob/49e308ad60d49319e7f289baac68ca3b5a685648/Capturas/logo_2.png" width="350px" alt="Banner"></a><br>  
   <p align="center">Sistema de Gestión Farmacéutica - ESOFT-Care+</p>
 </h1>
-**Este proyecto ha sido realizado con el proposito de demostrar las habilidades por aprendidas en el lenguaje Javam el diseño de interfaces y el manejo de bases de datos relacionales.**
+**Este proyecto ha sido realizado con el proposito de demostrar las habilidades aprendidas en el lenguaje Java, el diseño de interfaces y el manejo de bases de datos relacionales.**
 
 # Contenido
 1. Integrantes
