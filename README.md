@@ -25,7 +25,7 @@ Por el lado de administrador se debe ver la lista de empleados, de productos y r
 
 Todo este proyecto deberá ser ligado a una base de datos relacional, en este caso, MySQL. 
 
-Todo el proyecto se realizó mediante el IDE Netbeans, las librería de AbsoluteLayout y móudlos modificables para generar PDFs.
+Todo el proyecto se realizó mediante el IDE Netbeans, las librería de AbsoluteLayout y módulos modificables para generar PDFs.
 
 - ### Requisitos del sistema
   - JDK version: 20.0 o posterior
